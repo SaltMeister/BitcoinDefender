@@ -18,7 +18,7 @@ public class DesktopLauncher {
     private static LwjglApplicationConfiguration getDefaultConfiguration() {
         LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
         configuration.title = "bitcoin-defender";
-        configuration.width = 640;
+        configuration.width = 800;
         configuration.height = 480;
         for (int size : new int[] { 128, 64, 32, 16 }) {
             configuration.addIcon("libgdx" + size + ".png", FileType.Internal);
