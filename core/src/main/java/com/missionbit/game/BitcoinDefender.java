@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -29,6 +30,10 @@ public class BitcoinDefender extends ApplicationAdapter {
         // Create a sprite batch for rendering our image
         myBatch = new SpriteBatch();
 
+        myImage = new Sprite( new Texture(Gdx.files.internal("")));// add a image for the background
+        myImage.setX(0);
+        myImage.setY(0);
+
         //TODO: Load our image
     }
     @Override
@@ -42,9 +47,13 @@ public class BitcoinDefender extends ApplicationAdapter {
         camera.update();
         myBatch.setProjectionMatrix(camera.combined);
 
+        myBatch.begin();
+        myImage.draw(myBatch);
+        myBatch.end();
+
         //TODO: Draw our image!
     }
-    
+
     @Override
     public void dispose() {
         myBatch.dispose();
