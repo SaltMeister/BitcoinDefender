@@ -43,7 +43,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         //TODO: Load our image
     }
     @Override
-    public void render() {
+    public void render() { 
 
         // Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
