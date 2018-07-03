@@ -36,7 +36,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         background.setY(0);
 
         
-
+    //just a test comment, you can delete this after
 
 
 
