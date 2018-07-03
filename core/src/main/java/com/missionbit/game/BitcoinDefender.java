@@ -15,7 +15,8 @@ import java.util.Random;
 public class BitcoinDefender extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Random randomSource;
-    private Sprite myImage;
+    private Sprite background;
+    private Sprite normie;
     private SpriteBatch myBatch;
     private Vector2 velocity;
 
@@ -30,9 +31,14 @@ public class BitcoinDefender extends ApplicationAdapter {
         // Create a sprite batch for rendering our image
         myBatch = new SpriteBatch();
 
-        myImage = new Sprite( new Texture(Gdx.files.internal("")));// add a image for the background
-        myImage.setX(0);
-        myImage.setY(0);
+        background = new Sprite( new Texture(Gdx.files.internal("images/stockBackground.png")));// add a image for the background
+        background.setX(0);
+        background.setY(0);
+
+        
+
+
+
 
         //TODO: Load our image
     }
@@ -48,7 +54,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         myBatch.setProjectionMatrix(camera.combined);
 
         myBatch.begin();
-        myImage.draw(myBatch);
+        background.draw(myBatch);
         myBatch.end();
 
         //TODO: Draw our image!
