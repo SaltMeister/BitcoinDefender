@@ -35,8 +35,9 @@ public class BitcoinDefender extends ApplicationAdapter {
         background.setX(0);
         background.setY(0);
 
-        //regularEnemy = new Sprite( new Texture(Gdx.files.internal("images/.png"))); // creates an enemy
-
+        regularEnemy = new Sprite( new Texture(Gdx.files.internal("images/mainCharacter.png"))); // creates the main character
+        regularEnemy.setX(200);
+        regularEnemy.setY(200);
 
 
         //TODO: Load our image
@@ -54,6 +55,7 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         myBatch.begin();
         background.draw(myBatch);
+        regularEnemy.draw(myBatch);
         myBatch.end();
 
         //TODO: Draw our image!
