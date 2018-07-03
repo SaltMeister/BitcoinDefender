@@ -39,7 +39,6 @@ public class BitcoinDefender extends ApplicationAdapter {
 
 
 
-
         //TODO: Load our image
     }
     @Override
