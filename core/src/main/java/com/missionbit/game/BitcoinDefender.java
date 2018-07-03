@@ -16,7 +16,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Random randomSource;
     private Sprite background;
-    private Sprite normie;
+    private Sprite regularEnemy;
     private SpriteBatch myBatch;
     private Vector2 velocity;
 
@@ -35,7 +35,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         background.setX(0);
         background.setY(0);
 
-        
+        //regularEnemy = new Sprite( new Texture(Gdx.files.internal("images/.png"))); // creates an enemy
 
 
 
