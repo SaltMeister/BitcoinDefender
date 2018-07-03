@@ -38,7 +38,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         
     //just a test comment, you can delete this after
 
-        regularEnemy = new Sprite( new Texture(Gdx.files.internal("images/mainCharacter.png"))); // creates the main character
+        regularEnemy = new Sprite( new Texture(Gdx.files.internal("images/mainCharacterWithGun.png"))); // creates the main character
         regularEnemy.setX(200);
         regularEnemy.setY(200);
 
