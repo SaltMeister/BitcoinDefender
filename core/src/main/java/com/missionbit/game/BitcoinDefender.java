@@ -16,7 +16,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Random randomSource;
     private Sprite background;
-    private Sprite normie;
+    private Sprite regularEnemy;
     private SpriteBatch myBatch;
     private Vector2 velocity;
 
@@ -38,6 +38,9 @@ public class BitcoinDefender extends ApplicationAdapter {
         
     //just a test comment, you can delete this after
 
+        regularEnemy = new Sprite( new Texture(Gdx.files.internal("images/mainCharacter.png"))); // creates the main character
+        regularEnemy.setX(200);
+        regularEnemy.setY(200);
 
 
         //TODO: Load our image
@@ -55,6 +58,7 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         myBatch.begin();
         background.draw(myBatch);
+        regularEnemy.draw(myBatch);
         myBatch.end();
 
         //TODO: Draw our image!
