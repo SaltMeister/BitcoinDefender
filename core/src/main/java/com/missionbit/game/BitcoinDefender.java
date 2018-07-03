@@ -5,9 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.Random;
 
@@ -15,10 +19,15 @@ import java.util.Random;
 public class BitcoinDefender extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Random randomSource;
+    private Sprite bullet;
     private Sprite background;
-    private Sprite regularEnemy;
+    private Sprite mainCharacter;
+    private Animation regularEnemyAnimation;
     private SpriteBatch myBatch;
     private Vector2 velocity;
+    private Vector2 gunPosition;
+    private Vector2 shootClick;
+    private ParticleEffect effect;
 
     @Override
     public void create() {
@@ -35,10 +44,20 @@ public class BitcoinDefender extends ApplicationAdapter {
         background.setX(0);
         background.setY(0);
 
-        regularEnemy = new Sprite( new Texture(Gdx.files.internal("images/mainCharacter.png"))); // creates the main character
-        regularEnemy.setX(200);
-        regularEnemy.setY(200);
+        mainCharacter = new Sprite(new Texture(Gdx.files.internal("images/mainCharacter.png"))); // creates the main character
+        //regularEnemyAnimation = new Animation(new TextureRegion(regularEnemy), 2, 1);
+        mainCharacter.setX(200);
+        mainCharacter.setY(200);
 
+        bullet = new Sprite( new Texture(Gdx.files.internal("images/bullet.png")));// add a image for the background
+        bullet.setX(mainCharacter.getX() + mainCharacter.getWidth());
+        bullet.setY(mainCharacter.getY() + mainCharacter.getHeight());
+
+        gunPosition = new Vector2();
+        gunPosition.x = mainCharacter.getX() + mainCharacter.getWidth();
+        gunPosition.y = mainCharacter.getY() + mainCharacter.getHeight();
+
+        shootClick = new Vector2();
 
         //TODO: Load our image
     }
@@ -55,13 +74,26 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         myBatch.begin();
         background.draw(myBatch);
-        regularEnemy.draw(myBatch);
+        mainCharacter.draw(myBatch);
+        bullet.draw(myBatch);
         myBatch.end();
+
+        if(Gdx.input.isTouched()){
+            Vector3 touchPos = new Vector3();
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+
+            camera.unproject(touchPos);
+            System.out.println(touchPos.x + " " + touchPos.y);
+
+            shootClick.x = touchPos.x;
+            shootClick.y = touchPos.y;
+        }
 
         //TODO: Draw our image!
     }
 
     @Override
+
     public void dispose() {
         myBatch.dispose();
     }
