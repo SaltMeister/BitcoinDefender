@@ -27,6 +27,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private Vector2 velocity;
     private Vector2 gunPosition;
     private Vector2 shootClick;
+    private Vector2 bulletVelocity;
     private ParticleEffect effect;
 
     @Override
@@ -44,10 +45,11 @@ public class BitcoinDefender extends ApplicationAdapter {
         background.setX(0);
         background.setY(0);
 
-        mainCharacter = new Sprite(new Texture(Gdx.files.internal("images/mainCharacter.png"))); // creates the main character
+        mainCharacter = new Sprite(new Texture(Gdx.files.internal("images/mainCharacterWithGun.png"))); // creates the main character
         //regularEnemyAnimation = new Animation(new TextureRegion(regularEnemy), 2, 1);
         mainCharacter.setX(200);
         mainCharacter.setY(200);
+
 
         bullet = new Sprite( new Texture(Gdx.files.internal("images/bullet.png")));// add a image for the background
         bullet.setX(mainCharacter.getX() + mainCharacter.getWidth());
@@ -62,7 +64,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         //TODO: Load our image
     }
     @Override
-    public void render() { 
+    public void render() {
 
         // Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -71,6 +73,9 @@ public class BitcoinDefender extends ApplicationAdapter {
         //Set up our camera
         camera.update();
         myBatch.setProjectionMatrix(camera.combined);
+
+        bullet.setX(bullet.getX() + shootClick.x * 10);
+        bullet.setY(bullet.getY() + shootClick.y * 10);
 
         myBatch.begin();
         background.draw(myBatch);
@@ -87,6 +92,11 @@ public class BitcoinDefender extends ApplicationAdapter {
 
             shootClick.x = touchPos.x;
             shootClick.y = touchPos.y;
+
+            shootClick.sub(gunPosition);
+            shootClick.nor();
+
+
         }
 
         //TODO: Draw our image!
