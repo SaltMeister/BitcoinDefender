@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
@@ -29,7 +30,8 @@ public class BitcoinDefender extends ApplicationAdapter {
     private Vector2 shootClick;
     private Vector2 bulletVelocity;
     private ParticleEffect effect;
-    private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+    private ArrayList<Bullet> bullets;
+    private ArrayList<Enemy> enemies;
 
     @Override
     public void create() {
@@ -51,9 +53,15 @@ public class BitcoinDefender extends ApplicationAdapter {
         mainCharacter.setX(150);
         mainCharacter.setY(150);
 
-        enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));
-        enemy.setX(Gdx.graphics.getWidth());/*Gdx.graphics.getWidth()*/
-        enemy.setY(200);
+        //enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));
+        //enemy.setX(150);/*Gdx.graphics.getWidth()*/
+        //enemy.setY(200);
+        enemies = new ArrayList<Enemy>();
+
+        for (int i = 0; i < 20; i++) {
+           enemies.add(new Enemy(MathUtils.random(800), MathUtils.random(400), mainCharacter.getX(), mainCharacter.getY()));
+        }
+        bullets = new ArrayList<Bullet>();
 
         gunPosition = new Vector2();
         gunPosition.x = mainCharacter.getX() + mainCharacter.getWidth();
@@ -102,10 +110,13 @@ public class BitcoinDefender extends ApplicationAdapter {
         myBatch.begin();
         background.draw(myBatch);
         mainCharacter.draw(myBatch);
-        enemy.draw(myBatch);
+        //enemy.draw(myBatch);
         //spawns multiple bullets
         for (Bullet B : bullets) {
             B.Draw(myBatch);
+        }
+        for (Enemy e : enemies) {
+            e.Draw(myBatch);
         }
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
