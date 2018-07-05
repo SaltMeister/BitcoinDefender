@@ -32,6 +32,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private ParticleEffect effect;
     private ArrayList<Bullet> bullets;
     private ArrayList<Enemy> enemies;
+    private int healthOfWall = 100; //the amount of lives the wall has
 
     @Override
     public void create() {
@@ -58,9 +59,6 @@ public class BitcoinDefender extends ApplicationAdapter {
         //enemy.setY(200);
         enemies = new ArrayList<Enemy>();
 
-        for (int i = 0; i < 20; i++) {
-           enemies.add(new Enemy(MathUtils.random(800), MathUtils.random(400), mainCharacter.getX(), mainCharacter.getY()));
-        }
         bullets = new ArrayList<Bullet>();
 
         gunPosition = new Vector2();
@@ -85,7 +83,12 @@ public class BitcoinDefender extends ApplicationAdapter {
         camera.update();
         myBatch.setProjectionMatrix(camera.combined);
 
-        if(Gdx.input.justTouched())
+        if (MathUtils.random(100) == 1)
+        {
+            enemies.add(new Enemy(MathUtils.random(800), MathUtils.random(400), mainCharacter.getX(), mainCharacter.getY()));
+        }
+
+        if (Gdx.input.justTouched())
         {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
