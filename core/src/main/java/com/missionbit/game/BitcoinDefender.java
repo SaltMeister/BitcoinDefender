@@ -52,15 +52,14 @@ public class BitcoinDefender extends ApplicationAdapter {
         mainCharacter.setX(150);
         mainCharacter.setY(150);
 
-
-
-
         gunPosition = new Vector2();
         gunPosition.x = mainCharacter.getX() + mainCharacter.getWidth();
         gunPosition.y = mainCharacter.getY() + mainCharacter.getHeight();
 
         shootClick = new Vector2();
 
+        effect = new ParticleEffect();
+        effect.load(Gdx.files.internal("particles/muzzleFlash.p"), Gdx.files.internal("images"));
         //TODO: Load our image
     }
     @Override
@@ -78,8 +77,11 @@ public class BitcoinDefender extends ApplicationAdapter {
         myBatch.begin();
         background.draw(myBatch);
         mainCharacter.draw(myBatch);
-        for (Bullet B : bullets)
+
+        //spawns multiple bullets
+        for (Bullet B : bullets) {
             B.Draw(myBatch);
+        }
         myBatch.end();
 
         if(Gdx.input.justTouched())
@@ -96,6 +98,8 @@ public class BitcoinDefender extends ApplicationAdapter {
             shootClick.sub(gunPosition);
             shootClick.nor();
 
+            effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(),  mainCharacter.getY() + 60);
+            effect.start();
             Bullet B = new Bullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y);
             bullets.add(B);
         }
