@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -29,6 +30,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private Vector2 shootClick;
     private Vector2 bulletVelocity;
     private ParticleEffect effect;
+    private ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
     @Override
     public void create() {
@@ -41,19 +43,17 @@ public class BitcoinDefender extends ApplicationAdapter {
         // Create a sprite batch for rendering our image
         myBatch = new SpriteBatch();
 
-        background = new Sprite( new Texture(Gdx.files.internal("images/stockBackground.png")));// add a image for the background
+        background = new Sprite( new Texture(Gdx.files.internal("images/background.png")));// add a image for the background
         background.setX(0);
         background.setY(0);
 
         mainCharacter = new Sprite(new Texture(Gdx.files.internal("images/mainCharacterWithGun.png"))); // creates the main character
         //regularEnemyAnimation = new Animation(new TextureRegion(regularEnemy), 2, 1);
-        mainCharacter.setX(200);
-        mainCharacter.setY(200);
+        mainCharacter.setX(150);
+        mainCharacter.setY(150);
 
 
-        bullet = new Sprite( new Texture(Gdx.files.internal("images/bullet.png")));// add a image for the background
-        bullet.setX(mainCharacter.getX() + mainCharacter.getWidth());
-        bullet.setY(mainCharacter.getY() + mainCharacter.getHeight());
+
 
         gunPosition = new Vector2();
         gunPosition.x = mainCharacter.getX() + mainCharacter.getWidth();
@@ -64,7 +64,8 @@ public class BitcoinDefender extends ApplicationAdapter {
         //TODO: Load our image
     }
     @Override
-    public void render() {
+    public void render()
+    {
 
         // Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -74,16 +75,15 @@ public class BitcoinDefender extends ApplicationAdapter {
         camera.update();
         myBatch.setProjectionMatrix(camera.combined);
 
-        bullet.setX(bullet.getX() + shootClick.x * 10);
-        bullet.setY(bullet.getY() + shootClick.y * 10);
-
         myBatch.begin();
         background.draw(myBatch);
         mainCharacter.draw(myBatch);
-        bullet.draw(myBatch);
+        for (Bullet B : bullets)
+            B.Draw(myBatch);
         myBatch.end();
 
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.justTouched())
+        {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
@@ -96,7 +96,8 @@ public class BitcoinDefender extends ApplicationAdapter {
             shootClick.sub(gunPosition);
             shootClick.nor();
 
-
+            Bullet B = new Bullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y);
+            bullets.add(B);
         }
 
         //TODO: Draw our image!
