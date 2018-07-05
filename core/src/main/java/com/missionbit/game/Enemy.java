@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
-public class Enemy {
+public class Enemy
+{
     public Sprite enemy;
     public Vector2 direction;
 
@@ -18,11 +19,12 @@ public class Enemy {
 
         float randomSpawn = MathUtils.random() * 200;
 
-        enemy = new Sprite( new Texture(Gdx.files.internal("images/enemyDefault.png")));// add a image for the background
+        enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));// add a image for the background
         enemy.setX(Gdx.graphics.getWidth());// enemies spawn on the outside of the right side
         enemy.setY(randomSpawn);
         System.out.println(enemy.getY() * 0.55 + 190);
     }
+
 
     public float getX()
     {
@@ -41,6 +43,14 @@ public class Enemy {
     public boolean collideWithFence()
     {
         return enemy.getY() * 0.55 + 190 >= getX();
+    }
+
+    public boolean collideWithBullet(Bullet b)
+    {
+        return  b.getX() > getX() &&
+                b.getX() < getX() + enemy.getWidth() &&
+                b.getY() > getY() &&
+                b.getY() < getY() + enemy.getHeight();
     }
 
     public void Draw(SpriteBatch sprite)

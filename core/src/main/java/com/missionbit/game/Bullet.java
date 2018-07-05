@@ -27,6 +27,17 @@ public class Bullet
             direction.rotate(randomDirection);
         }
     }
+
+    public float getX()
+    {
+        return bullet.getX();
+    }
+
+    public float getY()
+    {
+        return bullet.getY();
+    }
+
     public void Draw(SpriteBatch sprite)
     {
         bullet.setX(bullet.getX() + direction.x * 10);

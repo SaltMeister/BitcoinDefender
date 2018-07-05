@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -125,27 +126,42 @@ public class BitcoinDefender extends ApplicationAdapter {
         mainCharacter.draw(myBatch);
         //enemy.draw(myBatch);
         //spawns multiple bullets
+        collisionDetection(enemies, bullets, myBatch);
+
         for (Bullet B : bullets)
         {
             B.Draw(myBatch);
         }
+
+        effect.draw(myBatch, Gdx.graphics.getDeltaTime());
+        myBatch.end();
+        //TODO: Draw our image!
+    }
+
+    private static boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets, SpriteBatch batch) {
         for (int loop = enemies.size() - 1; loop >= 0; loop--)
         {
+            for (int j = bullets.size() - 1; j >= 0; j--)
+            {
+                if (enemies.get(loop).collideWithBullet(bullets.get(j)))
+                {
+                    enemies.remove(loop);
+                    bullets.remove(j);
+                    return true;
+                }
+            }
 
             if (enemies.get(loop).collideWithFence())
             {
                 enemies.remove(loop);
-            }
-            else
-            {
-                enemies.get(loop).update();
-                enemies.get(loop).Draw(myBatch);
+                return true;
             }
 
+            enemies.get(loop).update(); // TODO remove outside of collision detection function
+            enemies.get(loop).Draw(batch); ////// ^^^
         }
-        effect.draw(myBatch, Gdx.graphics.getDeltaTime());
-        myBatch.end();
-        //TODO: Draw our image!
+
+        return false;
     }
 
     @Override
