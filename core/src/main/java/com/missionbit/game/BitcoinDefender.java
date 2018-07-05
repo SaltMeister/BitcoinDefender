@@ -19,6 +19,8 @@ import java.util.Random;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class BitcoinDefender extends ApplicationAdapter {
+    private static final int INITIAL_ENEMY_SPAWN_RATE = 100;
+    private static final int HEALTH_OF_WALL = 100;
     private OrthographicCamera camera;
     private Random randomSource;
     private Sprite bullet;
@@ -32,7 +34,8 @@ public class BitcoinDefender extends ApplicationAdapter {
     private ParticleEffect effect;
     private ArrayList<Bullet> bullets;
     private ArrayList<Enemy> enemies;
-    private int healthOfWall = 100; //the amount of lives the wall has
+    private static int spawnRate;
+    private int healthOfWall; //the amount of lives the wall has
 
     @Override
     public void create() {
@@ -69,8 +72,13 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         effect = new ParticleEffect();
         effect.load(Gdx.files.internal("particles/muzzleFlash.p"), Gdx.files.internal("images"));
+
+        spawnRate = INITIAL_ENEMY_SPAWN_RATE; // sets the spawn rate to the default one
+        healthOfWall = HEALTH_OF_WALL; // sets health of wall
+
         //TODO: Load our image
     }
+
     @Override
     public void render()
     {
@@ -83,9 +91,11 @@ public class BitcoinDefender extends ApplicationAdapter {
         camera.update();
         myBatch.setProjectionMatrix(camera.combined);
 
-        if (MathUtils.random(100) == 1)
+
+        if (MathUtils.random(spawnRate) == 1)// randomizes spawn rate of the enemies
         {
-            enemies.add(new Enemy(MathUtils.random(800), MathUtils.random(400), mainCharacter.getX(), mainCharacter.getY()));
+            //spawns enemies
+            enemies.add(new Enemy(mainCharacter.getX()));
         }
 
         if (Gdx.input.justTouched())
@@ -115,11 +125,23 @@ public class BitcoinDefender extends ApplicationAdapter {
         mainCharacter.draw(myBatch);
         //enemy.draw(myBatch);
         //spawns multiple bullets
-        for (Bullet B : bullets) {
+        for (Bullet B : bullets)
+        {
             B.Draw(myBatch);
         }
-        for (Enemy e : enemies) {
-            e.Draw(myBatch);
+        for (int loop = enemies.size() - 1; loop >= 0; loop--)
+        {
+
+            if (enemies.get(loop).collideWithFence())
+            {
+                enemies.remove(loop);
+            }
+            else
+            {
+                enemies.get(loop).update();
+                enemies.get(loop).Draw(myBatch);
+            }
+
         }
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
