@@ -46,7 +46,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         background.setX(0);
         background.setY(0);
 
-        mainCharacter = new Sprite(new Texture(Gdx.files.internal("images/mainCharacterWithGun.png"))); // creates the main character
+        mainCharacter = new Sprite(new Texture(Gdx.files.internal("images/doubleBarrelShotgun.png"))); // creates the main character
         //regularEnemyAnimation = new Animation(new TextureRegion(regularEnemy), 2, 1);
         mainCharacter.setX(150);
         mainCharacter.setY(150);
@@ -90,11 +90,12 @@ public class BitcoinDefender extends ApplicationAdapter {
 
             shootClick.sub(gunPosition);
             shootClick.nor();
-
-            Bullet B = new Bullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y);
-            bullets.add(B);
-
-            effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth() - 5,  mainCharacter.getY() + 65);
+            //for (int loop = 0; loop < 5; loop++) loop for shotgun bullets
+            //{
+                Bullet B = new Bullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y, false);
+                bullets.add(B);
+            //}
+            effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
             effect.start();
         }
 
