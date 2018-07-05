@@ -21,8 +21,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private OrthographicCamera camera;
     private Random randomSource;
     private Sprite bullet;
-    private Sprite background;
-    private Sprite mainCharacter;
+    private Sprite mainCharacter, enemy, background;
     private Animation regularEnemyAnimation;
     private SpriteBatch myBatch;
     private Vector2 velocity;
@@ -52,6 +51,10 @@ public class BitcoinDefender extends ApplicationAdapter {
         mainCharacter.setX(150);
         mainCharacter.setY(150);
 
+        enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));
+        enemy.setX(Gdx.graphics.getWidth());/*Gdx.graphics.getWidth()*/
+        enemy.setY(200);
+
         gunPosition = new Vector2();
         gunPosition.x = mainCharacter.getX() + mainCharacter.getWidth();
         gunPosition.y = mainCharacter.getY() + mainCharacter.getHeight();
@@ -74,16 +77,6 @@ public class BitcoinDefender extends ApplicationAdapter {
         camera.update();
         myBatch.setProjectionMatrix(camera.combined);
 
-        myBatch.begin();
-        background.draw(myBatch);
-        mainCharacter.draw(myBatch);
-
-        //spawns multiple bullets
-        for (Bullet B : bullets) {
-            B.Draw(myBatch);
-        }
-        myBatch.end();
-
         if(Gdx.input.justTouched())
         {
             Vector3 touchPos = new Vector3();
@@ -98,12 +91,23 @@ public class BitcoinDefender extends ApplicationAdapter {
             shootClick.sub(gunPosition);
             shootClick.nor();
 
-            effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(),  mainCharacter.getY() + 60);
-            effect.start();
             Bullet B = new Bullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y);
             bullets.add(B);
+
+            effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth() - 5,  mainCharacter.getY() + 65);
+            effect.start();
         }
 
+        myBatch.begin();
+        background.draw(myBatch);
+        mainCharacter.draw(myBatch);
+        enemy.draw(myBatch);
+        //spawns multiple bullets
+        for (Bullet B : bullets) {
+            B.Draw(myBatch);
+        }
+        effect.draw(myBatch, Gdx.graphics.getDeltaTime());
+        myBatch.end();
         //TODO: Draw our image!
     }
 

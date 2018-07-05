@@ -15,8 +15,8 @@ public class Bullet
     {
         direction = new Vector2();
         direction.x = directionX;
-        direction.y = directionY;
-
+        direction.y = directionY; //0.1f; //todo hack
+        System.out.println(directionY);
         bullet = new Sprite( new Texture(Gdx.files.internal("images/bullet.png")));// add a image for the background
         bullet.setX(startX);
         bullet.setY(startY);
