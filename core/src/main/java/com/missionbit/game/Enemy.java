@@ -17,7 +17,7 @@ public class Enemy {
         direction.y = directionY; //0.1f; //todo hack
         System.out.println(directionY);
         enemy = new Sprite( new Texture(Gdx.files.internal("images/enemyDefault.png")));// add a image for the background
-        enemy.setX(startX);
+        enemy.setX(Gdx.graphics.getWidth());
         enemy.setY(startY);
     }
 
