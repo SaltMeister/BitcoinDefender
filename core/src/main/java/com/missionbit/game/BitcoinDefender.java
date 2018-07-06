@@ -57,7 +57,7 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         mainCharacter = new Sprite(new Texture(Gdx.files.internal("images/doubleBarrelShotgun.png"))); // creates the main character
         //regularEnemyAnimation = new Animation(new TextureRegion(regularEnemy), 2, 1);
-        mainCharacter.setX(150);
+        mainCharacter.setX(130);
         mainCharacter.setY(150);
 
         //enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));
@@ -114,12 +114,12 @@ public class BitcoinDefender extends ApplicationAdapter {
 
             shootClick.sub(gunPosition);
             shootClick.nor();
-            //for (int loop = 0; loop < 5; loop++) loop for shotgun bullets
+            //for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
             //{
                 Bullet B = new Bullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y, false);
                 bullets.add(B);
             //}
-            
+
             // displays muzzle flash
             effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
             effect.start();
@@ -131,20 +131,27 @@ public class BitcoinDefender extends ApplicationAdapter {
         mainCharacter.draw(myBatch);
         //enemy.draw(myBatch);
         //spawns multiple bullets
-        collisionDetection(enemies, bullets, myBatch);
+        collisionDetection(enemies, bullets);
 
         for (Bullet B : bullets)
         {
             // draws multiple bullets
             B.Draw(myBatch);
         }
+
+        for(int loop = enemies.size() - 1; loop >= 0; loop--)
+        {
+            enemies.get(loop).update();
+            enemies.get(loop).Draw(myBatch);
+        }
         // actually draws the particle effects
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
+
         //TODO: Draw our image!
     }
 
-    private static boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets, SpriteBatch batch) {
+    private static boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets) {
         for (int loop = enemies.size() - 1; loop >= 0; loop--)
         {
             for (int j = bullets.size() - 1; j >= 0; j--)
@@ -155,18 +162,20 @@ public class BitcoinDefender extends ApplicationAdapter {
                     bullets.remove(j);
                     return true;
                 }
+
+                if (enemies.get(loop).collideWithFence())
+                {
+                    enemies.get(loop).stopEnemy();
+                    return true;
+                }
             }
 
             if (enemies.get(loop).collideWithFence())
             {
-                enemies.remove(loop);
+                enemies.get(loop).stopEnemy();
                 return true;
             }
-
-            enemies.get(loop).update(); // TODO remove outside of collision detection function
-            enemies.get(loop).Draw(batch); ////// ^^^
         }
-
         return false;
     }
 
