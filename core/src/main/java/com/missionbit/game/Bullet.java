@@ -12,6 +12,7 @@ public class Bullet
     //variables
     public Sprite bullet;
     public Vector2 direction;
+    public boolean alive;
 
 
     public Bullet(float startX, float startY, float directionX, float directionY, boolean isRandom) {

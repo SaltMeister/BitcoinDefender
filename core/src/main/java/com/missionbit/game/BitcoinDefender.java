@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -21,24 +22,24 @@ import java.util.Random;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class BitcoinDefender extends ApplicationAdapter {
     // Variables
-    private static final int INITIAL_ENEMY_SPAWN_RATE = 100;
+    private static final int INITIAL_ENEMY_SPAWN_RATE = 50;
     private static final int HEALTH_OF_WALL = 100;
     private OrthographicCamera camera;
     private Random randomSource;
-    private Sprite bullet;
-    private Sprite mainCharacter, enemy, background;
-    private Animation regularEnemyAnimation;
+    private mainCharacter mainCharacter;
+    private Sprite background;
     private SpriteBatch myBatch;
-    private Vector2 velocity;
     private Vector2 gunPosition;
     private Vector2 shootClick;
-    private Vector2 bulletVelocity;
     private ParticleEffect effect;
     private ArrayList<Bullet> bullets;
     private ArrayList<Enemy> enemies;
     private static int spawnRate;
     private int healthOfWall; //the amount of lives the wall has
-
+    private static Vector2 wallStart;
+    private static Vector2 wallEnd;
+    private boolean showDebug = true;
+    private ShapeRenderer debugRenderer;
     @Override
     public void create() {
         // randomizer
@@ -55,10 +56,10 @@ public class BitcoinDefender extends ApplicationAdapter {
         background.setX(0);
         background.setY(0);
 
-        mainCharacter = new Sprite(new Texture(Gdx.files.internal("images/doubleBarrelShotgun.png"))); // creates the main character
+        mainCharacter = new mainCharacter(120, 150); // creates the main character
         //regularEnemyAnimation = new Animation(new TextureRegion(regularEnemy), 2, 1);
-        mainCharacter.setX(130);
-        mainCharacter.setY(150);
+        //mainCharacter.setX(130);
+        //mainCharacter.setY(150);
 
         //enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));
         //enemy.setX(150);/*Gdx.graphics.getWidth()*/
@@ -78,7 +79,9 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         spawnRate = INITIAL_ENEMY_SPAWN_RATE; // sets the spawn rate to the default one
         healthOfWall = HEALTH_OF_WALL; // sets health of wall
-
+        wallStart = new Vector2(186.99998f, 0.0f);
+        wallEnd = new Vector2(320.0f, 258.0f);
+        debugRenderer = new ShapeRenderer();
         //TODO: Load our image
     }
 
@@ -128,7 +131,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         // starts displaying the stuff
         myBatch.begin();
         background.draw(myBatch);
-        mainCharacter.draw(myBatch);
+        myBatch.draw(mainCharacter.getTexture(), mainCharacter.getX(), mainCharacter.getY());
         //enemy.draw(myBatch);
         //spawns multiple bullets
         collisionDetection(enemies, bullets);
@@ -149,34 +152,41 @@ public class BitcoinDefender extends ApplicationAdapter {
         myBatch.end();
 
         //TODO: Draw our image!
+        //enemies.removeIf(e->e.alive);
+        if (showDebug)
+        {
+            debugRenderer.setProjectionMatrix(camera.combined);
+            debugRenderer.begin(ShapeRenderer.ShapeType.Line);
+            debugRenderer.setColor(0,0.5f,0.5f, 1);
+            debugRenderer.line(wallStart, wallEnd);
+            debugRenderer.end();
+        }
     }
 
     private static boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets) {
+        boolean flag = false;
         for (int loop = enemies.size() - 1; loop >= 0; loop--)
         {
+            if (enemies.get(loop).collideWithFence(wallStart, wallEnd))
+            {
+                enemies.get(loop).stopEnemy();
+                flag = true;
+            }
             for (int j = bullets.size() - 1; j >= 0; j--)
             {
                 if (enemies.get(loop).collideWithBullet(bullets.get(j)))
                 {
-                    enemies.remove(loop);
-                    bullets.remove(j);
-                    return true;
-                }
-
-                if (enemies.get(loop).collideWithFence())
-                {
-                    enemies.get(loop).stopEnemy();
-                    return true;
+                    //enemies.remove(loop);
+                    //bullets.remove(j);
+                    enemies.get(loop).alive = false;
+                    bullets.get(j).alive = false;
+                    flag = true;
                 }
             }
 
-            if (enemies.get(loop).collideWithFence())
-            {
-                enemies.get(loop).stopEnemy();
-                return true;
-            }
+
         }
-        return false;
+        return flag;
     }
 
     @Override

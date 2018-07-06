@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -11,6 +12,8 @@ public class Enemy
 {
     public Sprite enemy;
     public Vector2 direction;
+    private float lastDistance;
+    public boolean alive;
 
     public Enemy(float directionX)
     {
@@ -19,6 +22,7 @@ public class Enemy
 
         float randomSpawn = MathUtils.random() * 200;
         int enemyHealth = 100;
+        lastDistance = 5000;
 
         enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));// add a image for the background
         enemy.setX(Gdx.graphics.getWidth());// enemies spawn on the outside of the right side
@@ -38,12 +42,21 @@ public class Enemy
 
     public void update()
     {
-        enemy.setX(enemy.getX() + direction.x * -0.009f); // moved the enemy in a set speed
+        enemy.setX(enemy.getX() + direction.x * -0.05f); // moved the enemy in a set speed
     }
 
     public boolean collideWithFence()
     {
         return enemy.getY() * 0.55 + 190 >= getX(); // checks if enemy has touched the fence
+    }
+
+    public boolean collideWithFence(Vector2 fenceStart, Vector2 fenceEnd)
+    {
+        float distance = Intersector.distanceLinePoint(fenceStart.x, fenceStart.y, fenceEnd.x, fenceEnd.y, enemy.getX(), enemy.getY());
+        System.out.println(distance);
+        lastDistance = distance;
+        return distance < 10 || lastDistance < distance;
+
     }
 
     public boolean collideWithBullet(Bullet b) // checks if enemy has touch the bullet
