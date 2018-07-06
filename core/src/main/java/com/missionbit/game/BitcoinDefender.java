@@ -20,6 +20,7 @@ import java.util.Random;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class BitcoinDefender extends ApplicationAdapter {
+    // Variables
     private static final int INITIAL_ENEMY_SPAWN_RATE = 100;
     private static final int HEALTH_OF_WALL = 100;
     private OrthographicCamera camera;
@@ -40,6 +41,7 @@ public class BitcoinDefender extends ApplicationAdapter {
 
     @Override
     public void create() {
+        // randomizer
         randomSource = new Random();
 
         // Set up camera for 2d view of 800x480 pixels
@@ -71,7 +73,7 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         shootClick = new Vector2();
 
-        effect = new ParticleEffect();
+        effect = new ParticleEffect(); // particle effects for muzzle flash
         effect.load(Gdx.files.internal("particles/muzzleFlash.p"), Gdx.files.internal("images"));
 
         spawnRate = INITIAL_ENEMY_SPAWN_RATE; // sets the spawn rate to the default one
@@ -99,7 +101,7 @@ public class BitcoinDefender extends ApplicationAdapter {
             enemies.add(new Enemy(mainCharacter.getX()));
         }
 
-        if (Gdx.input.justTouched())
+        if (Gdx.input.justTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
         {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -117,10 +119,13 @@ public class BitcoinDefender extends ApplicationAdapter {
                 Bullet B = new Bullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y, false);
                 bullets.add(B);
             //}
+            
+            // displays muzzle flash
             effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
             effect.start();
         }
 
+        // starts displaying the stuff
         myBatch.begin();
         background.draw(myBatch);
         mainCharacter.draw(myBatch);
@@ -130,9 +135,10 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         for (Bullet B : bullets)
         {
+            // draws multiple bullets
             B.Draw(myBatch);
         }
-
+        // actually draws the particle effects
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
         //TODO: Draw our image!

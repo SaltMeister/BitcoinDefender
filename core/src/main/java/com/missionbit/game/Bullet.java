@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Bullet
 {
+    //variables
     public Sprite bullet;
     public Vector2 direction;
 
@@ -17,12 +18,16 @@ public class Bullet
         direction = new Vector2();
         direction.x = directionX;
         direction.y = directionY; //0.1f; //todo hack
-        System.out.println(directionY);
-        bullet = new Sprite(new Texture(Gdx.files.internal("images/bullet.png")));// add a image for the background
+
+        System.out.println(directionY);//todo remove this
+
+        bullet = new Sprite(new Texture(Gdx.files.internal("images/bullet.png")));// loads the bullet image
         bullet.setX(startX);
         bullet.setY(startY);
+
         if(isRandom == true)
         {
+            // code for a random spread in bullets, SHOGUNS
             float randomDirection = MathUtils.random() * 10 - 5;
             direction.rotate(randomDirection);
         }
@@ -30,20 +35,20 @@ public class Bullet
 
     public float getX()
     {
-        return bullet.getX();
+        return bullet.getX(); // gets the x value of the bullet
     }
 
     public float getY()
     {
-        return bullet.getY();
+        return bullet.getY(); // gets the y value of the bullet
     }
 
     public void Draw(SpriteBatch sprite)
     {
-        bullet.setX(bullet.getX() + direction.x * 10);
-        bullet.setY(bullet.getY() + direction.y * 10);
+        bullet.setX(bullet.getX() + direction.x * 10); // sets the velocity of the bullet in set direction
+        bullet.setY(bullet.getY() + direction.y * 10); // ^^^
 
-        bullet.draw(sprite);
+        bullet.draw(sprite); // draws bullet
     }
 }
 
