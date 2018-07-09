@@ -2,6 +2,7 @@ package com.missionbit.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -13,13 +14,14 @@ public class mainCharacter
     public Vector2 mainCharacterPositon;
     public Rectangle bounds;
 
+
     public mainCharacter(int x, int y)
     {
-        mainCharacterPositon = new Vector2(x, y);
-        mainCharacter = new Texture("images/test.png");
-        bounds = new Rectangle(x, y, mainCharacter.getWidth(), mainCharacter.getHeight());
+        //mainCharacterPositon = new Vector2(x, y);
+        //mainCharacter = new Texture("images/test.png");
+        //bounds = new Rectangle(x, y, mainCharacter.getWidth(), mainCharacter.getHeight());
 
-        mainCharacterAnimation = new Animation(new TextureRegion(mainCharacter), 8, 1f);
+        //mainCharacterAnimation = new Animation(new TextureRegion(mainCharacter), 8, 1f);
     }
 
     public void update()

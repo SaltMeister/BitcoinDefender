@@ -27,7 +27,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private static final int HEALTH_OF_WALL = 100;
     private OrthographicCamera camera;
     private Random randomSource;
-    private mainCharacter mainCharacter;
+    //private mainCharacter mainCharacter;
     private Sprite background;
     private Sprite wallHP;
     private SpriteBatch myBatch;
@@ -46,6 +46,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private static long startTime = System.currentTimeMillis(); // sets the time
     private static long elapsedTime;
     private static long elapsedSeconds;
+    private Sprite mainCharacter;
 
     @Override
     public void create() {
@@ -67,13 +68,19 @@ public class BitcoinDefender extends ApplicationAdapter {
         wallHP.setX(wallHP.getWidth());
         wallHP.setY(Gdx.graphics.getHeight() - wallHP.getHeight() * 2);
 
-        mainCharacter = new mainCharacter(120, 150); // creates the main character
+        mainCharacter = new Sprite(new Texture(Gdx.files.internal("images/doubleBarrelShotgun.png")));
+        mainCharacter.setX(150);
+        mainCharacter.setY(150);
+
+        //mainCharacter = new mainCharacter(120, 150); // creates the main character
 
         enemies = new ArrayList<Enemy>();
 
         bullets = new ArrayList<Bullet>();
 
         gunPosition = new Vector2();
+        //gunPosition.x = mainCharacter.getX() + mainCharacter.getWidth();
+        //gunPosition.y = mainCharacter.getY() + mainCharacter.getHeight();
         gunPosition.x = mainCharacter.getX() + mainCharacter.getWidth();
         gunPosition.y = mainCharacter.getY() + mainCharacter.getHeight();
 
@@ -112,37 +119,44 @@ public class BitcoinDefender extends ApplicationAdapter {
             //spawns enemies
             enemies.add(new Enemy(mainCharacter.getX()));
         }
-
-        if (Gdx.input.justTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
+        if (healthOfWall > 0) // if health goes to 0 u cannot shoot anymore
         {
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            if (Gdx.input.justTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
+            {
+                Vector3 touchPos = new Vector3();
+                touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
-            camera.unproject(touchPos);
-            //.out.println(touchPos.x + " " + touchPos.y); //todo remove this
+                camera.unproject(touchPos);
+                System.out.println(touchPos.x + " " + touchPos.y); //todo remove this
 
-            shootClick.x = touchPos.x;
-            shootClick.y = touchPos.y;
+                shootClick.x = touchPos.x;
+                shootClick.y = touchPos.y;
 
-            shootClick.sub(gunPosition);
-            shootClick.nor();
-            //for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
-            //{
+                shootClick.sub(gunPosition);
+                shootClick.nor();
+                //for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
+                //{                                                                                         //when adding animation fix this section to adapt to the larger texture size
+
                 Bullet B = new Bullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y, false);
                 bullets.add(B);
-            //}
+                //}
 
-            // displays muzzle flash
-            effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60);
-            effect.start();
+                // displays muzzle flash
+                effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60);
+                effect.start();
+            }
         }
+        else
+        {
 
+        }
         // starts displaying the stuff
         myBatch.begin();
         background.draw(myBatch);
         wallHP.draw(myBatch);
         font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, Gdx.graphics.getHeight() - wallHP.getHeight());
-        mainCharacter.update();
+        //mainCharacter.update();
+        mainCharacter.draw(myBatch);
         myBatch.draw(mainCharacter.getTexture(), mainCharacter.getX(), mainCharacter.getY());
 
         //enemy.draw(myBatch);
@@ -159,7 +173,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
 
-        System.out.println(elapsedSeconds); //todo remove this
+        //System.out.println(elapsedSeconds); //todo remove this
         if (elapsedSeconds >= 1) // if seconds is larger than 1 vvvvv
             startTime = System.currentTimeMillis(); // resets the start time so then clock resets to 0
         //TODO: Draw our image!
@@ -198,12 +212,12 @@ public class BitcoinDefender extends ApplicationAdapter {
             {
                 if (enemies.get(loop).collideWithBullet(bullets.get(j)))
                 {
-                    enemies.remove(loop);
+                    //enemies.remove(loop);
                     //enemies.get(loop).health - 50;
-                    bullets.remove(j);
+                    //bullets.remove(j);
 
-                    //enemies.get(loop).alive = false;
-                    //bullets.get(j).alive = false;
+                    enemies.get(loop).alive = false;
+                    bullets.get(j).alive = false;
                     flag = true;
                 }
             }
