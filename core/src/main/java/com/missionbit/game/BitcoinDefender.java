@@ -40,6 +40,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private static Vector2 wallEnd;
     private boolean showDebug = true;
     private ShapeRenderer debugRenderer;
+
     @Override
     public void create() {
         // randomizer
@@ -57,13 +58,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         background.setY(0);
 
         mainCharacter = new mainCharacter(120, 150); // creates the main character
-        //regularEnemyAnimation = new Animation(new TextureRegion(regularEnemy), 2, 1);
-        //mainCharacter.setX(130);
-        //mainCharacter.setY(150);
 
-        //enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));
-        //enemy.setX(150);/*Gdx.graphics.getWidth()*/
-        //enemy.setY(200);
         enemies = new ArrayList<Enemy>();
 
         bullets = new ArrayList<Bullet>();
@@ -124,17 +119,19 @@ public class BitcoinDefender extends ApplicationAdapter {
             //}
 
             // displays muzzle flash
-            effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
+            effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60);
             effect.start();
         }
 
         // starts displaying the stuff
         myBatch.begin();
         background.draw(myBatch);
+        mainCharacter.update();
         myBatch.draw(mainCharacter.getTexture(), mainCharacter.getX(), mainCharacter.getY());
+
         //enemy.draw(myBatch);
         //spawns multiple bullets
-        collisionDetection(enemies, bullets);
+        collisionDetection(enemies, bullets, myBatch);
 
         for (Bullet B : bullets)
         {
@@ -142,11 +139,9 @@ public class BitcoinDefender extends ApplicationAdapter {
             B.Draw(myBatch);
         }
 
-        for(int loop = enemies.size() - 1; loop >= 0; loop--)
-        {
-            enemies.get(loop).update();
-            enemies.get(loop).Draw(myBatch);
-        }
+
+
+
         // actually draws the particle effects
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
@@ -163,7 +158,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         }
     }
 
-    private static boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets) {
+    private static boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets, SpriteBatch batch) {
         boolean flag = false;
         for (int loop = enemies.size() - 1; loop >= 0; loop--)
         {
@@ -183,7 +178,8 @@ public class BitcoinDefender extends ApplicationAdapter {
                     flag = true;
                 }
             }
-
+            enemies.get(loop).update();
+            enemies.get(loop).Draw(batch);
 
         }
         return flag;
