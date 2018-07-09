@@ -10,10 +10,12 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Enemy
 {
+    public final int ENEMY_HP = 100;
     public Sprite enemy;
     public Vector2 direction;
     private float lastDistance;
     public boolean alive;
+    public int health;
 
     public Enemy(float directionX)
     {
@@ -21,7 +23,7 @@ public class Enemy
         direction.x = directionX;
 
         float randomSpawn = MathUtils.random() * 200;
-        int enemyHealth = 100;
+        health = ENEMY_HP;
         lastDistance = 5000;
 
         enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));// add a image for the background
@@ -42,18 +44,12 @@ public class Enemy
 
     public void update()
     {
-        enemy.setX(enemy.getX() + direction.x * -0.05f); // moved the enemy in a set speed
-    }
-
-    public boolean collideWithFence()
-    {
-        return enemy.getY() * 0.55 + 190 >= getX(); // checks if enemy has touched the fence
+        enemy.setX(enemy.getX() + direction.x * -0.009f); // moved the enemy in a set speed
     }
 
     public boolean collideWithFence(Vector2 fenceStart, Vector2 fenceEnd)
     {
         float distance = Intersector.distanceLinePoint(fenceStart.x, fenceStart.y, fenceEnd.x, fenceEnd.y, enemy.getX(), enemy.getY());
-        System.out.println(distance);
         lastDistance = distance;
         return distance < 10 || lastDistance < distance;
 

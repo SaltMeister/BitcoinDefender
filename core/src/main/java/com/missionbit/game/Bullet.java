@@ -20,8 +20,6 @@ public class Bullet
         direction.x = directionX;
         direction.y = directionY; //0.1f; //todo hack
 
-        System.out.println(directionY);//todo remove this
-
         bullet = new Sprite(new Texture(Gdx.files.internal("images/bullet.png")));// loads the bullet image
         bullet.setX(startX);
         bullet.setY(startY);

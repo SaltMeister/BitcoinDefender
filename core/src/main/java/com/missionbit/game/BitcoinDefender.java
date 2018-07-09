@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,12 +23,13 @@ import java.util.Random;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class BitcoinDefender extends ApplicationAdapter {
     // Variables
-    private static final int INITIAL_ENEMY_SPAWN_RATE = 50;
+    private static final int INITIAL_ENEMY_SPAWN_RATE = 150;
     private static final int HEALTH_OF_WALL = 100;
     private OrthographicCamera camera;
     private Random randomSource;
     private mainCharacter mainCharacter;
     private Sprite background;
+    private Sprite wallHP;
     private SpriteBatch myBatch;
     private Vector2 gunPosition;
     private Vector2 shootClick;
@@ -35,11 +37,15 @@ public class BitcoinDefender extends ApplicationAdapter {
     private ArrayList<Bullet> bullets;
     private ArrayList<Enemy> enemies;
     private static int spawnRate;
-    private int healthOfWall; //the amount of lives the wall has
+    private static int healthOfWall; //the amount of lives the wall has
+    private BitmapFont font;
     private static Vector2 wallStart;
     private static Vector2 wallEnd;
     private boolean showDebug = true;
     private ShapeRenderer debugRenderer;
+    private static long startTime = System.currentTimeMillis(); // sets the time
+    private static long elapsedTime;
+    private static long elapsedSeconds;
 
     @Override
     public void create() {
@@ -56,6 +62,10 @@ public class BitcoinDefender extends ApplicationAdapter {
         background = new Sprite( new Texture(Gdx.files.internal("images/background.png")));// add a image for the background
         background.setX(0);
         background.setY(0);
+
+        wallHP = new Sprite( new Texture(Gdx.files.internal("images/wallHP.png")));
+        wallHP.setX(wallHP.getWidth());
+        wallHP.setY(Gdx.graphics.getHeight() - wallHP.getHeight() * 2);
 
         mainCharacter = new mainCharacter(120, 150); // creates the main character
 
@@ -74,6 +84,8 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         spawnRate = INITIAL_ENEMY_SPAWN_RATE; // sets the spawn rate to the default one
         healthOfWall = HEALTH_OF_WALL; // sets health of wall
+        font = new BitmapFont();
+
         wallStart = new Vector2(186.99998f, 0.0f);
         wallEnd = new Vector2(320.0f, 258.0f);
         debugRenderer = new ShapeRenderer();
@@ -83,6 +95,8 @@ public class BitcoinDefender extends ApplicationAdapter {
     @Override
     public void render()
     {
+       elapsedTime = System.currentTimeMillis() - startTime; // sets the time that has past in milliseconds
+       elapsedSeconds = elapsedTime / 1000; // sets the seconds
 
         // Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -105,7 +119,7 @@ public class BitcoinDefender extends ApplicationAdapter {
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
             camera.unproject(touchPos);
-            System.out.println(touchPos.x + " " + touchPos.y);
+            //.out.println(touchPos.x + " " + touchPos.y); //todo remove this
 
             shootClick.x = touchPos.x;
             shootClick.y = touchPos.y;
@@ -126,6 +140,8 @@ public class BitcoinDefender extends ApplicationAdapter {
         // starts displaying the stuff
         myBatch.begin();
         background.draw(myBatch);
+        wallHP.draw(myBatch);
+        font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, Gdx.graphics.getHeight() - wallHP.getHeight());
         mainCharacter.update();
         myBatch.draw(mainCharacter.getTexture(), mainCharacter.getX(), mainCharacter.getY());
 
@@ -139,13 +155,13 @@ public class BitcoinDefender extends ApplicationAdapter {
             B.Draw(myBatch);
         }
 
-
-
-
         // actually draws the particle effects
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
 
+        System.out.println(elapsedSeconds); //todo remove this
+        if (elapsedSeconds >= 1) // if seconds is larger than 1 vvvvv
+            startTime = System.currentTimeMillis(); // resets the start time so then clock resets to 0
         //TODO: Draw our image!
         //enemies.removeIf(e->e.alive);
         if (showDebug)
@@ -165,21 +181,39 @@ public class BitcoinDefender extends ApplicationAdapter {
             if (enemies.get(loop).collideWithFence(wallStart, wallEnd))
             {
                 enemies.get(loop).stopEnemy();
+                if (healthOfWall > 0)
+                {
+                    if (elapsedSeconds >= 1)
+                        healthOfWall -= 2; // if the enemies touched the wall drop 2 hp every second
+                }
+                else
+                {
+                    healthOfWall = 0;
+                    startTime = 0; // sets time to 0 so no more attacking from enemies
+                    //System.out.println("Game over");
+                }
                 flag = true;
             }
             for (int j = bullets.size() - 1; j >= 0; j--)
             {
                 if (enemies.get(loop).collideWithBullet(bullets.get(j)))
                 {
-                    //enemies.remove(loop);
-                    //bullets.remove(j);
-                    enemies.get(loop).alive = false;
-                    bullets.get(j).alive = false;
+                    enemies.remove(loop);
+                    //enemies.get(loop).health - 50;
+                    bullets.remove(j);
+
+                    //enemies.get(loop).alive = false;
+                    //bullets.get(j).alive = false;
                     flag = true;
                 }
             }
-            enemies.get(loop).update();
-            enemies.get(loop).Draw(batch);
+            if (healthOfWall <= 0)
+                enemies.get(loop).Draw(batch);
+            else
+            {
+                enemies.get(loop).update();
+                enemies.get(loop).Draw(batch);
+            }
 
         }
         return flag;
