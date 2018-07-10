@@ -114,7 +114,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         myBatch.setProjectionMatrix(camera.combined);
 
         manager.update();
-        manager.draw(camera);
+       // manager.draw(camera);
         if (MathUtils.random(spawnRate) == 1)// randomizes spawn rate of the enemies
         {
             //spawns enemies
@@ -167,6 +167,7 @@ public class BitcoinDefender extends ApplicationAdapter {
             // draws multiple bullets
             B.Draw(myBatch);
         }
+
 
         // actually draws the particle effects
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());

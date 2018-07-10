@@ -34,14 +34,14 @@ public class bulletManager
         {
             f = new Bullet(startX, startY, directionX, directionY, isRandom);
             activeBullets.add(f);
-            f.update();
+            //f.update();
             System.out.println("New");
         }
         else
         {
             f = pool.remove(0);
-            f.reset();
-            f.update();
+            f.reset(startX, startY, directionX, directionY);
+            //f.update();
             activeBullets.add(f);
             System.out.println("From pool");
         }
@@ -51,7 +51,7 @@ public class bulletManager
     {
     for(Bullet c : activeBullets)
     {
-        c.update();
+       // c.update();
         if(!c.isActive())
         {
             removed.add(c);

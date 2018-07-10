@@ -15,19 +15,14 @@ public class Bullet
     public boolean alive;
     public float x;
     public float y;
+    public float direction_X;
+    public float direction_Y;
 
 
     public Bullet(float startX, float startY, float directionX, float directionY, boolean isRandom) {
         direction = new Vector2();
-        direction.x = directionX;
-        direction.y = directionY; //0.1f; //todo hack
-        alive = true;
-        x = startX;
-        y = startY;
-
         bullet = new Sprite(new Texture(Gdx.files.internal("images/bullet.png")));// loads the bullet image
-        bullet.setX(x);
-        bullet.setY(y);
+        reset(startX, startY, directionX, directionY);
 
         if(isRandom == true)
         {
@@ -47,17 +42,18 @@ public class Bullet
         return bullet.getY(); // gets the y value of the bullet
     }
 
-    public void reset(){
+    public void reset(float startX, float startY, float directionX, float directionY)
+    {
         alive = true;
-        direction = new Vector2(MathUtils.random() * 300, MathUtils.random() * 300);
-        bullet.setX(0);
-        bullet.setY(0);
+        direction.x = directionX;
+        direction.y = directionY;
+
+        bullet.setX(startX);
+        bullet.setY(startY);
     }
 
     public void update()
     {
-        bullet.setX(x);
-        bullet.setY(y);
 
         bullet.setX(bullet.getX() + direction.x * 10); // sets the velocity of the bullet in set direction
         bullet.setY(bullet.getY() + direction.y * 10);
