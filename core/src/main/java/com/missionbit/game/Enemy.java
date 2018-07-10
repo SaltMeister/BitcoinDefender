@@ -26,9 +26,10 @@ public class Enemy
         health = ENEMY_HP;
         lastDistance = 5000;
 
-        enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));// add a image for the background
+        enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));
         enemy.setX(Gdx.graphics.getWidth());// enemies spawn on the outside of the right side
         enemy.setY(randomSpawn); // randomizes the spawn of the enemy
+        alive = true;
     }
 
 
@@ -68,9 +69,40 @@ public class Enemy
         //enemy.setX(enemy.getX() + direction.x * 0.009f); // moved the enemy in a set speed
         direction.setZero();
     }
+    /*
+    public void walking(long elapsedTime)
+    {
+        if (elapsedTime > 750)
+        {
+            enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefaultWalking2.png")));
+            enemy.setX(enemy.getX());
+            enemy.setY(enemy.getY());
 
+        }
+        else if (elapsedTime > 250)
+        {
+            enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefaultWalking1.png")));
+            enemy.setX(enemy.getX());
+            enemy.setY(enemy.getY());
+        }
+        else if (elapsedTime > 1000)
+        {
+            enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));
+            enemy.setX(enemy.getX());
+            enemy.setY(enemy.getY());
+        }
+        enemy.setX(enemy.getX() + direction.x * -0.009f); // moved the enemy in a set speed
+    }
+     */
     public void Draw(SpriteBatch sprite)
     {
-        enemy.draw(sprite); // draws the enemy
+        if(alive == true)
+        {
+            enemy.draw(sprite);// draws enemy
+        }
+        else // draw death animation and other stuff
+        {
+
+        }
     }
 }
