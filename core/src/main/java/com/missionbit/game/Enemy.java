@@ -16,6 +16,7 @@ public class Enemy
     private float lastDistance;
     public boolean alive;
     public int health;
+    public Sprite healthbar;
 
     public Enemy(float directionX)
     {
@@ -30,6 +31,9 @@ public class Enemy
         enemy.setX(Gdx.graphics.getWidth());// enemies spawn on the outside of the right side
         enemy.setY(randomSpawn); // randomizes the spawn of the enemy
         alive = true;
+        healthbar=new Sprite(new Texture(Gdx.files.internal("images/Healthbar.png")));
+        healthbar.setX(enemy.getX());
+        healthbar.setY(enemy.getY());
     }
 
 
@@ -46,6 +50,9 @@ public class Enemy
     public void update()
     {
         enemy.setX(enemy.getX() + direction.x * -0.009f); // moved the enemy in a set speed
+        healthbar.setX(enemy.getX());
+        healthbar.setY(enemy.getY());
+
     }
 
     public boolean collideWithFence(Vector2 fenceStart, Vector2 fenceEnd)
@@ -102,7 +109,9 @@ public class Enemy
     {
         if(alive == true)
         {
+            float healthpercent = health/(float)ENEMY_HP;
             enemy.draw(sprite);// draws enemy
+            sprite.draw(healthbar,enemy.getX(),enemy.getY()-5,enemy.getWidth()*healthpercent,5);
         }
         else // draw death animation and other stuff
         {
