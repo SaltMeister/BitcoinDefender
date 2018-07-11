@@ -220,7 +220,7 @@ public class BitcoinDefender extends ApplicationAdapter {
                     //enemies.get(loop).health - 50;
                     //bullets.remove(j);
 
-                    enemies.get(loop).alive = false;
+                    enemies.get(loop).dodamage(25);
                     bullets.get(j).alive = false;
                     flag = true;
                 }
