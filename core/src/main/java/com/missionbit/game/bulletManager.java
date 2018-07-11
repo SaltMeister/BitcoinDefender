@@ -40,7 +40,7 @@ public class bulletManager
         else
         {
             f = pool.remove(0);
-            f.reset(startX, startY, directionX, directionY);
+            f.reset(startX, startY, directionX, directionY, isRandom);
             //f.update();
             activeBullets.add(f);
             System.out.println("From pool");
@@ -61,6 +61,11 @@ public class bulletManager
     pool.addAll(removed);
     removed.clear();
 
+    }
+
+    public ArrayList<Bullet> getActiveBullets()
+    {
+        return activeBullets;
     }
 
     public void draw(Camera camera){

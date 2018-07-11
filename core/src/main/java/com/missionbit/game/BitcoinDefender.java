@@ -34,7 +34,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private Vector2 gunPosition;
     private Vector2 shootClick;
     private ParticleEffect effect;
-    private ArrayList<Bullet> bullets;
+    //private ArrayList<Bullet> bullets;
     private ArrayList<Enemy> enemies;
     private static int spawnRate;
     private static int healthOfWall; //the amount of lives the wall has
@@ -76,7 +76,7 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         enemies = new ArrayList<Enemy>();
 
-        bullets = new ArrayList<Bullet>();
+        //bullets = new ArrayList<Bullet>();
 
         gunPosition = new Vector2();
         //gunPosition.x = mainCharacter.getX() + mainCharacter.getWidth();
@@ -137,7 +137,7 @@ public class BitcoinDefender extends ApplicationAdapter {
                 shootClick.nor();
                 //for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
                 //{                                                                                         //when adding animation fix this section to adapt to the larger texture size
-                bullets.add(manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y, false));
+                manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y, false);
                 //}
 
                 // displays muzzle flash
@@ -158,21 +158,22 @@ public class BitcoinDefender extends ApplicationAdapter {
         mainCharacter.draw(myBatch);
         myBatch.draw(mainCharacter.getTexture(), mainCharacter.getX(), mainCharacter.getY());
 
+
         //enemy.draw(myBatch);
         //spawns multiple bullets
-        collisionDetection(enemies, bullets, myBatch);
-
+        collisionDetection(enemies, manager.getActiveBullets(), myBatch);
+/*
         for (Bullet B : bullets)
         {
             // draws multiple bullets
             B.Draw(myBatch);
         }
-
+*/
 
         // actually draws the particle effects
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
-
+        manager.draw(camera);
         //System.out.println(elapsedSeconds); //todo remove this
         if (elapsedTime >= 1000) // if seconds is larger than 1 vvvvv
             startTime = System.currentTimeMillis(); // resets the start time so then clock resets to 0

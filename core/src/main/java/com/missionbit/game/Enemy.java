@@ -58,6 +58,10 @@ public class Enemy
 
     public boolean collideWithBullet(Bullet b) // checks if enemy has touch the bullet
     {
+        if (!alive)
+        {
+            return false;
+        }
         return  b.getX() > getX() && //returns true or false if bullet hit the enemy
                 b.getX() < getX() + enemy.getWidth() &&
                 b.getY() > getY() &&

@@ -19,17 +19,11 @@ public class Bullet
     public float direction_Y;
 
 
-    public Bullet(float startX, float startY, float directionX, float directionY, boolean isRandom) {
+    public Bullet(float startX, float startY, float directionX, float directionY, boolean isRandom)
+    {
         direction = new Vector2();
         bullet = new Sprite(new Texture(Gdx.files.internal("images/bullet.png")));// loads the bullet image
-        reset(startX, startY, directionX, directionY);
-
-        if(isRandom == true)
-        {
-            // code for a random spread in bullets, SHOGUNS
-            float randomDirection = MathUtils.random() * 10 - 5;
-            direction.rotate(randomDirection);
-        }
+        reset(startX, startY, directionX, directionY, isRandom);
     }
 
     public float getX()
@@ -42,7 +36,7 @@ public class Bullet
         return bullet.getY(); // gets the y value of the bullet
     }
 
-    public void reset(float startX, float startY, float directionX, float directionY)
+    public void reset(float startX, float startY, float directionX, float directionY, boolean isRandom)
     {
         alive = true;
         direction.x = directionX;
@@ -50,6 +44,13 @@ public class Bullet
 
         bullet.setX(startX);
         bullet.setY(startY);
+
+        if(isRandom == true)
+        {
+            // code for a random spread in bullets, SHOGUNS
+            float randomDirection = MathUtils.random() * 10 - 5;
+            direction.rotate(randomDirection);
+        }
     }
 
     public void update()
@@ -73,8 +74,9 @@ public class Bullet
     {
         bullet.setX(bullet.getX() + direction.x * 10); // sets the velocity of the bullet in set direction
         bullet.setY(bullet.getY() + direction.y * 10); // ^^^
-
-        bullet.draw(sprite); // draws bullet
+        if (alive) {
+            bullet.draw(sprite); // draws bullet
+        }
     }
 }
 
