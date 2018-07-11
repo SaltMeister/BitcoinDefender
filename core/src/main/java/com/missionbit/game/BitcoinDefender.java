@@ -147,7 +147,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         }
         else
         {
-
+            // can't do anything
         }
         // starts displaying the stuff
         myBatch.begin();
@@ -157,18 +157,8 @@ public class BitcoinDefender extends ApplicationAdapter {
         //mainCharacter.update();
         mainCharacter.draw(myBatch);
         myBatch.draw(mainCharacter.getTexture(), mainCharacter.getX(), mainCharacter.getY());
-
-
-        //enemy.draw(myBatch);
         //spawns multiple bullets
         collisionDetection(enemies, manager.getActiveBullets(), myBatch);
-/*
-        for (Bullet B : bullets)
-        {
-            // draws multiple bullets
-            B.Draw(myBatch);
-        }
-*/
 
         // actually draws the particle effects
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
