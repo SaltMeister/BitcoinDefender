@@ -137,17 +137,17 @@ public class BitcoinDefender extends ApplicationAdapter {
                 shootClick.nor();
                 //for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
                 //{                                                                                         //when adding animation fix this section to adapt to the larger texture size
-                manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60, shootClick.x, shootClick.y, false);
+                manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, false);
                 //}
 
                 // displays muzzle flash
-                effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 60);
+                effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
                 effect.start();
             }
         }
         else
         {
-
+            // can't do anything
         }
         // starts displaying the stuff
         myBatch.begin();
@@ -157,28 +157,18 @@ public class BitcoinDefender extends ApplicationAdapter {
         //mainCharacter.update();
         mainCharacter.draw(myBatch);
         myBatch.draw(mainCharacter.getTexture(), mainCharacter.getX(), mainCharacter.getY());
-
-
-        //enemy.draw(myBatch);
         //spawns multiple bullets
         collisionDetection(enemies, manager.getActiveBullets(), myBatch);
-/*
-        for (Bullet B : bullets)
-        {
-            // draws multiple bullets
-            B.Draw(myBatch);
-        }
-*/
 
         // actually draws the particle effects
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
         manager.draw(camera);
-        //System.out.println(elapsedSeconds); //todo remove this
+
         if (elapsedTime >= 1000) // if seconds is larger than 1 vvvvv
             startTime = System.currentTimeMillis(); // resets the start time so then clock resets to 0
+
         //TODO: Draw our image!
-        //enemies.removeIf(e->e.alive);
         if (showDebug)
         {
             debugRenderer.setProjectionMatrix(camera.combined);
@@ -216,10 +206,6 @@ public class BitcoinDefender extends ApplicationAdapter {
             {
                 if (enemies.get(loop).collideWithBullet(bullets.get(j)))
                 {
-                    //enemies.remove(loop);
-                    //enemies.get(loop).health - 50;
-                    //bullets.remove(j);
-
                     enemies.get(loop).dodamage(25);
                     bullets.get(j).alive = false;
                     flag = true;
@@ -233,15 +219,13 @@ public class BitcoinDefender extends ApplicationAdapter {
                 enemies.get(loop).update();
                 enemies.get(loop).Draw(batch);
             }
-
         }
         return flag;
     }
 
     @Override
-
-    public void dispose() {
+    public void dispose()
+    {
         myBatch.dispose();
     }
-
 }
