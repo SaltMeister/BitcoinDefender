@@ -25,8 +25,6 @@ public class bulletManager
         batch = new SpriteBatch();
     }
 
-
-
     public Bullet spawnBullet(float startX, float startY, float directionX, float directionY, boolean isRandom)
     {
         Bullet f;
@@ -47,20 +45,19 @@ public class bulletManager
         }
         return f;
     }
+
     public void update()
     {
-    for(Bullet c : activeBullets)
-    {
-       // c.update();
-        if(!c.isActive())
+        for(Bullet c : activeBullets)
         {
-            removed.add(c);
-        }
+            // c.update();
+            if(!c.isActive())
+                removed.add(c);
     }
+
     activeBullets.removeAll(removed);
     pool.addAll(removed);
     removed.clear();
-
     }
 
     public ArrayList<Bullet> getActiveBullets()
@@ -68,21 +65,14 @@ public class bulletManager
         return activeBullets;
     }
 
-    public void draw(Camera camera){
+    public void draw(Camera camera)
+    {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        for(Bullet b : activeBullets){
+
+        for(Bullet b : activeBullets)
             b.Draw(batch);
-        }
         batch.end();
-
     }
-
-//    public void handleClick(){
-//        for(Bullet b : activeBullets)
-//        {
-//            b.handleClick();
-//        }
-    }
-//}
+}
 

@@ -174,11 +174,11 @@ public class BitcoinDefender extends ApplicationAdapter {
         effect.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
         manager.draw(camera);
-        //System.out.println(elapsedSeconds); //todo remove this
+
         if (elapsedTime >= 1000) // if seconds is larger than 1 vvvvv
             startTime = System.currentTimeMillis(); // resets the start time so then clock resets to 0
+
         //TODO: Draw our image!
-        //enemies.removeIf(e->e.alive);
         if (showDebug)
         {
             debugRenderer.setProjectionMatrix(camera.combined);
@@ -216,10 +216,6 @@ public class BitcoinDefender extends ApplicationAdapter {
             {
                 if (enemies.get(loop).collideWithBullet(bullets.get(j)))
                 {
-                    //enemies.remove(loop);
-                    //enemies.get(loop).health - 50;
-                    //bullets.remove(j);
-
                     enemies.get(loop).dodamage(25);
                     bullets.get(j).alive = false;
                     flag = true;
@@ -233,15 +229,13 @@ public class BitcoinDefender extends ApplicationAdapter {
                 enemies.get(loop).update();
                 enemies.get(loop).Draw(batch);
             }
-
         }
         return flag;
     }
 
     @Override
-
-    public void dispose() {
+    public void dispose()
+    {
         myBatch.dispose();
     }
-
 }

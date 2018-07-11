@@ -52,16 +52,14 @@ public class Enemy
     {
         float distance = Intersector.distanceLinePoint(fenceStart.x, fenceStart.y, fenceEnd.x, fenceEnd.y, enemy.getX(), enemy.getY());
         lastDistance = distance;
-        return distance < 10 || lastDistance < distance;
 
+        return distance < 10 || lastDistance < distance;
     }
 
     public boolean collideWithBullet(Bullet b) // checks if enemy has touch the bullet
     {
         if (!alive)
-        {
             return false;
-        }
         return  b.getX() > getX() && //returns true or false if bullet hit the enemy
                 b.getX() < getX() + enemy.getWidth() &&
                 b.getY() > getY() &&
@@ -101,20 +99,18 @@ public class Enemy
     public void Draw(SpriteBatch sprite)
     {
         if(alive == true)
-        {
             enemy.draw(sprite);// draws enemy
-        }
         else // draw death animation and other stuff
         {
 
         }
     }
-    public void dodamage(int damage){
-
+    public void dodamage(int damage)
+    {
         health=health-damage;
+
         if(health<=0){
             alive=false;
         }
-
     }
 }

@@ -13,11 +13,10 @@ public class Bullet
     public Sprite bullet;
     public Vector2 direction;
     public boolean alive;
-    public float x;
-    public float y;
-    public float direction_X;
-    public float direction_Y;
-
+    //public float x;
+    //public float y;
+    //public float direction_X;
+    //public float direction_Y;
 
     public Bullet(float startX, float startY, float directionX, float directionY, boolean isRandom)
     {
@@ -60,11 +59,6 @@ public class Bullet
         bullet.setY(bullet.getY() + direction.y * 10);
     }
 
-    public void handleClick()
-    {
-
-    }
-
     public boolean isActive()
     {
         return alive;
@@ -74,9 +68,9 @@ public class Bullet
     {
         bullet.setX(bullet.getX() + direction.x * 10); // sets the velocity of the bullet in set direction
         bullet.setY(bullet.getY() + direction.y * 10); // ^^^
-        if (alive) {
+
+        if (alive)
             bullet.draw(sprite); // draws bullet
-        }
     }
 }
 
