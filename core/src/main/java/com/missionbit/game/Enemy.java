@@ -109,4 +109,12 @@ public class Enemy
 
         }
     }
+    public void dodamage(int damage){
+
+        health=health-damage;
+        if(health<=0){
+            alive=false;
+        }
+
+    }
 }
