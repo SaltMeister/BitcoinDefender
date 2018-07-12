@@ -165,10 +165,9 @@ public class BitcoinDefender extends ApplicationAdapter {
         myBatch.end();
         manager.draw(camera);
 
-        if (elapsedTime >= 1000) // if seconds is larger than 1 vvvvv
-            startTime = System.currentTimeMillis(); // resets the start time so then clock resets to 0
-
         //TODO: Draw our image!
+
+        //TODO remove VV
         if (showDebug)
         {
             debugRenderer.setProjectionMatrix(camera.combined);
@@ -190,6 +189,7 @@ public class BitcoinDefender extends ApplicationAdapter {
                 {
                     if (enemies.get(loop).alive)
                     {
+                        //Draw attack animation
                         if (elapsedTime >= 1000)
                             healthOfWall -= 2; // if the enemies touched the wall drop 2 hp every second
                     }

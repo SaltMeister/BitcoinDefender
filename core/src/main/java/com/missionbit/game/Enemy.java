@@ -20,11 +20,14 @@ public class Enemy
     public boolean alive;
     public int health;
     public Sprite healthbar;
-    private Animation<Texture> animation;
-    private Array<Texture> frames = new Array<Texture>();
-    private float animationTime;
-    public int enemyWidth;
-    public int enemyHeight;
+    private Animation<Texture> walkinganimation;
+    private Array<Texture> walkingframes = new Array<Texture>();
+    private Animation<Texture> attackAnimation;
+    private Array<Texture> attackFrames = new Array<Texture>();
+    private float walkinganimationTime;
+    private float attackAnimationTime;
+    public int enemyWidthDefault, enemyHeightDefault;
+    public int enemyAttackWidth, enemyAttackHeight;
 
     public Enemy(float directionX)
     {
@@ -36,7 +39,6 @@ public class Enemy
         health = ENEMY_HP;
         lastDistance = 5000;
 
-        //enemy = new Sprite(new Texture(Gdx.files.internal("images/enemyDefault.png")));
         position.x = Gdx.graphics.getWidth();// enemies spawn on the outside of the right side
         position.y = randomSpawn; // randomizes the spawn of the enemy
         alive = true;
@@ -44,16 +46,25 @@ public class Enemy
         healthbar.setX(position.x);
         healthbar.setY(position.y);
 
-        frames.add(new Texture(Gdx.files.internal("images/enemyDefault.png")));
-        frames.add(new Texture(Gdx.files.internal("images/enemyDefaultWalking2.png")));
-        frames.add(new Texture(Gdx.files.internal("images/enemyDefault.png")));
-        frames.add(new Texture(Gdx.files.internal("images/enemyDefaultWalking1.png")));
-        animation = new Animation<Texture>(0.25f, frames);
-        animationTime = 0;
+        walkingframes.add(new Texture(Gdx.files.internal("images/enemyDefault.png")));
+        walkingframes.add(new Texture(Gdx.files.internal("images/enemyDefaultWalking2.png")));
+        walkingframes.add(new Texture(Gdx.files.internal("images/enemyDefault.png")));
+        walkingframes.add(new Texture(Gdx.files.internal("images/enemyDefaultWalking1.png")));
+        walkinganimation = new Animation<Texture>(0.25f, walkingframes);
+        walkinganimationTime = 0;
 
-        enemyWidth = frames.get(0).getWidth();
-        enemyHeight = frames.get(0).getHeight();
+        enemyWidthDefault = walkingframes.get(0).getWidth();
+        enemyHeightDefault = walkingframes.get(0).getHeight();
 
+        attackFrames.add(new Texture(Gdx.files.internal("images/enemyDefaultSwing1.png")));
+        attackFrames.add(new Texture(Gdx.files.internal("images/enemyDefaultSwing2.png")));
+        attackFrames.add(new Texture(Gdx.files.internal("images/enemyDefaultSwing3.png")));
+        attackFrames.add(new Texture(Gdx.files.internal("images/enemyDefaultSwing4.png")));
+        attackAnimation = new Animation<Texture>(0.25f, attackFrames);
+        attackAnimationTime = 0;
+
+        enemyAttackWidth = attackFrames.get(0).getWidth();
+        enemyAttackHeight = attackFrames.get(0).getHeight();
     }
 
 
@@ -69,10 +80,10 @@ public class Enemy
 
     public void update()
     {
-        position.x = position.x + direction.x * -0.009f; // moved the enemy in a set speed
+        position.x = position.x + direction.x * -0.005f; // moved the enemy in a set speed
         healthbar.setX(position.x);
         healthbar.setY(position.y);
-        animationTime += Gdx.graphics.getDeltaTime();
+        walkinganimationTime += Gdx.graphics.getDeltaTime();
         System.out.println(Gdx.graphics.getDeltaTime());
 
     }
@@ -90,14 +101,13 @@ public class Enemy
         if (!alive)
             return false;
         return  b.getX() > getX() && //returns true or false if bullet hit the enemy
-                b.getX() < getX() + enemyWidth &&
+                b.getX() < getX() + enemyWidthDefault &&
                 b.getY() > getY() &&
-                b.getY() < getY() + enemyHeight;
+                b.getY() < getY() + enemyHeightDefault;
     }
 
     public void stopEnemy()
     {
-        //enemy.setX(enemy.getX() + direction.x * 0.009f); // moved the enemy in a set speed
         direction.setZero();
     }
 
@@ -106,9 +116,9 @@ public class Enemy
         if(alive)
         {
             float healthpercent = health / (float)ENEMY_HP;
-            Texture draw = animation.getKeyFrame(animationTime, true);
-            sprite.draw(draw, position.x, position.y, enemyWidth, enemyHeight);
-            sprite.draw(healthbar, position.x,position.y - 5,enemyWidth * healthpercent,5);
+            Texture draw = walkinganimation.getKeyFrame(walkinganimationTime, true);
+            sprite.draw(draw, position.x, position.y, enemyWidthDefault, enemyHeightDefault);
+            sprite.draw(healthbar, position.x,position.y - 5,enemyWidthDefault * healthpercent,5);
         }
         else // draw death animation and other stuff
         {
@@ -117,9 +127,10 @@ public class Enemy
     }
     public void dodamage(int damage)
     {
-        health=health-damage;
+        health = health - damage;
 
-        if(health <= 0){
+        if(health <= 0)
+        {
             alive = false;
         }
     }
