@@ -84,8 +84,6 @@ public class Enemy
         healthbar.setX(position.x);
         healthbar.setY(position.y);
         walkinganimationTime += Gdx.graphics.getDeltaTime();
-        System.out.println(Gdx.graphics.getDeltaTime());
-
     }
 
     public boolean collideWithFence(Vector2 fenceStart, Vector2 fenceEnd)
@@ -100,6 +98,7 @@ public class Enemy
     {
         if (!alive)
             return false;
+
         return  b.getX() > getX() && //returns true or false if bullet hit the enemy
                 b.getX() < getX() + enemyWidthDefault &&
                 b.getY() > getY() &&

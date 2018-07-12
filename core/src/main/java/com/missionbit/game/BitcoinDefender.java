@@ -116,10 +116,8 @@ public class BitcoinDefender extends ApplicationAdapter {
         manager.update();
        // manager.draw(camera);
         if (MathUtils.random(spawnRate) == 1)// randomizes spawn rate of the enemies
-        {
-            //spawns enemies
-            enemies.add(new Enemy(mainCharacter.getX()));
-        }
+            enemies.add(new Enemy(mainCharacter.getX()));  //spawns enemies
+
         if (healthOfWall > 0) // if health goes to 0 u cannot shoot anymore
         {
             if (Gdx.input.justTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
@@ -128,17 +126,14 @@ public class BitcoinDefender extends ApplicationAdapter {
                 touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
                 camera.unproject(touchPos);
-                System.out.println(touchPos.x + " " + touchPos.y); //todo remove this
 
                 shootClick.x = touchPos.x;
                 shootClick.y = touchPos.y;
 
                 shootClick.sub(gunPosition);
                 shootClick.nor();
-                for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
-                {                                                                                         //when adding animation fix this section to adapt to the larger texture size
-                manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
-                }
+                for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets //when adding animation fix this section to adapt to the larger texture size
+                    manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
 
                 // displays muzzle flash
                 effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
