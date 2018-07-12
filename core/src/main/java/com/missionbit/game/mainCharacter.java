@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class mainCharacter
 {
-    public Animation mainCharacterAnimation;
+    //public Animation mainCharacterAnimation;
     public Texture mainCharacter;
     public Vector2 mainCharacterPositon;
     public Rectangle bounds;
@@ -27,7 +27,7 @@ public class mainCharacter
     public void update()
     {
         bounds.setPosition(mainCharacterPositon.x, mainCharacterPositon.y);
-        mainCharacterAnimation.update(Gdx.graphics.getDeltaTime());
+        //mainCharacterAnimation.update(Gdx.graphics.getDeltaTime());
     }
     public float getX()
     {
@@ -52,11 +52,12 @@ public class mainCharacter
         return mainCharacterPositon;
     }
 
+    /*
     public TextureRegion getTexture()
     {
         return mainCharacterAnimation.getFrame();
     }
-
+    */
     public void dispose()
     {
         mainCharacter.dispose();

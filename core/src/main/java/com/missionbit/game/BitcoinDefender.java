@@ -135,10 +135,10 @@ public class BitcoinDefender extends ApplicationAdapter {
 
                 shootClick.sub(gunPosition);
                 shootClick.nor();
-                //for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
-                //{                                                                                         //when adding animation fix this section to adapt to the larger texture size
-                manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, false);
-                //}
+                for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
+                {                                                                                         //when adding animation fix this section to adapt to the larger texture size
+                manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
+                }
 
                 // displays muzzle flash
                 effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
