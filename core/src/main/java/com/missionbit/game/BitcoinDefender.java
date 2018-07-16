@@ -195,6 +195,8 @@ public class BitcoinDefender extends ApplicationAdapter {
             {
                 if (enemies.get(loop).collideWithBullet(bullets.get(j)))
                 {
+                    //todo blood.setPosition(enemy.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
+                    //blood.start();
                     enemies.get(loop).dodamage(25);
                     bullets.get(j).alive = false;
                     flag = true;
