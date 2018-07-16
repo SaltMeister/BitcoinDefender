@@ -12,6 +12,7 @@ public class menuScreen
 {
 private Sprite homescreen;
 private Sprite playbutton;
+private Sprite helpbutton;
 private SpriteBatch batch;
 protected boolean gamestarted=false;
 
@@ -21,8 +22,12 @@ public menuScreen (){
     homescreen.setY(-95);
     batch=new SpriteBatch();
     playbutton=new Sprite(new Texture(Gdx.files.internal("images/game home play button.png")));
-    playbutton.setX(100);
+    playbutton.setX(250);
     playbutton.setY(100);
+    batch=new SpriteBatch();
+    helpbutton=new Sprite(new Texture(Gdx.files.internal("images/game home help button.png")));
+    helpbutton.setX(450);
+    helpbutton.setY(100);
 
 }
 public void draw(Camera c){
@@ -35,6 +40,7 @@ public void draw(Camera c){
     batch.begin();
     homescreen.draw(batch);
     playbutton.draw(batch);
+    helpbutton.draw(batch);
     batch.end();
     if (Gdx.input.justTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
     {

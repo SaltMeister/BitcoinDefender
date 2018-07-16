@@ -43,6 +43,7 @@ public class bulletManager
             activeBullets.add(f);
             //System.out.println("From pool");
         }
+
         return f;
     }
 
@@ -50,14 +51,13 @@ public class bulletManager
     {
         for(Bullet c : activeBullets)
         {
-            // c.update();
             if(!c.isActive())
                 removed.add(c);
-    }
+        }
 
-    activeBullets.removeAll(removed);
-    pool.addAll(removed);
-    removed.clear();
+        activeBullets.removeAll(removed);
+        pool.addAll(removed);
+        removed.clear();
     }
 
     public static ArrayList<Bullet> getActiveBullets()
