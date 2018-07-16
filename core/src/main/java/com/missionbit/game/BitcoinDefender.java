@@ -46,6 +46,8 @@ public class BitcoinDefender extends ApplicationAdapter {
     private enemyManager enemyManger;
     private bulletManager manager;
     private Weapon weapon;
+    private boolean gameStarted=false;
+    private menuScreen menu;
 
     @Override
     public void create() {
@@ -92,11 +94,18 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         manager = new bulletManager();
         weapon = new Weapon(25,5,1);
+        menu=new menuScreen();
     }
 
     @Override
-    public void render()
-    {
+    public void render() {
+        if (gameStarted==false){
+            menu.draw(camera);
+
+        }
+        else {rendergame();}
+    }
+    public void rendergame(){
        elapsedTime = System.currentTimeMillis() - startTime; // sets the time that has past in milliseconds
         // Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
