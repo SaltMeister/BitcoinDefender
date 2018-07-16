@@ -13,10 +13,6 @@ public class Bullet
     public Sprite bullet;
     public Vector2 direction;
     public boolean alive;
-    //public float x;
-    //public float y;
-    //public float direction_X;
-    //public float direction_Y;
 
     public Bullet(float startX, float startY, float directionX, float directionY, boolean isRandom)
     {

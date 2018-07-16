@@ -27,7 +27,8 @@ public class Enemy
     private float walkinganimationTime;
     private float attackAnimationTime;
     public int enemyWidthDefault, enemyHeightDefault;
-    public int enemyAttackWidth, enemyAttackHeight;
+    public int enemyAttackWidth, enemyAttackHeight;;
+    public float randomSpawn;
 
     public Enemy(float directionX)
     {
@@ -35,7 +36,7 @@ public class Enemy
         direction = new Vector2();
         direction.x = directionX;
 
-        float randomSpawn = MathUtils.random() * 200;
+        randomSpawn = MathUtils.random() * 200;
         health = ENEMY_HP;
         lastDistance = 5000;
 
@@ -132,5 +133,23 @@ public class Enemy
         {
             alive = false;
         }
+    }
+
+    public void reset()
+    {
+        alive = true;
+        position.x = Gdx.graphics.getWidth();// enemies spawn on the outside of the right side
+        position.y = randomSpawn; // randomizes the spawn of the enemy
+        position.x = position.x + direction.x * -0.005f; // moved the enemy in a set speed
+
+        health = 100;
+        healthbar.setX(position.x);
+        healthbar.setY(position.y);
+        walkinganimationTime += Gdx.graphics.getDeltaTime();
+    }
+
+    public boolean isActive()
+    {
+        return alive;
     }
 }

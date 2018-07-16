@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 public class bulletManager
 {
     //Creatures we're actively drawing
-    private ArrayList<Bullet> activeBullets = new ArrayList<Bullet>();
+    private static ArrayList<Bullet> activeBullets = new ArrayList<Bullet>();
 
     //Expired creatures we'll re-use
     private ArrayList<Bullet> pool = new ArrayList<Bullet>(); // reuse them
@@ -33,7 +33,7 @@ public class bulletManager
             f = new Bullet(startX, startY, directionX, directionY, isRandom);
             activeBullets.add(f);
             //f.update();
-            System.out.println("New");
+            //System.out.println("New");
         }
         else
         {
@@ -41,7 +41,7 @@ public class bulletManager
             f.reset(startX, startY, directionX, directionY, isRandom);
             //f.update();
             activeBullets.add(f);
-            System.out.println("From pool");
+            //System.out.println("From pool");
         }
         return f;
     }
@@ -60,7 +60,7 @@ public class bulletManager
     removed.clear();
     }
 
-    public ArrayList<Bullet> getActiveBullets()
+    public static ArrayList<Bullet> getActiveBullets()
     {
         return activeBullets;
     }
