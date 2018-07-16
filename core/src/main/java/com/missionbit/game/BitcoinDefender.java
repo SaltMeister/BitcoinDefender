@@ -43,8 +43,9 @@ public class BitcoinDefender extends ApplicationAdapter {
     private static long startTime = System.currentTimeMillis(); // sets the time
     private static long elapsedTime;
     private Sprite mainCharacter;
-    private static bulletManager bulletManager;
     private enemyManager enemyManger;
+    private bulletManager manager;
+    private Weapon weapon;
 
     @Override
     public void create() {
@@ -87,9 +88,10 @@ public class BitcoinDefender extends ApplicationAdapter {
         wallStart = new Vector2(186.99998f, 0.0f);
         wallEnd = new Vector2(320.0f, 258.0f);
         debugRenderer = new ShapeRenderer();
-        bulletManager = new bulletManager();
         enemyManger = new enemyManager();
 
+        manager = new bulletManager();
+        weapon = new Weapon(25,5,1);
     }
 
     @Override
@@ -104,7 +106,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         camera.update();
         myBatch.setProjectionMatrix(camera.combined);
 
-        bulletManager.update();
+        manager.update();
         enemyManger.update();
 
        // manager.draw(camera);
@@ -125,8 +127,14 @@ public class BitcoinDefender extends ApplicationAdapter {
 
                 shootClick.sub(gunPosition);
                 shootClick.nor();
+
+                weapon.fire(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y,manager);
+                //for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
+              //  {                                                                                         //when adding animation fix this section to adapt to the larger texture size
+                //manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
+               // }
                 for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets //when adding animation fix this section to adapt to the larger texture size
-                    bulletManager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
+                    manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
 
                 // displays muzzle flash
                 muzzleFlash.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
@@ -149,7 +157,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         blood.draw(myBatch, Gdx.graphics.getDeltaTime());
 
         enemyManger.draw(camera);
-        bulletManager.draw(camera);
+        manager.draw(camera);
 
         myBatch.end();
 
