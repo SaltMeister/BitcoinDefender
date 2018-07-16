@@ -26,15 +26,14 @@ public class BitcoinDefender extends ApplicationAdapter {
     private static final int INITIAL_ENEMY_SPAWN_RATE = 150;
     private static final int HEALTH_OF_WALL = 100;
     private OrthographicCamera camera;
-    private Random randomSource;
     //private mainCharacter mainCharacter;
     private Sprite background;
     private Sprite wallHP;
     private SpriteBatch myBatch;
     private Vector2 gunPosition;
     private Vector2 shootClick;
-    private ParticleEffect effect;
-    //private ArrayList<Bullet> bullets;
+    private ParticleEffect muzzleFlash;
+    private static ParticleEffect blood;
     private ArrayList<Enemy> enemies;
     private static int spawnRate;
     private static int healthOfWall; //the amount of lives the wall has
@@ -47,12 +46,10 @@ public class BitcoinDefender extends ApplicationAdapter {
     private static long elapsedTime;
     private Sprite mainCharacter;
     private bulletManager manager;
+    private Weapon weapon;
 
     @Override
     public void create() {
-        // randomizer
-        randomSource = new Random();
-
         // Set up camera for 2d view of 800x480 pixels
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
@@ -76,8 +73,6 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         enemies = new ArrayList<Enemy>();
 
-        //bullets = new ArrayList<Bullet>();
-
         gunPosition = new Vector2();
         //gunPosition.x = mainCharacter.getX() + mainCharacter.getWidth();
         //gunPosition.y = mainCharacter.getY() + mainCharacter.getHeight();
@@ -86,8 +81,10 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         shootClick = new Vector2();
 
-        effect = new ParticleEffect(); // particle effects for muzzle flash
-        effect.load(Gdx.files.internal("particles/muzzleFlash.p"), Gdx.files.internal("images"));
+        muzzleFlash = new ParticleEffect(); // particle effects for muzzle flash
+        muzzleFlash.load(Gdx.files.internal("particles/muzzleFlash.p"), Gdx.files.internal("images"));
+        blood = new ParticleEffect();
+        blood.load(Gdx.files.internal("particles/bloodSplatter.p"), Gdx.files.internal("images"));
 
         spawnRate = INITIAL_ENEMY_SPAWN_RATE; // sets the spawn rate to the default one
         healthOfWall = HEALTH_OF_WALL; // sets health of wall
@@ -97,7 +94,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         wallEnd = new Vector2(320.0f, 258.0f);
         debugRenderer = new ShapeRenderer();
         manager = new bulletManager();
-        //TODO: Load our image
+        weapon = new Weapon(25,5,1);
     }
 
     @Override
@@ -116,10 +113,8 @@ public class BitcoinDefender extends ApplicationAdapter {
         manager.update();
        // manager.draw(camera);
         if (MathUtils.random(spawnRate) == 1)// randomizes spawn rate of the enemies
-        {
-            //spawns enemies
-            enemies.add(new Enemy(mainCharacter.getX()));
-        }
+            enemies.add(new Enemy(mainCharacter.getX()));  //spawns enemies
+
         if (healthOfWall > 0) // if health goes to 0 u cannot shoot anymore
         {
             if (Gdx.input.justTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
@@ -128,21 +123,26 @@ public class BitcoinDefender extends ApplicationAdapter {
                 touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
                 camera.unproject(touchPos);
-                System.out.println(touchPos.x + " " + touchPos.y); //todo remove this
 
                 shootClick.x = touchPos.x;
                 shootClick.y = touchPos.y;
 
                 shootClick.sub(gunPosition);
                 shootClick.nor();
-                for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
-                {                                                                                         //when adding animation fix this section to adapt to the larger texture size
-                manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
-                }
+<<<<<<< HEAD
+                weapon.fire(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y,manager);
+                //for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
+              //  {                                                                                         //when adding animation fix this section to adapt to the larger texture size
+                //manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
+               // }
+=======
+                for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets //when adding animation fix this section to adapt to the larger texture size
+                    manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
+>>>>>>> dc3a24665b1074f645e32c34987bd73af8fb9904
 
                 // displays muzzle flash
-                effect.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
-                effect.start();
+                muzzleFlash.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
+                muzzleFlash.start();
             }
         }
         else
@@ -161,22 +161,12 @@ public class BitcoinDefender extends ApplicationAdapter {
         collisionDetection(enemies, manager.getActiveBullets(), myBatch);
 
         // actually draws the particle effects
-        effect.draw(myBatch, Gdx.graphics.getDeltaTime());
+        muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
+        blood.draw(myBatch, Gdx.graphics.getDeltaTime());
         myBatch.end();
         manager.draw(camera);
 
-        if (elapsedTime >= 1000) // if seconds is larger than 1 vvvvv
-            startTime = System.currentTimeMillis(); // resets the start time so then clock resets to 0
-
         //TODO: Draw our image!
-        if (showDebug)
-        {
-            debugRenderer.setProjectionMatrix(camera.combined);
-            debugRenderer.begin(ShapeRenderer.ShapeType.Line);
-            debugRenderer.setColor(0,0.5f,0.5f, 1);
-            debugRenderer.line(wallStart, wallEnd);
-            debugRenderer.end();
-        }
     }
 
     private static boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets, SpriteBatch batch) {
@@ -190,6 +180,7 @@ public class BitcoinDefender extends ApplicationAdapter {
                 {
                     if (enemies.get(loop).alive)
                     {
+                        //Draw attack animation
                         if (elapsedTime >= 1000)
                             healthOfWall -= 2; // if the enemies touched the wall drop 2 hp every second
                     }
