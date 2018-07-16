@@ -2,6 +2,7 @@ package com.missionbit.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -46,7 +47,6 @@ public class BitcoinDefender extends ApplicationAdapter {
     private enemyManager enemyManger;
     private bulletManager manager;
     private Weapon weapon;
-    private boolean gameStarted=false;
     private menuScreen menu;
 
     @Override
@@ -95,11 +95,12 @@ public class BitcoinDefender extends ApplicationAdapter {
         manager = new bulletManager();
         weapon = new Weapon(25,5,1);
         menu=new menuScreen();
+        weapon = new Weapon(25,8,1);
     }
 
     @Override
     public void render() {
-        if (gameStarted==false){
+        if (menu.gamestarted==false){
             menu.draw(camera);
 
         }
@@ -137,17 +138,18 @@ public class BitcoinDefender extends ApplicationAdapter {
                 shootClick.sub(gunPosition);
                 shootClick.nor();
 
-                weapon.fire(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y,manager);
+               boolean fired = weapon.fire(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y,manager);
                 //for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets
               //  {                                                                                         //when adding animation fix this section to adapt to the larger texture size
                 //manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
                // }
-                for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets //when adding animation fix this section to adapt to the larger texture size
-                    manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
+               // for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets //when adding animation fix this section to adapt to the larger texture size
+                 //   manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
 
                 // displays muzzle flash
+                if(fired){
                 muzzleFlash.setPosition(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
-                muzzleFlash.start();
+                muzzleFlash.start();}
             }
         }
 
@@ -173,6 +175,10 @@ public class BitcoinDefender extends ApplicationAdapter {
         if (elapsedTime >= 1000) // if seconds is larger than 1 vvvvv
             startTime = System.currentTimeMillis(); // resets the start time so then clock resets to 0
         //TODO: Draw our image!
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+        weapon.reload();
+        }
+
     }
 
     private static boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets, SpriteBatch batch)
