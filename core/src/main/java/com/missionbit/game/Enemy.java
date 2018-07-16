@@ -130,9 +130,7 @@ public class Enemy
         health = health - damage;
 
         if(health <= 0)
-        {
             alive = false;
-        }
     }
 
     public void reset()
@@ -151,5 +149,13 @@ public class Enemy
     public boolean isActive()
     {
         return alive;
+    }
+
+    public void attackAnimation(boolean isAttack)
+    {
+        if (isAttack)
+        {
+            
+        }
     }
 }
