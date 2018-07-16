@@ -184,8 +184,7 @@ public class BitcoinDefender extends ApplicationAdapter {
                     if (enemies.get(loop).alive)
                     {
                         //Draw attack animation
-                        if (elapsedTime >= 1000)
-                            healthOfWall -= 2; // if the enemies touched the wall drop 2 hp every second
+                        healthOfWall -= enemies.get(loop).damageDealt(); // if the enemies touched the wall drop 2 hp every second
                     }
                 }
                 else
@@ -209,11 +208,6 @@ public class BitcoinDefender extends ApplicationAdapter {
             }
             if (healthOfWall <= 0)
                 enemies.get(loop).Draw(batch);
-            else
-            {
-                enemies.get(loop).update();
-                enemies.get(loop).Draw(batch);
-            }
         }
         return flag;
     }

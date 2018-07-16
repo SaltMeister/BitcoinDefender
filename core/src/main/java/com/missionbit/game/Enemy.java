@@ -29,6 +29,7 @@ public class Enemy
     public int enemyWidthDefault, enemyHeightDefault;
     public int enemyAttackWidth, enemyAttackHeight;;
     public float randomSpawn;
+    public boolean isAttack = false;
 
     public Enemy(float directionX)
     {
@@ -81,18 +82,39 @@ public class Enemy
 
     public void update()
     {
-        position.x = position.x + direction.x * -0.005f; // moved the enemy in a set speed
+        position.x = position.x + direction.x * -0.015f; // moved the enemy in a set speed
         healthbar.setX(position.x);
         healthbar.setY(position.y);
-        walkinganimationTime += Gdx.graphics.getDeltaTime();
+
+        if (isAttack)
+            attackAnimationTime += Gdx.graphics.getDeltaTime();
+        else
+            walkinganimationTime += Gdx.graphics.getDeltaTime();
+    }
+
+    public int damageDealt()
+    {
+        System.out.println(attackAnimation.getKeyFrameIndex(attackAnimationTime));
+        if (attackAnimation.getKeyFrameIndex(attackAnimationTime) == 3)
+        {
+            attackAnimationTime = 0;
+            return 1;
+        }
+        else
+            return 0;
     }
 
     public boolean collideWithFence(Vector2 fenceStart, Vector2 fenceEnd)
     {
+
         float distance = Intersector.distanceLinePoint(fenceStart.x, fenceStart.y, fenceEnd.x, fenceEnd.y, position.x, position.y);
         lastDistance = distance;
+        if (distance < 10 || lastDistance < distance)
+        {
+            isAttack = true;
+        }
 
-        return distance < 10 || lastDistance < distance;
+        return isAttack;
     }
 
     public boolean collideWithBullet(Bullet b) // checks if enemy has touch the bullet
@@ -116,8 +138,19 @@ public class Enemy
         if(alive)
         {
             float healthpercent = health / (float)ENEMY_HP;
-            Texture draw = walkinganimation.getKeyFrame(walkinganimationTime, true);
-            sprite.draw(draw, position.x, position.y, enemyWidthDefault, enemyHeightDefault);
+            Texture draw;
+
+            if (isAttack)
+            {
+                draw = attackAnimation.getKeyFrame(attackAnimationTime, true);
+                sprite.draw(draw, position.x, position.y, enemyAttackWidth, enemyAttackHeight);
+            }
+            else
+            {
+               draw = walkinganimation.getKeyFrame(walkinganimationTime, true);
+               sprite.draw(draw, position.x, position.y, enemyWidthDefault, enemyHeightDefault);
+            }
+
             sprite.draw(healthbar, position.x,position.y - 5,enemyWidthDefault * healthpercent,5);
         }
         else // draw death animation and other stuff
@@ -135,6 +168,7 @@ public class Enemy
 
     public void reset()
     {
+        isAttack = false;
         alive = true;
         position.x = Gdx.graphics.getWidth();// enemies spawn on the outside of the right side
         position.y = randomSpawn; // randomizes the spawn of the enemy
@@ -144,6 +178,7 @@ public class Enemy
         healthbar.setX(position.x);
         healthbar.setY(position.y);
         walkinganimationTime += Gdx.graphics.getDeltaTime();
+
     }
 
     public boolean isActive()
@@ -151,11 +186,4 @@ public class Enemy
         return alive;
     }
 
-    public void attackAnimation(boolean isAttack)
-    {
-        if (isAttack)
-        {
-            
-        }
-    }
 }
