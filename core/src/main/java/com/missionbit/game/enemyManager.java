@@ -26,21 +26,20 @@ public class enemyManager
     public Enemy spawnEnemy(float directionX)
     {
         Enemy f;
+
         if(pool.isEmpty())
         {
             f = new Enemy(directionX);
             activeEnemies.add(f);
             f.update();
-            System.out.println("New");
         }
         else
         {
             f = pool.remove(0);
             f.reset();
-            //f.update();
             activeEnemies.add(f);
-            System.out.println("From pool");
         }
+
         return f;
     }
 
