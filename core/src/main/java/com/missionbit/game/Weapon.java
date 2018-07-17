@@ -9,7 +9,6 @@ public class Weapon
 
     public Weapon(int startdamage, int startsize, int startfireRate)
     {
-
         damage = startdamage;
         size = startsize;
         bullets = startsize;
@@ -31,5 +30,10 @@ public class Weapon
        }
 
        return false;
+    }
+
+    public int showMaxBullets()
+    {
+        return size;
     }
 }

@@ -37,6 +37,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private static int spawnRate;
     private static int healthOfWall; //the amount of lives the wall has
     private BitmapFont font;
+    private BitmapFont ammo;
     private static Vector2 wallStart;
     private static Vector2 wallEnd;
     private static long startTime = System.currentTimeMillis(); // sets the time
@@ -44,7 +45,7 @@ public class BitcoinDefender extends ApplicationAdapter {
     private Sprite mainCharacter;
     private enemyManager enemyManger;
     private bulletManager manager;
-    private Weapon weapon;
+    private static Weapon weapon;
     private menuScreen menu;
 
     @Override
@@ -84,6 +85,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         spawnRate = INITIAL_ENEMY_SPAWN_RATE; // sets the spawn rate to the default one
         healthOfWall = HEALTH_OF_WALL; // sets health of wall
         font = new BitmapFont();
+        ammo = new BitmapFont();
 
         wallStart = new Vector2(186.99998f, 0.0f);
         wallEnd = new Vector2(320.0f, 258.0f);
@@ -92,20 +94,22 @@ public class BitcoinDefender extends ApplicationAdapter {
         manager = new bulletManager();
 
         menu=new menuScreen();
-        weapon = new Weapon(25,8,1);
+        weapon = new Weapon(20,2,1);
 
 
     }
 
     @Override
-    public void render() {
-        if (menu.gamestarted==false){
+    public void render()
+    {
+        if (menu.gamestarted==false)
             menu.draw(camera);
-
-        }
-        else {rendergame();}
+        else
+            rendergame();
     }
-    public void rendergame(){
+
+    public void rendergame()
+    {
        elapsedTime = System.currentTimeMillis() - startTime; // sets the time that has past in milliseconds
         // Clear the screen
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -138,9 +142,6 @@ public class BitcoinDefender extends ApplicationAdapter {
                 shootClick.nor();
 
                 boolean fired = weapon.fire(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y,manager);
-                // for (int loop = 0; loop < 5; loop++) //loop for shotgun bullets //when adding animation fix this section to adapt to the larger texture size
-                //   manager.spawnBullet(mainCharacter.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65, shootClick.x, shootClick.y, true);
-
                 // displays muzzle flash
                 if(fired)
                 {
@@ -155,7 +156,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         background.draw(myBatch);
         wallHP.draw(myBatch);
         font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, Gdx.graphics.getHeight() - wallHP.getHeight());
-
+        ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, Gdx.graphics.getHeight() - wallHP.getHeight ());
         //mainCharacter.update();
         mainCharacter.draw(myBatch);
         myBatch.draw(mainCharacter.getTexture(), mainCharacter.getX(), mainCharacter.getY());
@@ -212,7 +213,7 @@ public class BitcoinDefender extends ApplicationAdapter {
                 {
                     //todo blood.setPosition(enemy.getX() + mainCharacter.getWidth(), mainCharacter.getY() + 65);
                     //blood.start();
-                    enemies.get(loop).dodamage(25);
+                    enemies.get(loop).dodamage(weapon.damage);
                     bullets.get(j).alive = false;
                     flag = true;
                 }

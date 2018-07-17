@@ -50,13 +50,7 @@ public class mainCharacter
     {
         return mainCharacterPositon;
     }
-
-    /*
-    public TextureRegion getTexture()
-    {
-        return mainCharacterAnimation.getFrame();
-    }
-*/
+    
     public void dispose()
     {
         mainCharacter.dispose();
