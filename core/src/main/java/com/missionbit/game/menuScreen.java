@@ -14,6 +14,7 @@ public class menuScreen {
     private Sprite helpbutton;
     private SpriteBatch batch;
     private Sprite tutorial;
+    private Sprite exittutorial;
     protected boolean gamestarted = false;
     protected boolean showhelp = false;
 
@@ -29,7 +30,7 @@ public class menuScreen {
         helpbutton = new Sprite(new Texture(Gdx.files.internal("images/game home help button.png")));
         helpbutton.setX(450);
         helpbutton.setY(100);
-        tutorial =new Sprite(new Texture(Gdx.files.internal("images/game help.png")));
+        tutorial =new Sprite(new Texture(Gdx.files.internal("images/game help (2).png")));
 
     }
 
