@@ -3,6 +3,7 @@ package com.missionbit.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
@@ -13,9 +14,8 @@ import com.badlogic.gdx.utils.Array;
 public class Enemy
 {
     public final int ENEMY_HP = 100;
-    //public Sprite enemy;
     public Vector2 direction;
-    public Vector2 position;
+    public  Vector2 position;
     private float lastDistance;
     public boolean alive;
     public int health;
@@ -30,6 +30,7 @@ public class Enemy
     public int enemyAttackWidth, enemyAttackHeight;;
     public float randomSpawn;
     public boolean isAttack = false;
+    protected  ParticleEffect effect;
 
     public Enemy(float directionX)
     {
@@ -67,6 +68,9 @@ public class Enemy
 
         enemyAttackWidth = attackFrames.get(0).getWidth();
         enemyAttackHeight = attackFrames.get(0).getHeight();
+
+        effect = new ParticleEffect();
+        effect.load(Gdx.files.internal("particles/bloodSplatter.p"), Gdx.files.internal("images"));
     }
 
 
@@ -94,7 +98,6 @@ public class Enemy
 
     public int damageDealt()
     {
-        System.out.println(attackAnimation.getKeyFrameIndex(attackAnimationTime));
         if (attackAnimation.getKeyFrameIndex(attackAnimationTime) == 3)
         {
             attackAnimationTime = 0;
@@ -110,9 +113,7 @@ public class Enemy
         float distance = Intersector.distanceLinePoint(fenceStart.x, fenceStart.y, fenceEnd.x, fenceEnd.y, position.x, position.y);
         lastDistance = distance;
         if (distance < 10 || lastDistance < distance)
-        {
             isAttack = true;
-        }
 
         return isAttack;
     }
