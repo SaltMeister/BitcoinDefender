@@ -24,8 +24,11 @@ public class Enemy
     private Array<Texture> walkingframes = new Array<Texture>();
     private Animation<Texture> attackAnimation;
     private Array<Texture> attackFrames = new Array<Texture>();
+    private Animation<Texture> deathAnimation;
+    private Array<Texture> deathFrames = new Array<Texture>();
     private float walkinganimationTime;
     private float attackAnimationTime;
+    private float deathAnimationTime;
     public int enemyWidthDefault, enemyHeightDefault;
     public int enemyAttackWidth, enemyAttackHeight;;
     public float randomSpawn;
@@ -68,6 +71,16 @@ public class Enemy
 
         enemyAttackWidth = attackFrames.get(0).getWidth();
         enemyAttackHeight = attackFrames.get(0).getHeight();
+
+        deathFrames.add(new Texture(Gdx.files.internal("images/enemyDeath1.png")));
+        deathFrames.add(new Texture(Gdx.files.internal("images/enemyDeath2.png")));
+        deathFrames.add(new Texture(Gdx.files.internal("images/enemyDeath3.png")));
+        deathFrames.add(new Texture(Gdx.files.internal("images/enemyDeath4.png")));
+        deathFrames.add(new Texture(Gdx.files.internal("images/enemyDeath5.png")));
+        deathFrames.add(new Texture(Gdx.files.internal("images/enemyDeath6.png")));
+        deathFrames.add(new Texture(Gdx.files.internal("images/enemyDeath7.png")));
+        deathAnimation = new Animation<Texture>(0.25f, deathFrames);
+        deathAnimationTime = 0;
 
         effect = new ParticleEffect();
         effect.load(Gdx.files.internal("particles/splatter.p"), Gdx.files.internal("images"));
@@ -136,10 +149,11 @@ public class Enemy
 
     public void Draw(SpriteBatch sprite)
     {
+        Texture draw;
         if(alive)
         {
             float healthpercent = health / (float)ENEMY_HP;
-            Texture draw;
+            //Texture draw;
 
             if (isAttack)
             {
@@ -156,8 +170,12 @@ public class Enemy
         }
         else // draw death animation and other stuff
         {
-            //effect.draw(sprite, Gdx.graphics.getDeltaTime());
+            draw = deathAnimation.getKeyFrame(deathAnimationTime, false);
+            sprite.draw(draw, position.x, position.y);
+            deathAnimationTime += Gdx.graphics.getDeltaTime();
+            stopEnemy();
         }
+
         effect.draw(sprite, Gdx.graphics.getDeltaTime());
     }
     public void dodamage(int damage)
@@ -191,7 +209,7 @@ public class Enemy
 
     public boolean isActive()
     {
-        return alive || !effect.isComplete();
+        return alive || !effect.isComplete() || !deathAnimation.isAnimationFinished(deathAnimationTime);
     }
 
 }
