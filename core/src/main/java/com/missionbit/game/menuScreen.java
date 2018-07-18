@@ -12,9 +12,9 @@ public class menuScreen {
     private Sprite homescreen;
     private Sprite playbutton;
     private Sprite helpbutton;
+    private Sprite exittutorial;
     private SpriteBatch batch;
     private Sprite tutorial;
-    private Sprite exittutorial;
     protected boolean gamestarted = false;
     protected boolean showhelp = false;
 
@@ -31,6 +31,9 @@ public class menuScreen {
         helpbutton.setX(450);
         helpbutton.setY(100);
         tutorial =new Sprite(new Texture(Gdx.files.internal("images/game help (2).png")));
+        exittutorial = new Sprite(new Texture(Gdx.files.internal("images/exit tutorial button.png")));
+        exittutorial.setX(25);
+        exittutorial.setY(400);
 
     }
 
@@ -47,6 +50,7 @@ public class menuScreen {
             playbutton.draw(batch);
             helpbutton.draw(batch);
         } else {tutorial.draw(batch);
+        exittutorial.draw(batch);
 
         }
         batch.end();
@@ -65,6 +69,10 @@ public class menuScreen {
             if (helpbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y)) {
                 System.out.println("clicked");
                 showhelp = true;
+            }
+            if (exittutorial.getBoundingRectangle().contains(touchPos.x, touchPos.y)) {
+                showhelp = false;
+
             }
 
         }
