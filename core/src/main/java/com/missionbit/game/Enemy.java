@@ -86,7 +86,7 @@ public class Enemy
 
     public void update()
     {
-        position.x = position.x + direction.x * -0.015f; // moved the enemy in a set speed
+        position.x = position.x + direction.x * -0.009f; // moved the enemy in a set speed
         healthbar.setX(position.x);
         healthbar.setY(position.y);
 

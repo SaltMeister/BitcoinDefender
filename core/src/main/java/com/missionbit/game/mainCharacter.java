@@ -28,7 +28,7 @@ public class mainCharacter
         reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload6.png")));
         reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload7.png")));
         reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload8.png")));
-        reloadAnimation = new Animation<Texture>(0.15f, reloadFrames);
+        reloadAnimation = new Animation<Texture>(0.25f, reloadFrames);
         reloadAnimationTime = 0;
     }
 
@@ -48,6 +48,6 @@ public class mainCharacter
         }
         else
             draw = reloadFrames.get(0);
-        sprite.draw(draw, 150, 150, draw.getWidth(), draw.getHeight());
+        sprite.draw(draw, 140, 150, draw.getWidth(), draw.getHeight());
     }
 }

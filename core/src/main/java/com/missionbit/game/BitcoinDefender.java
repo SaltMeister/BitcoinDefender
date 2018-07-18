@@ -61,12 +61,12 @@ public class BitcoinDefender extends ApplicationAdapter {
         background.setX(0);
         background.setY(0);
 
-        wallHP = new Sprite( new Texture(Gdx.files.internal("images/wallHP.png")));
+        wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
-        wallHP.setY(Gdx.graphics.getHeight() - wallHP.getHeight() * 2);
+        wallHP.setY(Gdx.graphics.getHeight() - wallHP.getHeight() * 1.75f);
 
         mainCharacter1 = new Sprite(new Texture(Gdx.files.internal("images/doubleBarrelShotgun.png")));
-        mainCharacter1.setX(150);
+        mainCharacter1.setX(140);
         mainCharacter1.setY(150);
 
         //mainCharacter = new mainCharacter(120, 150); // creates the main character
