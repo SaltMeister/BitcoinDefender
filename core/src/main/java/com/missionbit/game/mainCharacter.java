@@ -13,7 +13,7 @@ public class mainCharacter
     private Animation<Texture> reloadAnimation;
     private Array<Texture> reloadFrames = new Array<Texture>();
     private float reloadAnimationTime;
-    protected boolean isReloading = false;
+    protected static boolean isReloading = false;
 
     public mainCharacter()
     {

@@ -79,8 +79,8 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         muzzleFlash = new ParticleEffect(); // particle effects for muzzle flash
         muzzleFlash.load(Gdx.files.internal("particles/muzzleFlash.p"), Gdx.files.internal("images"));
-        blood = new ParticleEffect();
-        blood.load(Gdx.files.internal("particles/bloodSplatter.p"), Gdx.files.internal("images"));
+        //blood = new ParticleEffect();
+        //blood.load(Gdx.files.internal("particles/bloodSplatter.p"), Gdx.files.internal("images"));
 
         spawnRate = INITIAL_ENEMY_SPAWN_RATE; // sets the spawn rate to the default one
         healthOfWall = HEALTH_OF_WALL; // sets health of wall
@@ -142,7 +142,8 @@ public class BitcoinDefender extends ApplicationAdapter {
 
                 boolean fired = weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager);
                 // displays muzzle flash
-                if (fired) {
+                if (fired)
+                {
                     muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                     muzzleFlash.start();
                 }
@@ -162,7 +163,7 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         // actually draws the particle effects
         muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
-        blood.draw(myBatch, Gdx.graphics.getDeltaTime());
+        //blood.draw(myBatch, Gdx.graphics.getDeltaTime());
 
         enemyManger.draw(camera);
         manager.draw(camera);
@@ -173,7 +174,8 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         //TODO: Draw our image!
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size)
+        {
             character.isReloading = true;
         }
         myBatch.begin();
@@ -193,10 +195,7 @@ public class BitcoinDefender extends ApplicationAdapter {
                 if (healthOfWall > 0)
                 {
                     if (enemies.get(loop).alive)
-                    {
-                        //Draw attack animation
                         healthOfWall -= enemies.get(loop).damageDealt(); // if the enemies touched the wall drop 2 hp every second
-                    }
                 }
                 else
                 {
@@ -210,11 +209,10 @@ public class BitcoinDefender extends ApplicationAdapter {
             {
                 if (enemies.get(loop).collideWithBullet(bullets.get(j)))
                 {
-                    enemies.get(loop).effect.setPosition(enemies.get(loop).getX(), enemies.get(loop).getY());
-                    enemies.get(loop).effect.start();
                     enemies.get(loop).dodamage(weapon.damage);
                     bullets.get(j).alive = false;
                     flag = true;
+                    enemies.get(loop).effect.setPosition(enemies.get(loop).position.x, enemies.get(loop).position.y + 50);
                 }
             }
             if (healthOfWall <= 0)

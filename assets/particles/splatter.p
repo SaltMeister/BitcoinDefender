@@ -1,17 +1,19 @@
 Untitled
 - Delay -
-active: false
+active: true
+lowMin: 0.0
+lowMax: 0.0
 - Duration - 
 lowMin: 100.0
 lowMax: 100.0
 - Count - 
-min: 20
+min: 0
 max: 500
 - Emission - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 250.0
-highMax: 250.0
+highMin: 200.0
+highMax: 200.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -20,17 +22,19 @@ timeline0: 0.0
 - Life - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 500.0
-highMax: 500.0
+highMin: 300.0
+highMax: 300.0
 relative: false
-scalingCount: 3
+scalingCount: 4
 scaling0: 1.0
-scaling1: 1.0
-scaling2: 0.3
-timelineCount: 3
+scaling1: 0.8367347
+scaling2: 0.0
+scaling3: 0.0
+timelineCount: 4
 timeline0: 0.0
-timeline1: 0.66
-timeline2: 1.0
+timeline1: 0.2739726
+timeline2: 0.44520548
+timeline3: 1.0
 - Life Offset - 
 active: false
 - X Offset - 
@@ -62,8 +66,8 @@ timeline0: 0.0
 - X Scale - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 5.0
-highMax: 5.0
+highMin: 8.0
+highMax: 8.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -78,12 +82,14 @@ lowMax: 0.0
 highMin: 10.0
 highMax: 200.0
 relative: false
-scalingCount: 2
+scalingCount: 3
 scaling0: 1.0
 scaling1: 0.0
-timelineCount: 2
+scaling2: 0.0
+timelineCount: 3
 timeline0: 0.0
-timeline1: 1.0
+timeline1: 0.46575344
+timeline2: 1.0
 - Angle - 
 active: true
 lowMin: 0.0
@@ -143,14 +149,14 @@ highMin: 1.0
 highMax: 1.0
 relative: false
 scalingCount: 4
-scaling0: 0.0
+scaling0: 1.0
 scaling1: 1.0
-scaling2: 0.75
-scaling3: 0.0
+scaling2: 1.0
+scaling3: 1.0
 timelineCount: 4
 timeline0: 0.0
 timeline1: 0.2
-timeline2: 0.8
+timeline2: 0.8082192
 timeline3: 1.0
 - Options - 
 attached: false

@@ -70,7 +70,7 @@ public class Enemy
         enemyAttackHeight = attackFrames.get(0).getHeight();
 
         effect = new ParticleEffect();
-        effect.load(Gdx.files.internal("particles/bloodSplatter.p"), Gdx.files.internal("images"));
+        effect.load(Gdx.files.internal("particles/splatter.p"), Gdx.files.internal("images"));
     }
 
 
@@ -156,15 +156,22 @@ public class Enemy
         }
         else // draw death animation and other stuff
         {
-
+            //effect.draw(sprite, Gdx.graphics.getDeltaTime());
         }
+        effect.draw(sprite, Gdx.graphics.getDeltaTime());
     }
     public void dodamage(int damage)
     {
         health = health - damage;
 
         if(health <= 0)
+        {
+            effect.start();
             alive = false;
+        }
+
+        if(alive)
+            effect.start();
     }
 
     public void reset()
@@ -184,7 +191,7 @@ public class Enemy
 
     public boolean isActive()
     {
-        return alive;
+        return alive || !effect.isComplete();
     }
 
 }
