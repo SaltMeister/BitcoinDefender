@@ -21,7 +21,7 @@ public class Weapon
 
     public boolean fire(float startx, float starty, float directionx, float directiony, bulletManager manager)
     {
-       if(bullets > 0)
+       if(bullets > 0 && !mainCharacter.isReloading)
        {
            for (int loop = 0; loop <= 5; loop++)
                manager.spawnBullet(startx, starty, directionx, directiony, true);

@@ -31,6 +31,7 @@ public class enemyManager
         {
             f = new Enemy(directionX);
             activeEnemies.add(f);
+            System.out.println("new enemy");
             f.update();
         }
         else
@@ -69,10 +70,8 @@ public class enemyManager
         batch.begin();
 
         for(Enemy b : activeEnemies)
-        {
             b.Draw(batch);
-        }
-
+//todo fix removing
         batch.end();
     }
 }
