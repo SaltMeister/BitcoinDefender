@@ -46,6 +46,8 @@ public class BitcoinDefender extends ApplicationAdapter {
     private enemyManager enemyManger;
     private bulletManager manager;
     private  Weapon weapon;
+    private Sprite pausebutton;
+    private Sprite reloadbutton;
     private menuScreen menu;
 
     @Override

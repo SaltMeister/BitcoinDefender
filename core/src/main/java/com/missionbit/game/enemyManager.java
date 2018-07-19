@@ -37,6 +37,7 @@ public class enemyManager
         else
         {
             f = pool.remove(0);
+            System.out.println("From pool");
             f.reset();
             activeEnemies.add(f);
         }
