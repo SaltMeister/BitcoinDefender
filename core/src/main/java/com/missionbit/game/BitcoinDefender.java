@@ -71,8 +71,6 @@ public class BitcoinDefender extends ApplicationAdapter {
         mainCharacter1.setX(140);
         mainCharacter1.setY(150);
 
-        //mainCharacter = new mainCharacter(120, 150); // creates the main character
-
         gunPosition = new Vector2();
         gunPosition.x = mainCharacter1.getX() + mainCharacter1.getWidth();
         gunPosition.y = mainCharacter1.getY() + mainCharacter1.getHeight();
@@ -81,8 +79,6 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         muzzleFlash = new ParticleEffect(); // particle effects for muzzle flash
         muzzleFlash.load(Gdx.files.internal("particles/muzzleFlash.p"), Gdx.files.internal("images"));
-        //blood = new ParticleEffect();
-        //blood.load(Gdx.files.internal("particles/bloodSplatter.p"), Gdx.files.internal("images"));
 
         spawnRate = INITIAL_ENEMY_SPAWN_RATE; // sets the spawn rate to the default one
         healthOfWall = HEALTH_OF_WALL; // sets health of wall
@@ -123,7 +119,6 @@ public class BitcoinDefender extends ApplicationAdapter {
         manager.update();
         enemyManger.update();
 
-        // manager.draw(camera);
         if (MathUtils.random(spawnRate) == 1)// randomizes spawn rate of the enemies
             enemyManger.spawnEnemy(mainCharacter1.getX());  //spawns enemies
 
@@ -158,7 +153,6 @@ public class BitcoinDefender extends ApplicationAdapter {
         wallHP.draw(myBatch);
         font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, Gdx.graphics.getHeight() - wallHP.getHeight());
         ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, Gdx.graphics.getHeight() - wallHP.getHeight());
-        //myBatch.draw(mainCharacter1.getTexture(), mainCharacter1.getX(), mainCharacter1.getY());
 
         //spawns multiple bullets
         collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
@@ -183,6 +177,12 @@ public class BitcoinDefender extends ApplicationAdapter {
         myBatch.begin();
         character.draw(myBatch, weapon);
         myBatch.end();
+
+        if (elapsedTime >= 30000)
+        {
+            if (Enemy.damageReduction > 0.05)
+                Enemy.damageReduction *= 0.95;
+        }
     }
 
     private boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets, SpriteBatch batch)

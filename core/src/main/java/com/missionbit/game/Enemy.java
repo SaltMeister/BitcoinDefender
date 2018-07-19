@@ -13,7 +13,9 @@ import com.badlogic.gdx.utils.Array;
 
 public class Enemy
 {
+    private final float INITIAL_DAMAGE_REDUCTION = 1.0f;
     public final int ENEMY_HP = 100;
+    public static float damageReduction;
     public Vector2 direction;
     public  Vector2 position;
     private float lastDistance;
@@ -37,6 +39,8 @@ public class Enemy
 
     public Enemy(float directionX)
     {
+        damageReduction = INITIAL_DAMAGE_REDUCTION;
+
         position = new Vector2();
         direction = new Vector2();
         direction.x = directionX;
@@ -171,7 +175,7 @@ public class Enemy
         else // draw death animation and other stuff
         {
             stopEnemy();
-            draw = deathAnimation.getKeyFrame(deathAnimationTime, false);
+            draw = deathAnimation.getKeyFrame(deathAnimationTime, true);
             sprite.draw(draw, position.x, position.y);
             deathAnimationTime += Gdx.graphics.getDeltaTime();
         }
@@ -180,10 +184,11 @@ public class Enemy
     }
     public void dodamage(int damage)
     {
-        health = health - damage;
+        health -= damage * damageReduction;
 
         if(health <= 0)
         {
+            deathAnimationTime = 0;
             effect.start();
             alive = false;
         }
