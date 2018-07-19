@@ -32,7 +32,6 @@ public class BitcoinDefender extends ApplicationAdapter {
     private Vector2 gunPosition;
     private Vector2 shootClick;
     private ParticleEffect muzzleFlash;
-    private ParticleEffect blood;
     private int spawnRate;
     private int healthOfWall; //the amount of lives the wall has
     private BitmapFont font;
@@ -153,6 +152,7 @@ public class BitcoinDefender extends ApplicationAdapter {
                 }
             }
         }
+        else
 
         // starts displaying the stuff
         myBatch.begin();
@@ -174,8 +174,8 @@ public class BitcoinDefender extends ApplicationAdapter {
         manager.draw(camera);
         myBatch.end();
 
-        if (elapsedTime >= 1000) // if seconds is larger than 1 vvvvv
-            startTime = System.currentTimeMillis(); // resets the start time so then clock resets to 0
+        //if (elapsedTime >= 1000) // if seconds is larger than 1 vvvvv
+         //   startTime = System.currentTimeMillis(); // resets the start time so then clock resets to 0
 
         //TODO: Draw our image!
 
@@ -191,6 +191,7 @@ public class BitcoinDefender extends ApplicationAdapter {
         {
             if (Enemy.damageReduction > 0.05)
                 Enemy.damageReduction *= 0.95;
+            startTime = System.currentTimeMillis();
         }
     }
 
