@@ -35,7 +35,8 @@ public class Enemy
     public int enemyAttackWidth, enemyAttackHeight;;
     public float randomSpawn;
     public boolean isAttack = false;
-    protected  ParticleEffect effect;
+    protected ParticleEffect blood;
+    protected ParticleEffect wallEffect;
 
     public Enemy(float directionX)
     {
@@ -86,8 +87,11 @@ public class Enemy
         deathAnimation = new Animation<Texture>(0.25f, deathFrames);
         deathAnimationTime = 0;
 
-        effect = new ParticleEffect();
-        effect.load(Gdx.files.internal("particles/splatter.p"), Gdx.files.internal("images"));
+        blood = new ParticleEffect();
+        blood.load(Gdx.files.internal("particles/splatter.p"), Gdx.files.internal("images"));
+
+        wallEffect = new ParticleEffect();
+        wallEffect.load(Gdx.files.internal("particles/brokenWall.p"), Gdx.files.internal("images"));
     }
 
 
@@ -117,6 +121,8 @@ public class Enemy
     {
         if (attackAnimation.getKeyFrameIndex(attackAnimationTime) == 3)
         {
+            wallEffect.setPosition(position.x, position.y + 50);
+            wallEffect.start();
             attackAnimationTime = 0;
             return 1;
         }
@@ -180,7 +186,8 @@ public class Enemy
             deathAnimationTime += Gdx.graphics.getDeltaTime();
         }
 
-        effect.draw(sprite, Gdx.graphics.getDeltaTime());
+        blood.draw(sprite, Gdx.graphics.getDeltaTime());
+        wallEffect.draw(sprite, Gdx.graphics.getDeltaTime());
     }
     public void dodamage(int damage)
     {
@@ -189,12 +196,12 @@ public class Enemy
         if(health <= 0)
         {
             deathAnimationTime = 0;
-            effect.start();
+            blood.start();
             alive = false;
         }
 
         if(alive)
-            effect.start();
+            blood.start();
     }
 
     public void reset(float directionX)
@@ -215,7 +222,7 @@ public class Enemy
 
     public boolean isActive()
     {
-        return alive || !effect.isComplete() || !deathAnimation.isAnimationFinished(deathAnimationTime);
+        return alive || !blood.isComplete() || !deathAnimation.isAnimationFinished(deathAnimationTime);
     }
 
 }

@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -65,7 +64,7 @@ public class BitcoinDefender extends ApplicationAdapter {
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
-        wallHP.setY(Gdx.graphics.getHeight() - wallHP.getHeight() * 1.75f);
+        wallHP.setY(background.getHeight() - wallHP.getHeight() * 1.75f);
 
         mainCharacter1 = new Sprite(new Texture(Gdx.files.internal("images/doubleBarrelShotgun.png")));
         mainCharacter1.setX(140);
@@ -159,8 +158,8 @@ public class BitcoinDefender extends ApplicationAdapter {
         myBatch.begin();
         background.draw(myBatch);
         wallHP.draw(myBatch);
-        font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, Gdx.graphics.getHeight() - wallHP.getHeight());
-        ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, Gdx.graphics.getHeight() - wallHP.getHeight());
+        font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, background.getHeight() - wallHP.getHeight());
+        ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, background.getHeight() - wallHP.getHeight());
 
         reloadbutton.draw(myBatch);
 
@@ -224,7 +223,7 @@ public class BitcoinDefender extends ApplicationAdapter {
                     enemies.get(loop).dodamage(weapon.damage);
                     bullets.get(j).alive = false;
                     flag = true;
-                    enemies.get(loop).effect.setPosition(enemies.get(loop).position.x, enemies.get(loop).position.y + 50);
+                    enemies.get(loop).blood.setPosition(enemies.get(loop).position.x, enemies.get(loop).position.y + 50);
                 }
             }
             if (healthOfWall <= 0)
