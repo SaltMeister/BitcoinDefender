@@ -71,6 +71,10 @@ public class BitcoinDefender extends ApplicationAdapter {
         mainCharacter1.setX(140);
         mainCharacter1.setY(150);
 
+        reloadbutton = new Sprite(new Texture(Gdx.files.internal("images/reloadButton.png")));
+        reloadbutton.setX(25);
+        reloadbutton.setY(25);
+
         gunPosition = new Vector2();
         gunPosition.x = mainCharacter1.getX() + mainCharacter1.getWidth();
         gunPosition.y = mainCharacter1.getY() + mainCharacter1.getHeight();
@@ -137,9 +141,13 @@ public class BitcoinDefender extends ApplicationAdapter {
                 shootClick.sub(gunPosition);
                 shootClick.nor();
 
-                boolean fired = weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager);
-                // displays muzzle flash
-                if (fired)
+                if(reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size)
+                {
+                    System.out.println("clicked");
+                    character.isReloading = true;
+                }
+                else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
+                        mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager))
                 {
                     muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                     muzzleFlash.start();
@@ -153,6 +161,8 @@ public class BitcoinDefender extends ApplicationAdapter {
         wallHP.draw(myBatch);
         font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, Gdx.graphics.getHeight() - wallHP.getHeight());
         ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, Gdx.graphics.getHeight() - wallHP.getHeight());
+
+        reloadbutton.draw(myBatch);
 
         //spawns multiple bullets
         collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
