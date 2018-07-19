@@ -41,7 +41,7 @@ public class Enemy
         direction = new Vector2();
         direction.x = directionX;
 
-        randomSpawn = MathUtils.random() * 200;
+        randomSpawn = MathUtils.random() * 100;
         health = ENEMY_HP;
         lastDistance = 5000;
 
@@ -99,7 +99,7 @@ public class Enemy
 
     public void update()
     {
-        position.x = position.x + direction.x * -0.009f; // moved the enemy in a set speed
+        position.x = position.x + direction.x * -0.005f; // moved the enemy in a set speed
         healthbar.setX(position.x);
         healthbar.setY(position.y);
 
