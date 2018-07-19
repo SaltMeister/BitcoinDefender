@@ -170,10 +170,10 @@ public class Enemy
         }
         else // draw death animation and other stuff
         {
+            stopEnemy();
             draw = deathAnimation.getKeyFrame(deathAnimationTime, false);
             sprite.draw(draw, position.x, position.y);
             deathAnimationTime += Gdx.graphics.getDeltaTime();
-            stopEnemy();
         }
 
         effect.draw(sprite, Gdx.graphics.getDeltaTime());

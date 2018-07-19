@@ -19,19 +19,19 @@ public class menuScreen {
     protected boolean showhelp = false;
 
     public menuScreen() {
-        homescreen = new Sprite(new Texture(Gdx.files.internal("images/game home.png")));
+        homescreen = new Sprite(new Texture(Gdx.files.internal("images/menu.png")));
         homescreen.setX(0);
         homescreen.setY(-95);
         batch = new SpriteBatch();
-        playbutton = new Sprite(new Texture(Gdx.files.internal("images/game home play button.png")));
+        playbutton = new Sprite(new Texture(Gdx.files.internal("images/playButton.png")));
         playbutton.setX(250);
         playbutton.setY(100);
         batch = new SpriteBatch();
-        helpbutton = new Sprite(new Texture(Gdx.files.internal("images/game home help button.png")));
+        helpbutton = new Sprite(new Texture(Gdx.files.internal("images/helpButton.png")));
         helpbutton.setX(450);
         helpbutton.setY(100);
-        tutorial =new Sprite(new Texture(Gdx.files.internal("images/game help (2).png")));
-        exittutorial = new Sprite(new Texture(Gdx.files.internal("images/exit tutorial button.png")));
+        tutorial =new Sprite(new Texture(Gdx.files.internal("images/tutorial.png")));
+        exittutorial = new Sprite(new Texture(Gdx.files.internal("images/leaveTutorialButton.png")));
         exittutorial.setX(25);
         exittutorial.setY(400);
 
