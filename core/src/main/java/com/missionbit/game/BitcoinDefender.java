@@ -71,6 +71,9 @@ public class BitcoinDefender extends ApplicationAdapter {
         mainCharacter1.setX(140);
         mainCharacter1.setY(150);
 
+        reloadbutton = new Sprite(new Texture(Gdx.files.internal("images/reloadbutton.png")));
+        reloadbutton.setX(50);
+        reloadbutton.setY(50);
         //mainCharacter = new mainCharacter(120, 150); // creates the main character
 
         gunPosition = new Vector2();
@@ -149,6 +152,10 @@ public class BitcoinDefender extends ApplicationAdapter {
                     muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                     muzzleFlash.start();
                 }
+            if(reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y)&& weapon.bullets < weapon.size) {
+                System.out.println("clicked");
+                character.isReloading = true;
+                }
             }
         }
 
@@ -159,6 +166,8 @@ public class BitcoinDefender extends ApplicationAdapter {
         font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, Gdx.graphics.getHeight() - wallHP.getHeight());
         ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, Gdx.graphics.getHeight() - wallHP.getHeight());
         //myBatch.draw(mainCharacter1.getTexture(), mainCharacter1.getX(), mainCharacter1.getY());
+
+        reloadbutton.draw(myBatch);
 
         //spawns multiple bullets
         collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
