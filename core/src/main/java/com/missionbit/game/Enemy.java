@@ -41,7 +41,7 @@ public class Enemy
         direction = new Vector2();
         direction.x = directionX;
 
-        randomSpawn = MathUtils.random() * 100;
+        randomSpawn = MathUtils.random() * 200;
         health = ENEMY_HP;
         lastDistance = 5000;
 
@@ -192,8 +192,9 @@ public class Enemy
             effect.start();
     }
 
-    public void reset()
+    public void reset(float directionX)
     {
+        direction.x = directionX;
         isAttack = false;
         alive = true;
         position.x = Gdx.graphics.getWidth();// enemies spawn on the outside of the right side
