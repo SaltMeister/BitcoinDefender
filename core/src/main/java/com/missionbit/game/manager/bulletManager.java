@@ -1,4 +1,4 @@
-package com.missionbit.game;
+package com.missionbit.game.manager;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.missionbit.game.Bullet;
 
 public class bulletManager
 {

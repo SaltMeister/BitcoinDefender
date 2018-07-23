@@ -1,7 +1,8 @@
-package com.missionbit.game;
+package com.missionbit.game.manager;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.missionbit.game.animations.Enemy;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.missionbit.game;
+package com.missionbit.game.animations;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.missionbit.game.Bullet;
 
 public class Enemy
 {
@@ -35,8 +36,8 @@ public class Enemy
     public int enemyAttackWidth, enemyAttackHeight;;
     public float randomSpawn;
     public boolean isAttack = false;
-    protected ParticleEffect blood;
-    protected ParticleEffect wallEffect;
+    public ParticleEffect blood;
+    public ParticleEffect wallEffect;
 
     public Enemy(float directionX)
     {

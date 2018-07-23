@@ -1,11 +1,14 @@
 package com.missionbit.game;
 
+import com.missionbit.game.animations.mainCharacter;
+import com.missionbit.game.manager.bulletManager;
+
 public class Weapon
 {
-    protected int damage;
-    protected int size;
-    protected int bullets;
-    protected int fireRate;
+    public int damage;
+    public int size;
+    public int bullets;
+    public int fireRate;
 
     public Weapon(int startdamage, int startsize, int startfireRate)
     {

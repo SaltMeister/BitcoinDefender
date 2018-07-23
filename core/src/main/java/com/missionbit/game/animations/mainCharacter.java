@@ -1,4 +1,4 @@
-package com.missionbit.game;
+package com.missionbit.game.animations;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,13 +7,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
+import com.missionbit.game.Weapon;
 
 public class mainCharacter
 {
     private Animation<Texture> reloadAnimation;
     private Array<Texture> reloadFrames = new Array<Texture>();
     private float reloadAnimationTime;
-    protected static boolean isReloading = false;
+    public static boolean isReloading = false;
 
     public mainCharacter()
     {
