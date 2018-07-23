@@ -166,15 +166,10 @@ public class PlayState extends State
 
             reloadbutton.draw(myBatch);
 
-<<<<<<< HEAD
-        pauseButton.draw(myBatch);
+            pauseButton.draw(myBatch);
 
-        //spawns multiple bullets
-        collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
-=======
             //spawns multiple bullets
             collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
->>>>>>> ae1a81b5e6a67a4c85eea27b5ef0bebb0cbb2a99
 
             // actually draws the particle effects
             muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
