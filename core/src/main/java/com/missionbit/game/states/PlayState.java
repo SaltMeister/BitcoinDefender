@@ -134,7 +134,6 @@ public class PlayState extends State
     {
         //todo move all update code into this from the render function
         handleInput();
-        //bulletManager.update();
     }
 
     @Override
