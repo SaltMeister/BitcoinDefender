@@ -47,14 +47,13 @@ public class PlayState extends State
     private Weapon weapon;
     private Sprite pausebutton;
     private Sprite reloadbutton;
+    private boolean playMode = true;
 
     public PlayState(GameStateManager gsm)
     {
         super(gsm);
 
         background = new Texture(Gdx.files.internal("images/background.png"));// add a image for the background
-        //background.setX(0);
-       // background.setY(0);
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
@@ -96,6 +95,7 @@ public class PlayState extends State
     @Override
     protected  void handleInput()
     {
+        //TODO add it to click pause button to stop the render function and set the boolean to false
         if (healthOfWall > 0) // if health goes to 0 u cannot shoot anymore
         {
             if (Gdx.input.justTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
@@ -111,16 +111,19 @@ public class PlayState extends State
                 shootClick.sub(gunPosition);
                 shootClick.nor();
 
-                if(reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size)
+                if (playMode)
                 {
-                    System.out.println("clicked");
-                    character.isReloading = true;
-                }
-                else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
-                        mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager))
-                {
-                    muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
-                    muzzleFlash.start();
+                    if(reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size)
+                    {
+                        System.out.println("clicked");
+                        character.isReloading = true;
+                    }
+                    else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
+                            mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager))
+                    {
+                        muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
+                        muzzleFlash.start();
+                    }
                 }
             }
         }
@@ -140,49 +143,55 @@ public class PlayState extends State
         //Set up our camera
         myBatch.setProjectionMatrix(cam.combined);
 
-        elapsedTime = System.currentTimeMillis() - startTime; // sets the time that has past in milliseconds
-
-
-        manager.update();
-        enemyManger.update();
-
-        if (MathUtils.random(spawnRate) == 1)// randomizes spawn rate of the enemies
-            enemyManger.spawnEnemy(mainCharacter1.getX());  //spawns enemies
-
-        // starts displaying the stuff
-        myBatch.begin();
-        myBatch.draw(background, 0, 0);
-        wallHP.draw(myBatch);
-        font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, background.getHeight() - wallHP.getHeight());
-        ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, background.getHeight() - wallHP.getHeight());
-
-        reloadbutton.draw(myBatch);
-
-        //spawns multiple bullets
-        collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
-
-        // actually draws the particle effects
-        muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
-
-        enemyManger.draw(cam);
-        manager.draw(cam);
-        myBatch.end();
-
-        //TODO: Draw our image!
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size)
-            character.isReloading = true;
-
-        myBatch.begin();
-        character.draw(myBatch, weapon);
-        myBatch.end();
-
-        if (elapsedTime >= 30000)
+        if (playMode)
         {
-            if (Enemy.damageReduction > 0.05)
-                Enemy.damageReduction *= 0.95;
+            elapsedTime = System.currentTimeMillis() - startTime; // sets the time that has past in milliseconds
 
-            startTime = System.currentTimeMillis();
+
+            manager.update();
+            enemyManger.update();
+
+            if (MathUtils.random(spawnRate) == 1)// randomizes spawn rate of the enemies
+                enemyManger.spawnEnemy(mainCharacter1.getX());  //spawns enemies
+
+            // starts displaying the stuff
+            myBatch.begin();
+            myBatch.draw(background, 0, 0);
+            wallHP.draw(myBatch);
+            font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, background.getHeight() - wallHP.getHeight());
+            ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, background.getHeight() - wallHP.getHeight());
+
+            reloadbutton.draw(myBatch);
+
+            //spawns multiple bullets
+            collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
+
+            // actually draws the particle effects
+            muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
+
+            enemyManger.draw(cam);
+            manager.draw(cam);
+            myBatch.end();
+
+            //TODO: Draw our image!
+
+            if (weapon.bullets == 0)
+                character.isReloading = true;
+            else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size)
+                character.isReloading = true;
+
+
+            myBatch.begin();
+            character.draw(myBatch, weapon);
+            myBatch.end();
+
+            if (elapsedTime >= 30000)
+            {
+                if (Enemy.damageReduction > 0.05)
+                    Enemy.damageReduction *= 0.95;
+
+                startTime = System.currentTimeMillis();
+            }
         }
     }
 
