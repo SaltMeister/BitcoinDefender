@@ -115,6 +115,11 @@ public class PlayState extends State
                 shootClick.sub(gunPosition);
                 shootClick.nor();
 
+                if (pauseButton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && playMode)
+                    playMode = false;
+                else
+                    playMode = true;
+
                 if (playMode)
                 {
                     if(reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size)
@@ -150,58 +155,51 @@ public class PlayState extends State
         {
             elapsedTime = System.currentTimeMillis() - startTime; // sets the time that has past in milliseconds
 
-
             manager.update();
             enemyManger.update();
 
             if (MathUtils.random(spawnRate) == 1)// randomizes spawn rate of the enemies
                 enemyManger.spawnEnemy(mainCharacter1.getX());  //spawns enemies
+        }
 
-            // starts displaying the stuff
-            myBatch.begin();
-            myBatch.draw(background, 0, 0);
-            wallHP.draw(myBatch);
-            font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, background.getHeight() - wallHP.getHeight());
-            ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, background.getHeight() - wallHP.getHeight());
+        // starts displaying the stuff
+        myBatch.begin();
+        myBatch.draw(background, 0, 0);
+        wallHP.draw(myBatch);
+        font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, background.getHeight() - wallHP.getHeight());
+        ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, background.getHeight() - wallHP.getHeight());
 
-            reloadbutton.draw(myBatch);
-
-<<<<<<< HEAD
-        pauseButton.draw(myBatch);
+        reloadbutton.draw(myBatch);
 
         //spawns multiple bullets
         collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
-=======
-            //spawns multiple bullets
-            collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
->>>>>>> ae1a81b5e6a67a4c85eea27b5ef0bebb0cbb2a99
 
-            // actually draws the particle effects
-            muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
+        // actually draws the particle effects
+        muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
 
-            enemyManger.draw(cam);
-            manager.draw(cam);
-            myBatch.end();
+        enemyManger.draw(cam);
+        manager.draw(cam);
+        myBatch.end();
 
-            //TODO: Draw our image!
+        //TODO: Draw our image!
 
-            if (weapon.bullets == 0)
-                character.isReloading = true;
-            else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size)
-                character.isReloading = true;
+        if (weapon.bullets == 0)
+            character.isReloading = true;
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size)
+            character.isReloading = true;
 
 
-            myBatch.begin();
-            character.draw(myBatch, weapon);
-            myBatch.end();
+        myBatch.begin();
+        pauseButton.draw(myBatch);
+        character.draw(myBatch, weapon);
+        myBatch.end();
 
-            if (elapsedTime >= 30000)
-            {
-                if (Enemy.damageReduction > 0.05)
-                    Enemy.damageReduction *= 0.95;
+        if (elapsedTime >= 30000)
+        {
+            if (Enemy.damageReduction > 0.05)
+                Enemy.damageReduction *= 0.95;
 
-                startTime = System.currentTimeMillis();
-            }
+            startTime = System.currentTimeMillis();
         }
     }
 
