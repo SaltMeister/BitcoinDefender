@@ -45,7 +45,7 @@ public class PlayState extends State
     private enemyManager enemyManger;
     private bulletManager manager;
     private Weapon weapon;
-    private Sprite pausebutton;
+    private Sprite pauseButton;
     private Sprite reloadbutton;
 
     public PlayState(GameStateManager gsm)
@@ -67,6 +67,10 @@ public class PlayState extends State
         reloadbutton = new Sprite(new Texture(Gdx.files.internal("images/reloadButton.png")));
         reloadbutton.setX(25);
         reloadbutton.setY(25);
+
+        pauseButton = new Sprite(new Texture(Gdx.files.internal("images/pauseButton.png")));
+        pauseButton.setX(Gdx.graphics.getWidth() - pauseButton.getWidth());
+        pauseButton.setY(Gdx.graphics.getHeight() - pauseButton.getHeight());
 
         gunPosition = new Vector2();
         gunPosition.x = mainCharacter1.getX() + mainCharacter1.getWidth();
@@ -157,6 +161,8 @@ public class PlayState extends State
         ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, background.getHeight() - wallHP.getHeight());
 
         reloadbutton.draw(myBatch);
+
+        pauseButton.draw(myBatch);
 
         //spawns multiple bullets
         collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
