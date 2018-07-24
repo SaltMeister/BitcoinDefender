@@ -69,10 +69,10 @@ public class PlayState extends State
         music.setVolume(0.5f);
         music.play();
 
-        shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun shot sound effect.mp3"));
+        shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunShotSoundEffect.mp3"));
         shotgunShot.setLooping(1,false);
         shotgunShot.setVolume(1,0.5f);
-        reload = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun Reload Sound Effect.mp3"));
+        reload = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunReloadSoundEffect.mp3"));
 
         g3c6 = Gdx.audio.newSound(Gdx.files.internal("muisc/G36 Sound Effects (1).mp3"));
 
@@ -195,7 +195,7 @@ public class PlayState extends State
 
                     if (playMode)
                     {
-                        if((reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size) || weapon.bullets == 0)
+                        if((reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size))
                         {
                             System.out.println("clicked");
                             character.isReloading = true;
@@ -260,6 +260,7 @@ public class PlayState extends State
         manager.draw(cam);
         myBatch.end();
 
+<<<<<<< HEAD
         //TODO: Draw our image!
 
         if (weapon.bullets == 0){
@@ -270,6 +271,8 @@ public class PlayState extends State
             character.isReloading = true;}
 
 
+=======
+>>>>>>> 9439b96589de9503c5879aa8d66e269f390a08d4
         //TODO: Draw our image
         myBatch.begin();
         pauseButton.draw(myBatch);
