@@ -190,7 +190,7 @@ public class PlayState extends State
 
                     if (playMode)
                     {
-                        if((reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size) || weapon.bullets == 0)
+                        if((reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size))
                         {
                             System.out.println("clicked");
                             character.isReloading = true;
