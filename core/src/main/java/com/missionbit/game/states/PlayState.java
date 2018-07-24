@@ -207,7 +207,6 @@ public class PlayState extends State
                             muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                             muzzleFlash.start();
                             shotgunShot.play();
-                            g3c6.play();
                         }
                     }
                 }
@@ -260,7 +259,6 @@ public class PlayState extends State
         manager.draw(cam);
         myBatch.end();
 
-<<<<<<< HEAD
         //TODO: Draw our image!
 
         if (weapon.bullets == 0){
@@ -271,8 +269,6 @@ public class PlayState extends State
             character.isReloading = true;}
 
 
-=======
->>>>>>> 9439b96589de9503c5879aa8d66e269f390a08d4
         //TODO: Draw our image
         myBatch.begin();
         pauseButton.draw(myBatch);
