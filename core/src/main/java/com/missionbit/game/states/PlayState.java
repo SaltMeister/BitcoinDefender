@@ -258,8 +258,9 @@ public class PlayState extends State
         enemyManger.draw(cam);
         manager.draw(cam);
         myBatch.end();
-        
+
         //TODO: Draw our image
+
         myBatch.begin();
         pauseButton.draw(myBatch);
         character.draw(myBatch, weapon);
@@ -309,7 +310,7 @@ public class PlayState extends State
             }
 
             if (healthOfWall <= 0)
-                enemies.get(loop).Draw(batch);
+                gsm.set(new GameOverState(gsm));
         }
 
         return flag;
