@@ -31,8 +31,8 @@ public class PlayState extends State
     private Music music;
     private Sound shotgunShot;
     private Sound reload;
-    private Sound autoRifle;
     private Sound autorifleReload;
+    private ParticleEffect muzzleFlash;
     private Sprite wallHP;
     private Vector2 gunPosition;
     private Vector2 shootClick;
@@ -103,15 +103,17 @@ public class PlayState extends State
         reloadbutton.setY(25);
 
         pauseButton = new Sprite(new Texture(Gdx.files.internal("images/pauseButton.png")));
-        pauseButton.setX(Gdx.graphics.getWidth() - pauseButton.getWidth());
-        pauseButton.setY(Gdx.graphics.getHeight() - pauseButton.getHeight());
+        pauseButton.setX(background.getWidth() - pauseButton.getWidth());
+        pauseButton.setY(background.getHeight() - pauseButton.getHeight());
 
         gunPosition = new Vector2();
         gunPosition.x = mainCharacter1.getX() + mainCharacter1.getWidth();
         gunPosition.y = mainCharacter1.getY() + mainCharacter1.getHeight();
 
-        shootClick = new Vector2();
+        muzzleFlash = new ParticleEffect(); // particle effects for muzzle flash
+        muzzleFlash.load(Gdx.files.internal("particles/muzzleFlash.p"), Gdx.files.internal("images"));
 
+        shootClick = new Vector2();
 
         spawnRate = INITIAL_ENEMY_SPAWN_RATE; // sets the spawn rate to the default one
         healthOfWall = HEALTH_OF_WALL; // sets health of wall
@@ -165,8 +167,6 @@ public class PlayState extends State
                         {
                             weapon.setParticlePositionAutoRifle(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 55);
                         }
-
-                        System.out.println("clicked");
                     }
                 }
             }
@@ -202,6 +202,8 @@ public class PlayState extends State
                                 mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager, weaponChoice))
                         {
                             shotgunShot.play(); // plays the shotgun shot
+                            muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
+                            muzzleFlash.start();
                         }
                     }
                 }
@@ -249,7 +251,7 @@ public class PlayState extends State
         collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
 
         // actually draws the particle effects
-        //muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
+        muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
         weapon.draw(myBatch, Gdx.graphics.getDeltaTime());
         enemyManger.draw(cam);
         manager.draw(cam);
@@ -262,7 +264,7 @@ public class PlayState extends State
         character.draw(myBatch, weapon);
         myBatch.end();
 
-        if (elapsedTime >= 30000)
+        if (elapsedTime >= 5000)
         {
             if (Enemy.damageReduction > 0.05)
                 Enemy.damageReduction *= 0.95;

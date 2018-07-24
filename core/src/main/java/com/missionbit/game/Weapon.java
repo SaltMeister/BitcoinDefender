@@ -27,9 +27,6 @@ public class Weapon
         bullets = startsize;
         fireRate = startfireRate;
 
-        muzzleFlash = new ParticleEffect(); // particle effects for muzzle flash
-        muzzleFlash.load(Gdx.files.internal("particles/muzzleFlash.p"), Gdx.files.internal("images"));
-
         autoRifleFlash = new ParticleEffect();
         autoRifleFlash.load(Gdx.files.internal("particles/muzzleFlashAuto.p"), Gdx.files.internal("images"));
 
@@ -45,11 +42,11 @@ public class Weapon
     public boolean fire(float startx, float starty, float directionx, float directiony, bulletManager manager, int weapon)
     {
         bulletElapsedTime = System.currentTimeMillis() - startTimeBullet;
-        System.out.println(startTimeBullet);
 
         if(bullets > 0 && !mainCharacter.isReloading)
         {
             if (weapon == 1)
+            {
                 if (bulletElapsedTime >= fireRate)
                 {
                     manager.spawnBullet(startx, starty, directionx, directiony, false);
@@ -63,6 +60,8 @@ public class Weapon
                     bullets = bullets - 1;
                     startTimeBullet = System.currentTimeMillis();
                 }
+            }
+
             else if (weapon == 2)
             {
                 for (int loop = 0; loop <= 5; loop++)
