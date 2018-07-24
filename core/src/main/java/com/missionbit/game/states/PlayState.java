@@ -194,14 +194,14 @@ public class PlayState extends State
                         {
                             System.out.println("clicked");
                             character.isReloading = true;
-                            reload.play();
+                            reload.play(); // plays the reload sound
                         }
                         else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
                                 mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager, weaponChoice))
                         {
                             muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                             muzzleFlash.start();
-                            shotgunShot.play();
+                            shotgunShot.play(); // plays the shotgun shot
                         }
                     }
                 }
