@@ -34,6 +34,7 @@ public class PlayState extends State
     private Music music;
     private Sound shotgunShot;
     private Sound reload;
+    private Sound g3c6;
     private Sprite wallHP;
     private Vector2 gunPosition;
     private Vector2 shootClick;
@@ -72,6 +73,10 @@ public class PlayState extends State
         shotgunShot.setLooping(1,false);
         shotgunShot.setVolume(1,0.5f);
         reload = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun Reload Sound Effect.mp3"));
+
+        g3c6 = Gdx.audio.newSound(Gdx.files.internal("muisc/G36 Sound Effects (1).mp3"));
+
+
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
@@ -202,6 +207,7 @@ public class PlayState extends State
                             muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                             muzzleFlash.start();
                             shotgunShot.play();
+                            g3c6.play();
                         }
                     }
                 }
@@ -254,7 +260,6 @@ public class PlayState extends State
         manager.draw(cam);
         myBatch.end();
 
-<<<<<<< HEAD
         //TODO: Draw our image!
 
         if (weapon.bullets == 0){
@@ -265,9 +270,7 @@ public class PlayState extends State
             character.isReloading = true;}
 
 
-=======
         //TODO: Draw our image
->>>>>>> 72ed09015d50d8c6fecfed84a1e12a2694872ba8
         myBatch.begin();
         pauseButton.draw(myBatch);
         character.draw(myBatch, weapon);
