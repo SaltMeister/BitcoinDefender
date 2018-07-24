@@ -33,7 +33,7 @@ public class Weapon
         autoRifleFlash = new ParticleEffect();
         autoRifleFlash.load(Gdx.files.internal("particles/muzzleFlashAuto.p"), Gdx.files.internal("images"));
 
-        autoRifle = Gdx.audio.newSound(Gdx.files.internal("music/autoRifleShotSound.mp3"));
+        autoRifle = Gdx.audio.newSound(Gdx.files.internal("music/autoRifleShot.mp3"));
         autoRifle.setLooping(1, false);
         autoRifle.setVolume(1, 0.5f); // auto rifle noise
     }
@@ -53,10 +53,13 @@ public class Weapon
                 if (bulletElapsedTime >= fireRate)
                 {
                     manager.spawnBullet(startx, starty, directionx, directiony, false);
+
                     autoRifle.play();
                     autoRifleFlash.setPosition(autoRiflePositionX, autoRiflePositionY);
+
                     if (autoRifleFlash.isComplete())
                         autoRifleFlash.start();
+
                     bullets = bullets - 1;
                     startTimeBullet = System.currentTimeMillis();
                 }

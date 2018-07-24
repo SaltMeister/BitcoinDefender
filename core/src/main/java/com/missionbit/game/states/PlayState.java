@@ -66,10 +66,17 @@ public class PlayState extends State
         music.setVolume(0.5f);
         music.play();
 
+        shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunShotSoundEffect.mp3"));
+        shotgunShot.setLooping(1, false);
+        shotgunShot.setVolume(1, 0.5f);
 
-        autoRifle = Gdx.audio.newSound(Gdx.files.internal("music/autoRifleShotSound.mp3"));
-        autoRifle.setLooping(1, false);
-        autoRifle.setVolume(1, 0.25f); // auto rifle noise
+        reload = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunReloadSoundEffect.mp3"));
+        reload.setLooping(1, false);
+        reload.setVolume(1, 0.5f);
+
+        autorifleReload = Gdx.audio.newSound(Gdx.files.internal("music/AutoRifleReload.mp3"));
+        autorifleReload.setLooping(1, false);
+        autorifleReload.setVolume(1, 0.5f);
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
@@ -151,11 +158,12 @@ public class PlayState extends State
                         if(reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size)
                         {
                             character.isReloading = true;
+                            autorifleReload.play();
                         }
-                        else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
-                                mainCharacter1.getY() + 58, shootClick.x, shootClick.y, manager, weaponChoice))
+                        else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth() - 10,
+                                mainCharacter1.getY() + 50, shootClick.x, shootClick.y, manager, weaponChoice))
                         {
-                            weapon.setParticlePositionAutoRifle(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 58);
+                            weapon.setParticlePositionAutoRifle(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 55);
                         }
 
                         System.out.println("clicked");
@@ -193,8 +201,6 @@ public class PlayState extends State
                         else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
                                 mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager, weaponChoice))
                         {
-                            //muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
-                           // muzzleFlash.start();
                             shotgunShot.play(); // plays the shotgun shot
                         }
                     }
