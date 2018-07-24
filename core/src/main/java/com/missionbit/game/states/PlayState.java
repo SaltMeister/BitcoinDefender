@@ -259,7 +259,7 @@ public class PlayState extends State
         enemyManger.draw(cam);
         manager.draw(cam);
         myBatch.end();
-        
+
         //TODO: Draw our image
         myBatch.begin();
         pauseButton.draw(myBatch);
