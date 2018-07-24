@@ -31,6 +31,8 @@ public class mainCharacter
         reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload8.png")));
         reloadAnimation = new Animation<Texture>(0.25f, reloadFrames);
         reloadAnimationTime = 0;
+
+
     }
 
     public void draw(SpriteBatch sprite, Weapon weapon)
