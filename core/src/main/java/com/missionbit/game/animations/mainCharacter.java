@@ -16,23 +16,36 @@ public class mainCharacter
     private float reloadAnimationTime;
     public static boolean isReloading = false;
 
-    public mainCharacter()
+    public mainCharacter(int weaponChoice)
     {
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload1.png")));
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload2.png")));
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload3.png")));
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload4.png")));
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload5.png")));
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload6.png")));
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload4.png")));
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload5.png")));
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload6.png")));
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload7.png")));
-        reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload8.png")));
-        reloadAnimation = new Animation<Texture>(0.25f, reloadFrames);
-        reloadAnimationTime = 0;
-
-
+        if (weaponChoice == 1)
+        {
+            reloadFrames.add(new Texture(Gdx.files.internal("images/autoRifle.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/autoRifleReload1.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/autoRifleReload2.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/autoRifleReload3.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/autoRifleReload4.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/autoRifleReload5.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/autoRifleReload6.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/autoRifleReload7.png")));
+            reloadAnimation = new Animation<Texture>(0.25f, reloadFrames);
+            reloadAnimationTime = 0;
+        }
+        else if (weaponChoice == 2) {
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload1.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload2.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload3.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload4.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload5.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload6.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload4.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload5.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload6.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload7.png")));
+            reloadFrames.add(new Texture(Gdx.files.internal("images/shotgunReload8.png")));
+            reloadAnimation = new Animation<Texture>(0.25f, reloadFrames);
+            reloadAnimationTime = 0;
+        }
     }
 
     public void draw(SpriteBatch sprite, Weapon weapon)
