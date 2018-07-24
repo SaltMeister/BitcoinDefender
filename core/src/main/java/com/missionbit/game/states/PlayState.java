@@ -2,6 +2,7 @@ package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,6 +30,7 @@ public class PlayState extends State
     private static final int HEALTH_OF_WALL = 100;
     private mainCharacter character;
     private Texture background;
+    private Music music;
     private Sprite wallHP;
     private Vector2 gunPosition;
     private Vector2 shootClick;
@@ -54,6 +56,11 @@ public class PlayState extends State
         super(gsm);
 
         background = new Texture(Gdx.files.internal("images/background.png"));// add a image for the background
+
+        music = Gdx.audio.newMusic(Gdx.files.internal("music/CitySoundEffects.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.5f);
+        music.play();
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
@@ -254,6 +261,7 @@ public class PlayState extends State
     public void dispose()
     {
         background.dispose();
+        music.dispose();
         //TODO dispose all assets
     }
 
