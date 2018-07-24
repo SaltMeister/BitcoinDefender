@@ -46,7 +46,7 @@ public class PlayState extends State
     private Vector2 wallEnd;
     private long startTime = System.currentTimeMillis(); // sets the time
     private long elapsedTime;
-    private Sprite mainCharacter1;
+    private Sprite mainCharacter1, mainCharacter2;
     private enemyManager enemyManger;
     private bulletManager manager;
     private Weapon weapon;
@@ -76,9 +76,13 @@ public class PlayState extends State
         wallHP.setX(wallHP.getWidth());
         wallHP.setY(background.getHeight() - wallHP.getHeight() * 1.75f);
 
-        mainCharacter1 = new Sprite(new Texture(Gdx.files.internal("images/doubleBarrelShotgun.png")));
-        mainCharacter1.setX(140);
-        mainCharacter1.setY(150);
+        //mainCharacter1 = new Sprite(new Texture(Gdx.files.internal("images/doubleBarrelShotgun.png")));
+        //mainCharacter1.setX(140);
+        //mainCharacter1.setY(150);
+
+        mainCharacter2 = new Sprite(new Texture(Gdx.files.internal("images/autoRifle.png")));
+        mainCharacter2.setX(140);
+        mainCharacter2.setY(150);
 
         reloadbutton = new Sprite(new Texture(Gdx.files.internal("images/reloadButton.png")));
         reloadbutton.setX(25);
@@ -89,8 +93,8 @@ public class PlayState extends State
         pauseButton.setY(Gdx.graphics.getHeight() - pauseButton.getHeight());
 
         gunPosition = new Vector2();
-        gunPosition.x = mainCharacter1.getX() + mainCharacter1.getWidth();
-        gunPosition.y = mainCharacter1.getY() + mainCharacter1.getHeight();
+        gunPosition.x = mainCharacter2.getX() + mainCharacter2.getWidth();
+        gunPosition.y = mainCharacter2.getY() + mainCharacter2.getHeight();
 
         shootClick = new Vector2();
 
@@ -108,7 +112,7 @@ public class PlayState extends State
         character = new mainCharacter();
         manager = new bulletManager();
 
-        weapon = new Weapon(20,2,1);
+        weapon = new Weapon(5,30,1);
 
         cam.setToOrtho(false, 800, 480);
     }
@@ -146,11 +150,12 @@ public class PlayState extends State
                         character.isReloading = true;
                         reload.play();
                     }
-                    else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
-                            mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager))
+                    else if(weapon.fire(mainCharacter2.getX() + mainCharacter2.getWidth(),
+                            mainCharacter2.getY() + 60, shootClick.x, shootClick.y, manager))
                     {
                         shotgunShot.play();
                         muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
+                        muzzleFlash.setPosition(mainCharacter2.getX() + mainCharacter2.getWidth(), mainCharacter2.getY() + 60);
                         muzzleFlash.start();
                     }
                 }
@@ -179,7 +184,7 @@ public class PlayState extends State
             enemyManger.update();
 
             if (MathUtils.random(spawnRate) == 1)// randomizes spawn rate of the enemies
-                enemyManger.spawnEnemy(mainCharacter1.getX());  //spawns enemies
+                enemyManger.spawnEnemy(mainCharacter2.getX());  //spawns enemies
         }
 
         // starts displaying the stuff
@@ -189,11 +194,7 @@ public class PlayState extends State
         font.draw(myBatch, " " + healthOfWall, wallHP.getWidth() * 2, background.getHeight() - wallHP.getHeight());
         ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, background.getHeight() - wallHP.getHeight());
 
-
-            pauseButton.draw(myBatch);
-
-            //spawns multiple bullets
-            collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
+        pauseButton.draw(myBatch);
 
         reloadbutton.draw(myBatch);
 
@@ -217,7 +218,8 @@ public class PlayState extends State
 
         myBatch.begin();
         pauseButton.draw(myBatch);
-        character.draw(myBatch, weapon);
+        //character.draw(myBatch, weapon);
+        mainCharacter2.draw(myBatch);
         myBatch.end();
 
         if (elapsedTime >= 30000)
