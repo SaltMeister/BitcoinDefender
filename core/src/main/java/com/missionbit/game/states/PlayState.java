@@ -35,6 +35,7 @@ public class PlayState extends State
     private Sound shotgunShot;
     private Sound reload;
     private Sound autoRifle;
+    private Sound autorifleReload;
     private Sprite wallHP;
     private Vector2 gunPosition;
     private Vector2 shootClick;
@@ -76,7 +77,7 @@ public class PlayState extends State
 
         autoRifle = Gdx.audio.newSound(Gdx.files.internal("music/autoRifleShotSound.mp3"));
         autoRifle.setLooping(1, false);
-        autoRifle.setVolume(1, 0.5f); // auto rifle noise
+        autoRifle.setVolume(1, 0.25f); // auto rifle noise
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
