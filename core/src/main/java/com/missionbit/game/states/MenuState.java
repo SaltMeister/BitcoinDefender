@@ -32,7 +32,7 @@ public class MenuState extends State
         helpButton.setX(450);
         helpButton.setY(100);
 
-        tutorial =new Sprite(new Texture(Gdx.files.internal("images/tutorial.png")));
+        tutorial = new Sprite(new Texture(Gdx.files.internal("images/tutorial.png")));
         exitTutorial = new Sprite(new Texture(Gdx.files.internal("images/leaveTutorialButton.png")));
         exitTutorial.setX(25);
         exitTutorial.setY(400);
@@ -51,7 +51,7 @@ public class MenuState extends State
             cam.unproject(touchPos);
 
             if (playButton.getBoundingRectangle().contains(touchPos.x, touchPos.y))
-                gsm.set(new PlayState(gsm));
+                gsm.set(new ChooseState(gsm));
 
             if (helpButton.getBoundingRectangle().contains(touchPos.x, touchPos.y))
                 gsm.push(new TutorialState(gsm));
