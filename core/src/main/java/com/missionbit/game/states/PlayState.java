@@ -34,6 +34,7 @@ public class PlayState extends State
     private Music music;
     private Sound shotgunShot;
     private Sound reload;
+    private Sound autoRifle;
     private Sprite wallHP;
     private Vector2 gunPosition;
     private Vector2 shootClick;
@@ -68,10 +69,17 @@ public class PlayState extends State
         music.setVolume(0.5f);
         music.play();
 
-        shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun shot sound effect.mp3"));
-        shotgunShot.setLooping(1,false);
-        shotgunShot.setVolume(1,0.5f);
-        reload = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun Reload Sound Effect.mp3"));
+        shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunShotSoundEffect.mp3"));
+        shotgunShot.setLooping(1, false);
+        shotgunShot.setVolume(1, 0.5f);
+        reload = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunReloadSoundEffect.mp3"));
+
+        autoRifle = Gdx.audio.newSound(Gdx.files.internal("music/autoRifleShotSound.mp3"));
+        autoRifle.setLooping(1, false);
+        autoRifle.setVolume(1, 0.5f);
+
+
+
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
@@ -190,18 +198,18 @@ public class PlayState extends State
 
                     if (playMode)
                     {
-                        if((reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size) || weapon.bullets == 0)
+                        if((reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size))
                         {
                             System.out.println("clicked");
                             character.isReloading = true;
-                            reload.play();
+                            reload.play(); // plays the reload sound
                         }
                         else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
                                 mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager, weaponChoice))
                         {
                             muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                             muzzleFlash.start();
-                            shotgunShot.play();
+                            shotgunShot.play(); // plays the shotgun shot
                         }
                     }
                 }
@@ -253,18 +261,6 @@ public class PlayState extends State
         enemyManger.draw(cam);
         manager.draw(cam);
         myBatch.end();
-
-
-        //TODO: Draw our image!
-
-        if (weapon.bullets == 0){
-            character.isReloading = true;
-            reload.play();}
-
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size){
-            character.isReloading = true;}
-
-
 
         //TODO: Draw our image
 

@@ -27,9 +27,7 @@ public class Weapon
        if(bullets > 0 && !mainCharacter.isReloading)
        {
            if (weapon == 1)
-           {
                manager.spawnBullet(startx, starty, directionx, directiony, false);
-           }
            else if (weapon == 2)
            {
                for (int loop = 0; loop <= 5; loop++)
