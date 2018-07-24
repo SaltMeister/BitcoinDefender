@@ -209,11 +209,12 @@ public class PlayState extends State
 
         //TODO: Draw our image!
 
-        if (weapon.bullets == 0)
+        if (weapon.bullets == 0){
             character.isReloading = true;
-            reload.play();
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size)
-            character.isReloading = true;
+            reload.play();}
+
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size){
+            character.isReloading = true;}
 
 
         myBatch.begin();
