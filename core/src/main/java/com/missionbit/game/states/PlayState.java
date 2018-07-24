@@ -68,10 +68,10 @@ public class PlayState extends State
         music.setVolume(0.5f);
         music.play();
 
-        shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun shot sound effect.mp3"));
+        shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunShotSoundEffect.mp3"));
         shotgunShot.setLooping(1,false);
         shotgunShot.setVolume(1,0.5f);
-        reload = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun Reload Sound Effect.mp3"));
+        reload = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunReloadSoundEffect.mp3"));
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
