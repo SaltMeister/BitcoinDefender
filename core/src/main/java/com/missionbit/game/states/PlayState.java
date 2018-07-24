@@ -3,6 +3,7 @@ package com.missionbit.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,6 +32,8 @@ public class PlayState extends State
     private mainCharacter character;
     private Texture background;
     private Music music;
+    private Sound shotgunShot;
+    private Sound reload;
     private Sprite wallHP;
     private Vector2 gunPosition;
     private Vector2 shootClick;
@@ -65,6 +68,11 @@ public class PlayState extends State
         music.setVolume(0.5f);
         music.play();
 
+        shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun shot sound effect.mp3"));
+        shotgunShot.setLooping(1,false);
+        shotgunShot.setVolume(1,0.5f);
+        reload = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun Reload Sound Effect.mp3"));
+
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
         wallHP.setY(background.getHeight() - wallHP.getHeight() * 1.75f);
@@ -73,7 +81,7 @@ public class PlayState extends State
         {
             mainCharacter1 = new Sprite(new Texture(Gdx.files.internal("images/autoRifle.png")));
 
-            weapon = new Weapon(5,30,1);
+            weapon = new Weapon(7,30,1);
         }
         else if (choice == 2)
         {
@@ -117,13 +125,14 @@ public class PlayState extends State
     }
 
     @Override
-    protected  void handleInput()
+    protected void handleInput()
     {
         //TODO add it to click pause button to stop the render function and set the boolean to false
         if (healthOfWall > 0) // if health goes to 0 u cannot shoot anymore
         {
             if (weaponChoice == 1)
-                if (Gdx.input.isTouched())
+            {
+                if (Gdx.input.justTouched())
                 {
                     Vector3 touchPos = new Vector3();
                     touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -149,15 +158,19 @@ public class PlayState extends State
                             character.isReloading = true;
                         }
                         else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
-                                mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager))
+                                mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager, weaponChoice))
                         {
                             muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                             muzzleFlash.start();
                         }
+
+                        System.out.println("clicked");
                     }
                 }
+            }
             else if (weaponChoice == 2)
-                if (Gdx.input.justTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
+            {
+                if (Gdx.input.isTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
                 {
                     Vector3 touchPos = new Vector3();
                     touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -181,20 +194,26 @@ public class PlayState extends State
                         {
                             System.out.println("clicked");
                             character.isReloading = true;
+                            reload.play();
                         }
                         else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
-                                mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager))
+                                mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager, weaponChoice))
                         {
                             muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                             muzzleFlash.start();
+                            shotgunShot.play();
                         }
+
+                        muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
+                        muzzleFlash.start();
                     }
                 }
+            }
         }
     }
 
     @Override
-    public  void update(float dt)
+    public void update(float dt)
     {
         //todo move all update code into this from the render function
         handleInput();

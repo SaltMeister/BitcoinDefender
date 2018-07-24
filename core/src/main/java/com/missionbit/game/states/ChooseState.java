@@ -11,7 +11,6 @@ public class ChooseState extends State
 {
     private Texture chooseScreen;
     private Sprite shotgunButton, autoRifleButton;
-    public int buttonChoice;
 
     public ChooseState(GameStateManager gsm)
     {
@@ -44,7 +43,6 @@ public class ChooseState extends State
 
             if (autoRifleButton.getBoundingRectangle().contains(touchPos.x, touchPos.y))
                 gsm.set(new PlayState(gsm, 1));
-
         }
     }
 
