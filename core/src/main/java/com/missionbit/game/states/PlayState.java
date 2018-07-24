@@ -167,6 +167,7 @@ public class PlayState extends State
                         {
                             muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                             muzzleFlash.start();
+                            g3c6.play();
                         }
 
                         System.out.println("clicked");
@@ -199,14 +200,14 @@ public class PlayState extends State
                         {
                             System.out.println("clicked");
                             character.isReloading = true;
-                            reload.play();
+                            reload.play(); // plays the reload sound
                         }
                         else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
                                 mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager, weaponChoice))
                         {
                             muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                             muzzleFlash.start();
-                            shotgunShot.play();
+                            shotgunShot.play(); // plays the shotgun shot
                         }
                     }
                 }
@@ -258,17 +259,7 @@ public class PlayState extends State
         enemyManger.draw(cam);
         manager.draw(cam);
         myBatch.end();
-
-        //TODO: Draw our image!
-
-        if (weapon.bullets == 0){
-            character.isReloading = true;
-            reload.play();}
-
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size){
-            character.isReloading = true;}
-
-
+        
         //TODO: Draw our image
         myBatch.begin();
         pauseButton.draw(myBatch);
