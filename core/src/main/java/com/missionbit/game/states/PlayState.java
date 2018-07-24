@@ -132,7 +132,7 @@ public class PlayState extends State
         {
             if (weaponChoice == 1)
             {
-                if (Gdx.input.justTouched())
+                if (Gdx.input.isTouched())
                 {
                     Vector3 touchPos = new Vector3();
                     touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -170,7 +170,7 @@ public class PlayState extends State
             }
             else if (weaponChoice == 2)
             {
-                if (Gdx.input.isTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
+                if (Gdx.input.justTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
                 {
                     Vector3 touchPos = new Vector3();
                     touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -190,7 +190,7 @@ public class PlayState extends State
 
                     if (playMode)
                     {
-                        if(reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size)
+                        if((reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size) || weapon.bullets == 0)
                         {
                             System.out.println("clicked");
                             character.isReloading = true;
@@ -203,9 +203,6 @@ public class PlayState extends State
                             muzzleFlash.start();
                             shotgunShot.play();
                         }
-
-                        muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
-                        muzzleFlash.start();
                     }
                 }
             }
@@ -257,14 +254,7 @@ public class PlayState extends State
         manager.draw(cam);
         myBatch.end();
 
-        //TODO: Draw our image!
-
-        if (weapon.bullets == 0)
-            character.isReloading = true;
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size)
-            character.isReloading = true;
-
-
+        //TODO: Draw our image
         myBatch.begin();
         pauseButton.draw(myBatch);
         character.draw(myBatch, weapon);
