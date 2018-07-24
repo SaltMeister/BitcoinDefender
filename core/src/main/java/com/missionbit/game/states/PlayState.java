@@ -34,6 +34,7 @@ public class PlayState extends State
     private Music music;
     private Sound shotgunShot;
     private Sound reload;
+    private Sound g3c6;
     private Sprite wallHP;
     private Vector2 gunPosition;
     private Vector2 shootClick;
@@ -72,6 +73,10 @@ public class PlayState extends State
         shotgunShot.setLooping(1,false);
         shotgunShot.setVolume(1,0.5f);
         reload = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunReloadSoundEffect.mp3"));
+
+        g3c6 = Gdx.audio.newSound(Gdx.files.internal("muisc/G36 Sound Effects (1).mp3"));
+
+
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
@@ -162,6 +167,7 @@ public class PlayState extends State
                         {
                             muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
                             muzzleFlash.start();
+                            g3c6.play();
                         }
 
                         System.out.println("clicked");
