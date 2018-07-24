@@ -1,11 +1,8 @@
 package com.missionbit.game.states;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -38,14 +35,13 @@ public class PlayState extends State
     private Sprite wallHP;
     private Vector2 gunPosition;
     private Vector2 shootClick;
-    private ParticleEffect muzzleFlash;
     private int spawnRate;
     private int healthOfWall; //the amount of lives the wall has
     private BitmapFont font;
     private BitmapFont ammo;
     private Vector2 wallStart;
     private Vector2 wallEnd;
-    private long startTime = System.currentTimeMillis(); // sets the time
+    private long startTimeEnemies = System.currentTimeMillis(); // sets the time
     private long elapsedTime;
     private Sprite mainCharacter1;
     private enemyManager enemyManger;
@@ -74,9 +70,6 @@ public class PlayState extends State
         shotgunShot.setVolume(1, 0.5f); // shotgun noise
         reload = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunReloadSoundEffect.mp3"));
 
-        autoRifle = Gdx.audio.newSound(Gdx.files.internal("music/autoRifleShotSound.mp3"));
-        autoRifle.setLooping(1, false);
-        autoRifle.setVolume(1, 0.5f); // auto rifle noise
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
@@ -86,7 +79,7 @@ public class PlayState extends State
         {
             mainCharacter1 = new Sprite(new Texture(Gdx.files.internal("images/autoRifle.png")));
 
-            weapon = new Weapon(7,30,1);
+            weapon = new Weapon(7,30,70);
         }
         else if (choice == 2)
         {
@@ -112,8 +105,6 @@ public class PlayState extends State
 
         shootClick = new Vector2();
 
-        muzzleFlash = new ParticleEffect(); // particle effects for muzzle flash
-        muzzleFlash.load(Gdx.files.internal("particles/muzzleFlash.p"), Gdx.files.internal("images"));
 
         spawnRate = INITIAL_ENEMY_SPAWN_RATE; // sets the spawn rate to the default one
         healthOfWall = HEALTH_OF_WALL; // sets health of wall
@@ -159,14 +150,12 @@ public class PlayState extends State
                     {
                         if(reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size)
                         {
-                            System.out.println("clicked");
                             character.isReloading = true;
                         }
                         else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
-                                mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager, weaponChoice))
+                                mainCharacter1.getY() + 58, shootClick.x, shootClick.y, manager, weaponChoice))
                         {
-                            muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
-                            muzzleFlash.start();
+                            weapon.setParticlePositionAutoRifle(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 58);
                         }
 
                         System.out.println("clicked");
@@ -204,8 +193,8 @@ public class PlayState extends State
                         else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth(),
                                 mainCharacter1.getY() + 60, shootClick.x, shootClick.y, manager, weaponChoice))
                         {
-                            muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
-                            muzzleFlash.start();
+                            //muzzleFlash.setPosition(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 60);
+                           // muzzleFlash.start();
                             shotgunShot.play(); // plays the shotgun shot
                         }
                     }
@@ -229,7 +218,8 @@ public class PlayState extends State
 
         if (playMode)
         {
-            elapsedTime = System.currentTimeMillis() - startTime; // sets the time that has past in milliseconds
+            elapsedTime = System.currentTimeMillis() - startTimeEnemies; // sets the time that has past in milliseconds
+
 
             manager.update();
             enemyManger.update();
@@ -253,8 +243,8 @@ public class PlayState extends State
         collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
 
         // actually draws the particle effects
-        muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
-
+        //muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
+        weapon.draw(myBatch, Gdx.graphics.getDeltaTime());
         enemyManger.draw(cam);
         manager.draw(cam);
         myBatch.end();
@@ -271,7 +261,7 @@ public class PlayState extends State
             if (Enemy.damageReduction > 0.05)
                 Enemy.damageReduction *= 0.95;
 
-            startTime = System.currentTimeMillis();
+            startTimeEnemies = System.currentTimeMillis();
         }
     }
 
@@ -292,7 +282,7 @@ public class PlayState extends State
                 else
                 {
                     healthOfWall = 0;
-                    startTime = 0; // sets time to 0 so no more attacking from enemies
+                    startTimeEnemies = 0; // sets time to 0 so no more attacking from enemies
                 }
 
                 flag = true;
