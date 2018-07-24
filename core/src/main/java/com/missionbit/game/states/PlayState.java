@@ -254,20 +254,7 @@ public class PlayState extends State
         manager.draw(cam);
         myBatch.end();
 
-<<<<<<< HEAD
-        //TODO: Draw our image!
-
-        if (weapon.bullets == 0){
-            character.isReloading = true;
-            reload.play();}
-
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size){
-            character.isReloading = true;}
-
-
-=======
         //TODO: Draw our image
->>>>>>> 72ed09015d50d8c6fecfed84a1e12a2694872ba8
         myBatch.begin();
         pauseButton.draw(myBatch);
         character.draw(myBatch, weapon);
