@@ -68,7 +68,7 @@ public class PlayState extends State
         shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun shot sound effect.mp3"));
         shotgunShot.setLooping(1,false);
         shotgunShot.setVolume(1,0.5f);
-        reload = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun Reload Sound Effect.mp3"));
+        reload = Gdx.audio.newSound(Gdx.files.internal("music/Shotgun Reload Sound Effect[Download Link].mp3"));
 
 
 
@@ -148,7 +148,6 @@ public class PlayState extends State
                     {
                         System.out.println("clicked");
                         character.isReloading = true;
-                        reload.play();
                     }
                     else if(weapon.fire(mainCharacter2.getX() + mainCharacter2.getWidth(),
                             mainCharacter2.getY() + 60, shootClick.x, shootClick.y, manager))
@@ -212,6 +211,7 @@ public class PlayState extends State
 
         if (weapon.bullets == 0)
             character.isReloading = true;
+            reload.play();
         else if (Gdx.input.isKeyJustPressed(Input.Keys.R) && weapon.bullets < weapon.size)
             character.isReloading = true;
 
