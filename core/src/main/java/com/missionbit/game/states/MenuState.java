@@ -77,7 +77,7 @@ public class MenuState extends State
 
         if (showHelp == false)
         {
-            batch.draw(homeScreen, 0, -95);
+            batch.draw(homeScreen, 0, 0);
             playButton.draw(batch);
             helpButton.draw(batch);
         }
