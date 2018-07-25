@@ -40,9 +40,10 @@ public class PlayState extends State
     private int healthOfWall; //the amount of lives the wall has
     private BitmapFont font;
     private BitmapFont ammo;
+    private BitmapFont timer;
     private Vector2 wallStart;
     private Vector2 wallEnd;
-    private long startTimeEnemies = System.currentTimeMillis(); // sets the time
+    private long startTimeEnemies = System.currentTimeMillis(); // sets the time for enemy spawn
     private long elapsedTime;
     private Sprite mainCharacter1;
     private enemyManager enemyManger;
@@ -86,7 +87,7 @@ public class PlayState extends State
         {
             mainCharacter1 = new Sprite(new Texture(Gdx.files.internal("images/autoRifle.png")));
 
-            weapon = new Weapon(7,30,70);
+            weapon = new Weapon(25,30,70);
         }
         else if (choice == 2)
         {
@@ -287,11 +288,6 @@ public class PlayState extends State
                     if (enemies.get(loop).alive)
                         healthOfWall -= enemies.get(loop).damageDealt(); // if the enemies touched the wall drop 2 hp every second
                 }
-                else
-                {
-                    healthOfWall = 0;
-                    startTimeEnemies = 0; // sets time to 0 so no more attacking from enemies
-                }
 
                 flag = true;
             }
@@ -319,6 +315,9 @@ public class PlayState extends State
     {
         background.dispose();
         music.dispose();
+        shotgunShot.dispose();
+        autorifleReload.dispose();
+        reload.dispose();
         //TODO dispose all assets
     }
 

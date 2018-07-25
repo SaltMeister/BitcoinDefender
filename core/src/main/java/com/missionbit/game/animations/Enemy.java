@@ -1,6 +1,7 @@
 package com.missionbit.game.animations;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -23,6 +24,7 @@ public class Enemy
     public boolean alive;
     public int health;
     public Sprite healthbar;
+    private Sound enemyDeath;
     private Animation<Texture> walkinganimation;
     private Array<Texture> walkingframes = new Array<Texture>();
     private Animation<Texture> attackAnimation;
@@ -93,6 +95,10 @@ public class Enemy
 
         wallEffect = new ParticleEffect();
         wallEffect.load(Gdx.files.internal("particles/brokenWall.p"), Gdx.files.internal("images"));
+
+        enemyDeath = Gdx.audio.newSound(Gdx.files.internal("music/enemyDeathNoise.mp3"));
+        enemyDeath.setLooping(1,false);
+        enemyDeath.setVolume(1, 0.75f);
     }
 
 
@@ -197,6 +203,7 @@ public class Enemy
         if(health <= 0)
         {
             deathAnimationTime = 0;
+            enemyDeath.play();
             blood.start();
             alive = false;
         }
