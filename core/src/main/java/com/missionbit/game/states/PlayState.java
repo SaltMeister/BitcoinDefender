@@ -46,7 +46,7 @@ public class PlayState extends State
     private long startTimeEnemies = System.currentTimeMillis(); // sets the time for enemy spawn
     private long elapsedTime;
     private Sprite mainCharacter1;
-    private enemyManager enemyManger;
+    private enemyManager enemyManager;
     private bulletManager manager;
     private Weapon weapon;
     private Sprite pauseButton;
@@ -123,7 +123,7 @@ public class PlayState extends State
 
         wallStart = new Vector2(186.99998f, 0.0f);
         wallEnd = new Vector2(320.0f, 258.0f);
-        enemyManger = new enemyManager();
+        enemyManager = new enemyManager();
         character = new mainCharacter(weaponChoice);
         manager = new bulletManager();
 
@@ -231,10 +231,10 @@ public class PlayState extends State
 
 
             manager.update();
-            enemyManger.update();
+            enemyManager.update();
 
             if (MathUtils.random(spawnRate) == 1)// randomizes spawn rate of the enemies
-                enemyManger.spawnEnemy(mainCharacter1.getX());  //spawns enemies
+                enemyManager.spawnEnemy(mainCharacter1.getX());  //spawns enemies
         }
 
         // starts displaying the stuff
@@ -254,7 +254,7 @@ public class PlayState extends State
         // actually draws the particle effects
         muzzleFlash.draw(myBatch, Gdx.graphics.getDeltaTime());
         weapon.draw(myBatch, Gdx.graphics.getDeltaTime());
-        enemyManger.draw(cam);
+        enemyManager.draw(cam);
         manager.draw(cam);
         myBatch.end();
 
@@ -318,6 +318,7 @@ public class PlayState extends State
         shotgunShot.dispose();
         autorifleReload.dispose();
         reload.dispose();
+        //enemyManager.dispose();
         //TODO dispose all assets
     }
 

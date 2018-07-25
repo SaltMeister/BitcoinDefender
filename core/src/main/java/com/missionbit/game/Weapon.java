@@ -10,7 +10,7 @@ import com.missionbit.game.manager.bulletManager;
 
 public class Weapon
 {
-    private ParticleEffect muzzleFlash, autoRifleFlash;
+    private ParticleEffect autoRifleFlash;
     private long startTimeBullet = System.currentTimeMillis();
     private long bulletElapsedTime;
     private float autoRiflePositionX, autoRiflePositionY;
@@ -34,6 +34,7 @@ public class Weapon
         autoRifle.setLooping(1, false);
         autoRifle.setVolume(1, 0.5f); // auto rifle noise
     }
+
     public void reload()
     {
         bullets = size;
@@ -79,11 +80,13 @@ public class Weapon
     {
         return size;
     }
+
     public void setParticlePositionAutoRifle(float x, float y)
     {
         autoRiflePositionX = x;
         autoRiflePositionY = y;
     }
+
     public void draw(SpriteBatch batch, float dt)
     {
         autoRifleFlash.draw(batch, dt);
