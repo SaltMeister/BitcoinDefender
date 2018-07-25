@@ -87,7 +87,7 @@ public class PlayState extends State
         {
             mainCharacter1 = new Sprite(new Texture(Gdx.files.internal("images/autoRifle.png")));
 
-            weapon = new Weapon(7,30,70);
+            weapon = new Weapon(25,30,70);
         }
         else if (choice == 2)
         {
