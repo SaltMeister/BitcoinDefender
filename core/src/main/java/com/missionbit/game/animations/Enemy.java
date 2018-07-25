@@ -98,7 +98,7 @@ public class Enemy
 
         enemyDeath = Gdx.audio.newSound(Gdx.files.internal("music/enemyDeathNoise.mp3"));
         enemyDeath.setLooping(1,false);
-        enemyDeath.setVolume(1, 0.75f);
+        enemyDeath.setVolume(1, 1f);
     }
 
 

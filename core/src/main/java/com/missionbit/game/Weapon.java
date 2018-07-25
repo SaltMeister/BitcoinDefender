@@ -32,7 +32,7 @@ public class Weapon
 
         autoRifle = Gdx.audio.newSound(Gdx.files.internal("music/autoRifleShot.mp3"));
         autoRifle.setLooping(1, false);
-        autoRifle.setVolume(1, 0.5f); // auto rifle noise
+        autoRifle.setVolume(1, 0.25f); // auto rifle noise
     }
 
     public void reload()
