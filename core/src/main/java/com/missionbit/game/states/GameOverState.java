@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameOverState extends State
@@ -11,6 +12,7 @@ public class GameOverState extends State
 
     private Texture GameOverScreen;
     private Music gameOverMusic;
+    private Sprite retry;
 
     public GameOverState(GameStateManager gsm)
     {
@@ -23,6 +25,10 @@ public class GameOverState extends State
         gameOverMusic.setLooping(true);
         gameOverMusic.setVolume(0.5f);
         gameOverMusic.play();
+
+        retry = new Sprite(new Texture(Gdx.files.internal("images/retryButton.png")));
+        retry.setX(350);
+        retry.setY(100);
     }
 
     protected void handleInput()
@@ -47,6 +53,7 @@ public class GameOverState extends State
 
         batch.begin();
         batch.draw(GameOverScreen, 0, 0);
+        retry.draw(batch);
         batch.end();
     }
 

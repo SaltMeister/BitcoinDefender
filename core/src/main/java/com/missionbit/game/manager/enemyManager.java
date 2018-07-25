@@ -1,5 +1,6 @@
 package com.missionbit.game.manager;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.animations.Enemy;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 public class enemyManager
 {
     //Creatures we're actively drawing
-    private static ArrayList<Enemy> activeEnemies = new ArrayList<Enemy>();
+    private  ArrayList<Enemy> activeEnemies = new ArrayList<Enemy>();
 
     //Expired creatures we'll re-use
     private ArrayList<Enemy> pool = new ArrayList<Enemy>(); // reuse them
@@ -62,7 +63,7 @@ public class enemyManager
         removed.clear();
     }
 
-    public static ArrayList<Enemy> getActiveEnemies()
+    public ArrayList<Enemy> getActiveEnemies()
     {
         return activeEnemies;
     }
@@ -78,3 +79,5 @@ public class enemyManager
         batch.end();
     }
 }
+
+
