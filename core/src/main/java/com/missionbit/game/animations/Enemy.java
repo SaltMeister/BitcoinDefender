@@ -25,6 +25,7 @@ public class Enemy
     public int health;
     public Sprite healthbar;
     private Sound enemyDeath;
+    private Sound enemyHitWall;
     private Animation<Texture> walkinganimation;
     private Array<Texture> walkingframes = new Array<Texture>();
     private Animation<Texture> attackAnimation;
@@ -99,6 +100,10 @@ public class Enemy
         enemyDeath = Gdx.audio.newSound(Gdx.files.internal("music/enemyDeathNoise.mp3"));
         enemyDeath.setLooping(1,false);
         enemyDeath.setVolume(1, 1f);
+
+        enemyHitWall = Gdx.audio.newSound(Gdx.files.internal("music/breakingWallSound.mp3"));
+        enemyHitWall.setLooping(1,false);
+        enemyHitWall.setVolume(1, 0.5f);
     }
 
 
@@ -130,6 +135,7 @@ public class Enemy
         {
             wallEffect.setPosition(position.x, position.y + 50);
             wallEffect.start();
+            enemyHitWall.play();
             attackAnimationTime = 0;
             return 1;
         }

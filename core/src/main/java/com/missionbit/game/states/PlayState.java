@@ -293,7 +293,7 @@ public class PlayState extends State
                 if (healthOfWall > 0)
                 {
                     if (enemies.get(loop).alive)
-                        healthOfWall -= enemies.get(loop).damageDealt(); // if the enemies touched the wall drop 2 hp every second
+                        healthOfWall -= enemies.get(loop).damageDealt(); // if the enemies touched the wall drop 1 hp every attack
                 }
 
                 flag = true;
