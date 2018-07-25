@@ -53,6 +53,7 @@ public class GameOverState extends State
     public void dispose()
     {
         GameOverScreen.dispose();
+        gameOverMusic.dispose();
     }
 
 }

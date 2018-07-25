@@ -315,6 +315,9 @@ public class PlayState extends State
     {
         background.dispose();
         music.dispose();
+        shotgunShot.dispose();
+        autorifleReload.dispose();
+        reload.dispose();
         //TODO dispose all assets
     }
 
