@@ -15,6 +15,8 @@ public class MenuState extends State
     private Sprite helpButton;
     private Sprite exitTutorial;
     private Sprite tutorial;
+    private Music menuMusic;
+
     protected boolean showHelp;
 
     public MenuState(GameStateManager gsm)
@@ -36,6 +38,11 @@ public class MenuState extends State
         exitTutorial = new Sprite(new Texture(Gdx.files.internal("images/leaveTutorialButton.png")));
         exitTutorial.setX(25);
         exitTutorial.setY(400);
+
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal("music/mainMenuMusic.mp3"));
+        menuMusic.setLooping(true);
+        menuMusic.setVolume(0.25f);
+        menuMusic.play();
 
         cam.setToOrtho(false, 800, 480);
     }
@@ -94,6 +101,7 @@ public class MenuState extends State
     public void dispose()
     {
         homeScreen.dispose();
+        menuMusic.dispose();
         System.out.println("Disposing of Menu State");
     }
 }
