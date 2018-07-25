@@ -40,9 +40,10 @@ public class PlayState extends State
     private int healthOfWall; //the amount of lives the wall has
     private BitmapFont font;
     private BitmapFont ammo;
+    private BitmapFont timer;
     private Vector2 wallStart;
     private Vector2 wallEnd;
-    private long startTimeEnemies = System.currentTimeMillis(); // sets the time
+    private long startTimeEnemies = System.currentTimeMillis(); // sets the time for enemy spawn
     private long elapsedTime;
     private Sprite mainCharacter1;
     private enemyManager enemyManger;
@@ -286,11 +287,6 @@ public class PlayState extends State
                 {
                     if (enemies.get(loop).alive)
                         healthOfWall -= enemies.get(loop).damageDealt(); // if the enemies touched the wall drop 2 hp every second
-                }
-                else
-                {
-                    healthOfWall = 0;
-                    startTimeEnemies = 0; // sets time to 0 so no more attacking from enemies
                 }
 
                 flag = true;
