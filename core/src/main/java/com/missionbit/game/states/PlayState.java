@@ -69,8 +69,8 @@ public class PlayState extends State
         music.play();
 
         graphicCard = new Sprite( new Texture( Gdx.files.internal("images/graphicCard.png")));
-        graphicCard.setX(15);
-        graphicCard.setY(15);
+        graphicCard.setX(100);
+        graphicCard.setY(150);
 
         shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunShotSoundEffect.mp3"));
         shotgunShot.setLooping(1, false);
@@ -252,6 +252,8 @@ public class PlayState extends State
         pauseButton.draw(myBatch);
 
         reloadbutton.draw(myBatch);
+
+        graphicCard.draw(myBatch);
 
         //spawns multiple bullets
         collisionDetection(enemyManager.getActiveEnemies(), bulletManager.getActiveBullets(), myBatch);
