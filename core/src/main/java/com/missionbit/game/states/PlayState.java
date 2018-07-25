@@ -34,6 +34,7 @@ public class PlayState extends State
     private Sound autorifleReload;
     private ParticleEffect muzzleFlash;
     private Sprite wallHP;
+    private Sprite graphicCard;
     private Vector2 gunPosition;
     private Vector2 shootClick;
     private int spawnRate;
@@ -66,6 +67,10 @@ public class PlayState extends State
         music.setLooping(true);
         music.setVolume(0.5f);
         music.play();
+
+        graphicCard = new Sprite( new Texture( Gdx.files.internal("images/graphicCard.png")));
+        graphicCard.setX(15);
+        graphicCard.setY(15);
 
         shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunShotSoundEffect.mp3"));
         shotgunShot.setLooping(1, false);
