@@ -31,7 +31,7 @@ public class PlayState extends State
     private Music music;
     private Sound shotgunShot;
     private Sound reload;
-    private Sound autorifleReload;
+    private Sound autoRifleReload;
     private ParticleEffect muzzleFlash;
     private Sprite wallHP;
     private Sprite graphicCard;
@@ -46,12 +46,13 @@ public class PlayState extends State
     private Vector2 wallEnd;
     private long startTimeEnemies = System.currentTimeMillis(); // sets the time for enemy spawn
     private long elapsedTime;
+    private long reloadTimer = System.currentTimeMillis();
     private Sprite mainCharacter1;
     private enemyManager enemyManager;
     private bulletManager manager;
     private Weapon weapon;
     private Sprite pauseButton;
-    private Sprite reloadbutton;
+    private Sprite reloadButton;
     private boolean playMode = true;
     private int weaponChoice;
 
@@ -72,17 +73,17 @@ public class PlayState extends State
         graphicCard.setX(100);
         graphicCard.setY(150);
 
-        shotgunShot = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunShotSoundEffect.mp3"));
+        shotgunShot = Gdx.audio.newSound(Gdx.files.internal("sounds/ShotgunShotSoundEffect.mp3"));
         shotgunShot.setLooping(1, false);
         shotgunShot.setVolume(1, 0.5f);
 
-        reload = Gdx.audio.newSound(Gdx.files.internal("music/ShotgunReloadSoundEffect.mp3"));
+        reload = Gdx.audio.newSound(Gdx.files.internal("sounds/ShotgunReloadSoundEffect.mp3"));
         reload.setLooping(1, false);
         reload.setVolume(1, 0.5f);
 
-        autorifleReload = Gdx.audio.newSound(Gdx.files.internal("music/AutoRifleReload.mp3"));
-        autorifleReload.setLooping(1, false);
-        autorifleReload.setVolume(1, 0.5f);
+        autoRifleReload = Gdx.audio.newSound(Gdx.files.internal("sounds/autoRifleReload.mp3"));
+        autoRifleReload.setLooping(1, false);
+        autoRifleReload.setVolume(1, 0.5f);
 
         wallHP = new Sprite( new Texture(Gdx.files.internal("images/Heart.png")));
         wallHP.setX(wallHP.getWidth());
@@ -104,9 +105,9 @@ public class PlayState extends State
         mainCharacter1.setX(140);
         mainCharacter1.setY(150);
 
-        reloadbutton = new Sprite(new Texture(Gdx.files.internal("images/reloadButton.png")));
-        reloadbutton.setX(25);
-        reloadbutton.setY(25);
+        reloadButton = new Sprite(new Texture(Gdx.files.internal("images/reloadButton.png")));
+        reloadButton.setX(25);
+        reloadButton.setY(25);
 
         pauseButton = new Sprite(new Texture(Gdx.files.internal("images/pauseButton.png")));
         pauseButton.setX(background.getWidth() - pauseButton.getWidth());
@@ -138,35 +139,42 @@ public class PlayState extends State
     @Override
     protected void handleInput()
     {
+        Vector3 touchPos = new Vector3();
+        touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+
+        cam.unproject(touchPos);
         //TODO add it to click pause button to stop the render function and set the boolean to false
         if (healthOfWall > 0) // if health goes to 0 u cannot shoot anymore
         {
+            if (Gdx.input.justTouched())
+            {
+                if (pauseButton.getBoundingRectangle().contains(touchPos.x, touchPos.y))
+                {
+                    playMode = !playMode;
+                    return;
+                }
+            }
             if (weaponChoice == 1)
             {
                 if (Gdx.input.isTouched())
                 {
-                    Vector3 touchPos = new Vector3();
-                    touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-
-                    cam.unproject(touchPos);
-
                     shootClick.x = touchPos.x;
                     shootClick.y = touchPos.y;
 
                     shootClick.sub(gunPosition);
                     shootClick.nor();
 
-                    if (pauseButton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && playMode)
-                        playMode = false;
-                    else
-                        playMode = true;
-
                     if (playMode)
                     {
-                        if(reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size)
+                        if(reloadButton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size)
                         {
                             character.isReloading = true;
-                            autorifleReload.play();
+                            if (System.currentTimeMillis() - reloadTimer >= 1000)
+                            {
+                                autoRifleReload.play();
+                                reloadTimer = System.currentTimeMillis();
+                            }
+
                         }
                         else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth() - 10,
                                 mainCharacter1.getY() + 50, shootClick.x, shootClick.y, manager, weaponChoice))
@@ -180,25 +188,15 @@ public class PlayState extends State
             {
                 if (Gdx.input.justTouched()) // if screen is touched once, shoot bullet, at set direction and load muzzle flash
                 {
-                    Vector3 touchPos = new Vector3();
-                    touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-
-                    cam.unproject(touchPos);
-
                     shootClick.x = touchPos.x;
                     shootClick.y = touchPos.y;
 
                     shootClick.sub(gunPosition);
                     shootClick.nor();
 
-                    if (pauseButton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && playMode)
-                        playMode = false;
-                    else
-                        playMode = true;
-
                     if (playMode)
                     {
-                        if((reloadbutton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size))
+                        if((reloadButton.getBoundingRectangle().contains(touchPos.x, touchPos.y) && weapon.bullets < weapon.size))
                         {
                             System.out.println("clicked");
                             character.isReloading = true;
@@ -212,6 +210,7 @@ public class PlayState extends State
                             muzzleFlash.start();
                         }
                     }
+
                 }
             }
         }
@@ -251,7 +250,7 @@ public class PlayState extends State
 
         pauseButton.draw(myBatch);
 
-        reloadbutton.draw(myBatch);
+        reloadButton.draw(myBatch);
 
         graphicCard.draw(myBatch);
 
@@ -323,7 +322,7 @@ public class PlayState extends State
         background.dispose();
         music.dispose();
         shotgunShot.dispose();
-        autorifleReload.dispose();
+        autoRifleReload.dispose();
         reload.dispose();
     }
 }

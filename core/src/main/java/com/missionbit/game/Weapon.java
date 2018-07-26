@@ -3,7 +3,6 @@ package com.missionbit.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.missionbit.game.animations.mainCharacter;
 import com.missionbit.game.manager.bulletManager;
@@ -30,7 +29,7 @@ public class Weapon
         autoRifleFlash = new ParticleEffect();
         autoRifleFlash.load(Gdx.files.internal("particles/muzzleFlashAuto.p"), Gdx.files.internal("images"));
 
-        autoRifle = Gdx.audio.newSound(Gdx.files.internal("music/autoRifleShot.mp3"));
+        autoRifle = Gdx.audio.newSound(Gdx.files.internal("sounds/autoRifleShot.mp3"));
         autoRifle.setLooping(1, false);
         autoRifle.setVolume(1, 0.25f); // auto rifle noise
     }

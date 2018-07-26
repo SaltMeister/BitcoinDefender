@@ -97,11 +97,11 @@ public class Enemy
         wallEffect = new ParticleEffect();
         wallEffect.load(Gdx.files.internal("particles/brokenWall.p"), Gdx.files.internal("images"));
 
-        enemyDeath = Gdx.audio.newSound(Gdx.files.internal("music/enemyDeathNoise.mp3"));
+        enemyDeath = Gdx.audio.newSound(Gdx.files.internal("sounds/enemyDeathNoise.mp3"));
         enemyDeath.setLooping(1,false);
         enemyDeath.setVolume(1, 1f);
 
-        enemyHitWall = Gdx.audio.newSound(Gdx.files.internal("music/breakingWallSound.mp3"));
+        enemyHitWall = Gdx.audio.newSound(Gdx.files.internal("sounds/breakingWallSound.mp3"));
         enemyHitWall.setLooping(1,false);
         enemyHitWall.setVolume(1, 0.5f);
     }
