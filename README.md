@@ -20,3 +20,5 @@ Shotgun Reloading Sound: https://www.youtube.com/watch?v=c-BKVzTLqlc .
 Shotgun Shot Sound Effect: https://www.youtube.com/watch?v=d9P085Qm01Y .
 
 Background Sound: https://www.youtube.com/watch?v=LZbEIxhiJRM .
+
+Game Win Music: https://www.youtube.com/watch?v=hKRUPYrAQoE .
