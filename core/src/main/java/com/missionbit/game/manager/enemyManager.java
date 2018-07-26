@@ -32,7 +32,6 @@ public class enemyManager
         if(pool.isEmpty())
         {
             f = new Enemy(directionX);
-            System.out.println("New enemy");
             activeEnemies.add(f);
             f.update();
         }
@@ -40,7 +39,6 @@ public class enemyManager
         {
             f = pool.remove(0);
             f.reset(directionX);
-            System.out.println("from pool");
             activeEnemies.add(f);
 
         }
@@ -75,7 +73,7 @@ public class enemyManager
 
         for(Enemy b : activeEnemies)
             b.Draw(batch);
-//todo fix removing
+
         batch.end();
     }
 }

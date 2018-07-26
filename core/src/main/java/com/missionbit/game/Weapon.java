@@ -72,7 +72,7 @@ public class Weapon
             return true;
         }
 
-       return false;
+        return false;
     }
 
     public int showMaxBullets()

@@ -51,10 +51,12 @@ public class mainCharacter
     public void draw(SpriteBatch sprite, Weapon weapon)
     {
         Texture draw;
+
         if (isReloading && weapon.bullets != weapon.size)
         {
             draw = reloadAnimation.getKeyFrame(reloadAnimationTime, false);
             reloadAnimationTime += Gdx.graphics.getDeltaTime();
+
             if (reloadAnimation.isAnimationFinished(reloadAnimationTime))
             {
                 isReloading = false;
@@ -64,6 +66,7 @@ public class mainCharacter
         }
         else
             draw = reloadFrames.get(0);
+
         sprite.draw(draw, 140, 150, draw.getWidth(), draw.getHeight());
     }
 }

@@ -143,7 +143,7 @@ public class PlayState extends State
         touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
         cam.unproject(touchPos);
-        //TODO add it to click pause button to stop the render function and set the boolean to false
+
         if (healthOfWall > 0) // if health goes to 0 u cannot shoot anymore
         {
             if (Gdx.input.justTouched())
@@ -151,6 +151,7 @@ public class PlayState extends State
                 if (pauseButton.getBoundingRectangle().contains(touchPos.x, touchPos.y))
                 {
                     playMode = !playMode;
+
                     if (playMode)
                         music.play();
                     else
@@ -182,9 +183,7 @@ public class PlayState extends State
                         }
                         else if(weapon.fire(mainCharacter1.getX() + mainCharacter1.getWidth() - 10,
                                 mainCharacter1.getY() + 50, shootClick.x, shootClick.y, manager, weaponChoice))
-                        {
                             weapon.setParticlePositionAutoRifle(mainCharacter1.getX() + mainCharacter1.getWidth(), mainCharacter1.getY() + 55);
-                        }
                     }
                 }
             }
@@ -223,7 +222,6 @@ public class PlayState extends State
     @Override
     public void update(float dt)
     {
-        //todo move all update code into this from the render function
         handleInput();
     }
 
@@ -236,7 +234,6 @@ public class PlayState extends State
         if (playMode)
         {
             elapsedTime = System.currentTimeMillis() - startTimeEnemies; // sets the time that has past in milliseconds
-
 
             manager.update();
             enemyManager.update();
@@ -253,9 +250,7 @@ public class PlayState extends State
         ammo.draw(myBatch, "Ammo: " + weapon.bullets + "/" + weapon.showMaxBullets(), wallHP.getWidth() * 6, background.getHeight() - wallHP.getHeight());
 
         pauseButton.draw(myBatch);
-
         reloadButton.draw(myBatch);
-
         graphicCard.draw(myBatch);
 
         //spawns multiple bullets
@@ -284,9 +279,7 @@ public class PlayState extends State
         }
 
         if (weapon.bullets == 0)
-        {
             character.isReloading = true;
-        }
     }
 
     private boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets, SpriteBatch batch)
@@ -298,6 +291,7 @@ public class PlayState extends State
             if (enemies.get(loop).collideWithFence(wallStart, wallEnd))
             {
                 enemies.get(loop).stopEnemy();
+
                 if (healthOfWall > 0)
                 {
                     if (enemies.get(loop).alive)

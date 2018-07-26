@@ -42,7 +42,7 @@ public class Bullet
 
         if(isRandom == true)
         {
-            // code for a random spread in bullets, SHOGUNS
+            // code for a random spread in bullets, SHOTGUNS
             float randomDirection = MathUtils.random() * 10 - 5;
             direction.rotate(randomDirection);
         }
@@ -50,7 +50,6 @@ public class Bullet
 
     public void update()
     {
-
         bullet.setX(bullet.getX() + direction.x * 10); // sets the velocity of the bullet in set direction
         bullet.setY(bullet.getY() + direction.y * 10);
     }

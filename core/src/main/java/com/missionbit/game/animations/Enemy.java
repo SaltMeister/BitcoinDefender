@@ -57,6 +57,7 @@ public class Enemy
         position.x = 800;// enemies spawn on the outside of the right side
         position.y = randomSpawn; // randomizes the spawn of the enemy
         alive = true;
+
         healthbar = new Sprite(new Texture(Gdx.files.internal("images/Healthbar.png")));
         healthbar.setX(position.x);
         healthbar.setY(position.y);
@@ -148,6 +149,7 @@ public class Enemy
 
         float distance = Intersector.distanceLinePoint(fenceStart.x, fenceStart.y, fenceEnd.x, fenceEnd.y, position.x, position.y);
         lastDistance = distance;
+
         if (distance < 10 || lastDistance < distance)
             isAttack = true;
 
@@ -176,7 +178,6 @@ public class Enemy
         if(alive)
         {
             float healthpercent = health / (float)ENEMY_HP;
-            //Texture draw;
 
             if (isAttack)
             {
@@ -223,6 +224,7 @@ public class Enemy
         direction.x = directionX;
         isAttack = false;
         alive = true;
+
         position.x = Gdx.graphics.getWidth();// enemies spawn on the outside of the right side
         position.y = randomSpawn; // randomizes the spawn of the enemy
         position.x = position.x + direction.x * -0.005f; // moved the enemy in a set speed

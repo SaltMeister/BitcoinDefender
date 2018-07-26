@@ -33,16 +33,12 @@ public class bulletManager
         {
             f = new Bullet(startX, startY, directionX, directionY, isRandom);
             activeBullets.add(f);
-            //f.update();
-            //System.out.println("New");
         }
         else
         {
             f = pool.remove(0);
             f.reset(startX, startY, directionX, directionY, isRandom);
-            //f.update();
             activeBullets.add(f);
-            //System.out.println("From pool");
         }
 
         return f;
@@ -73,6 +69,7 @@ public class bulletManager
 
         for(Bullet b : activeBullets)
             b.Draw(batch);
+
         batch.end();
     }
 }
