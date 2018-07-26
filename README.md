@@ -5,7 +5,7 @@ Created with Android studio
 and with the help of William and Kwan
 
 Music Resources
-Main Menu Music: https://www.youtube.com/watch?v=zKHyEnKfw8c. 
+Main Menu Music: https://www.youtube.com/watch?v=zKHyEnKfw8c.
 Game Over Music: youtube.com/watch?v=gIuotFZnBtk .
 Auto Rifle Shot: https://www.youtube.com/watch?v=JSJvTjLrLSI. 
 Auto Rifle Reload: youtube.com/watch?v=c-BKVzTLqlc. 
