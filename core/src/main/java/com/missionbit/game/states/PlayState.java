@@ -47,6 +47,8 @@ public class PlayState extends State
     private long startTimeEnemies = System.currentTimeMillis(); // sets the time for enemy spawn
     private long elapsedTime;
     private long reloadTimer = System.currentTimeMillis();
+    private long gameTimer = System.currentTimeMillis();
+    private long elapsedGameTime;
     private Sprite mainCharacter1;
     private enemyManager enemyManager;
     private bulletManager manager;
@@ -230,6 +232,11 @@ public class PlayState extends State
     {
         //Set up our camera
         myBatch.setProjectionMatrix(cam.combined);
+
+        elapsedGameTime = System.currentTimeMillis() - gameTimer;
+
+        if (elapsedGameTime >= 120000)
+            gsm.set(new GameWinState(gsm));
 
         if (playMode)
         {
