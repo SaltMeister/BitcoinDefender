@@ -99,7 +99,7 @@ public class PlayState extends State
         {
             mainCharacter1 = new Sprite(new Texture(Gdx.files.internal("images/doubleBarrelShotgun.png")));
 
-            weapon = new Weapon(30,2,1);
+            weapon = new Weapon(35,2,1);
         }
 
         mainCharacter1.setX(140);

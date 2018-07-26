@@ -47,12 +47,13 @@ public class Weapon
         {
             if (weapon == 1)
             {
+                autoRifleFlash.setPosition(autoRiflePositionX, autoRiflePositionY);
+
                 if (bulletElapsedTime >= fireRate)
                 {
                     manager.spawnBullet(startx, starty, directionx, directiony, false);
 
                     autoRifle.play();
-                    autoRifleFlash.setPosition(autoRiflePositionX, autoRiflePositionY);
 
                     if (autoRifleFlash.isComplete())
                         autoRifleFlash.start();
