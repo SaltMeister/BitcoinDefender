@@ -279,8 +279,8 @@ public class PlayState extends State
 
         if (elapsedTime >= 5000)
         {
-            if (Enemy.damageReduction > 0.05)
-                Enemy.damageReduction *= 0.95;
+            if (Enemy.damageReduction > 0.15)
+                Enemy.damageReduction *= 0.90;
 
             startTimeEnemies = System.currentTimeMillis();
         }
