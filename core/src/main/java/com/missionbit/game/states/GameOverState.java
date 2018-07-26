@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 
 public class GameOverState extends State
 {
@@ -34,8 +35,15 @@ public class GameOverState extends State
     protected void handleInput()
     {
         if (Gdx.input.isTouched())
-            gsm.set(new MenuState(gsm));
+        {
+            Vector3 touchPos = new Vector3();
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
+            cam.unproject(touchPos);
+
+            if (retry.getBoundingRectangle().contains(touchPos.x, touchPos.y))
+                gsm.set(new MenuState(gsm));
+        }
     }
 
     public void update(float dt)
