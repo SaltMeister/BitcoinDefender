@@ -277,7 +277,7 @@ public class PlayState extends State
         character.draw(myBatch, weapon);
         myBatch.end();
 
-        if (elapsedTime >= 5000)
+        if (elapsedTime >= 10000)
         {
             if (Enemy.damageReduction > 0.15)
                 Enemy.damageReduction *= 0.90;
