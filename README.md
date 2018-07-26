@@ -14,3 +14,9 @@ Auto Rifle Shot: https://www.youtube.com/watch?v=JSJvTjLrLSI.
 Auto Rifle Reload: https://www.youtube.com/watch?v=c-BKVzTLqlc. 
 
 Breaking Wall Sound: https://www.youtube.com/watch?v=7BNxIWxI2u4.
+
+Shotgun Reloading Sound: https://www.youtube.com/watch?v=c-BKVzTLqlc
+
+Shotgun Shot Sound Effect: https://www.youtube.com/watch?v=d9P085Qm01Y
+
+Background Sound: https://www.youtube.com/watch?v=LZbEIxhiJRM
