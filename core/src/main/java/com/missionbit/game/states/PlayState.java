@@ -151,6 +151,10 @@ public class PlayState extends State
                 if (pauseButton.getBoundingRectangle().contains(touchPos.x, touchPos.y))
                 {
                     playMode = !playMode;
+                    if (playMode)
+                        music.play();
+                    else
+                        music.pause();
                     return;
                 }
             }

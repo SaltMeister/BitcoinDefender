@@ -54,7 +54,7 @@ public class Enemy
         health = ENEMY_HP;
         lastDistance = 5000;
 
-        position.x = Gdx.graphics.getWidth();// enemies spawn on the outside of the right side
+        position.x = 800;// enemies spawn on the outside of the right side
         position.y = randomSpawn; // randomizes the spawn of the enemy
         alive = true;
         healthbar = new Sprite(new Texture(Gdx.files.internal("images/Healthbar.png")));
