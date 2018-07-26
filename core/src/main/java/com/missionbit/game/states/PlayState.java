@@ -75,7 +75,7 @@ public class PlayState extends State
 
         shotgunShot = Gdx.audio.newSound(Gdx.files.internal("sounds/ShotgunShotSoundEffect.mp3"));
         shotgunShot.setLooping(1, false);
-        shotgunShot.setVolume(1, 0.5f);
+        shotgunShot.setVolume(1, 0.25f);
 
         reload = Gdx.audio.newSound(Gdx.files.internal("sounds/ShotgunReloadSoundEffect.mp3"));
         reload.setLooping(1, false);
