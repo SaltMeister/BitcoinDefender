@@ -282,6 +282,11 @@ public class PlayState extends State
 
             startTimeEnemies = System.currentTimeMillis();
         }
+
+        if (weapon.bullets == 0)
+        {
+            character.isReloading = true;
+        }
     }
 
     private boolean collisionDetection(ArrayList<Enemy> enemies, ArrayList<Bullet> bullets, SpriteBatch batch)
