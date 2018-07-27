@@ -50,7 +50,7 @@ public class Enemy
         direction = new Vector2();
         direction.x = directionX;
 
-        randomSpawn = MathUtils.random() * 200;
+        randomSpawn = MathUtils.random() * 100;
         health = ENEMY_HP;
         lastDistance = 5000;
 

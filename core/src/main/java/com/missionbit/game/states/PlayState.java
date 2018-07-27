@@ -280,7 +280,7 @@ public class PlayState extends State
         if (elapsedTime >= 10000)
         {
             if (Enemy.damageReduction > 0.15)
-                Enemy.damageReduction *= 0.90;
+                Enemy.damageReduction *= 0.85;
 
             startTimeEnemies = System.currentTimeMillis();
         }
@@ -320,7 +320,11 @@ public class PlayState extends State
             }
 
             if (healthOfWall <= 0)
+            {
                 gsm.set(new GameOverState(gsm));
+                weaponChoice = 0;
+            }
+
         }
 
         return flag;
